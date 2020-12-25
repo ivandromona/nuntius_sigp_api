@@ -1,11 +1,13 @@
-package ao.adnlogico.sigp.nuntius.auth;
+package ao.adnlogico.sigp.nuntius.controller;
 
-import ao.adnlogico.sigp.nuntius.master.MasterTenant;
-import ao.adnlogico.sigp.nuntius.master.MasterTenantService;
+import ao.adnlogico.sigp.nuntius.dto.AuthResponse;
+import ao.adnlogico.sigp.nuntius.dto.UserLoginDTO;
+import ao.adnlogico.sigp.nuntius.master.entity.MasterTenant;
+import ao.adnlogico.sigp.nuntius.master.service.MasterTenantService;
 import ao.adnlogico.sigp.nuntius.master.config.DBContextHolder;
-import ao.adnlogico.sigp.nuntius.user.UserTenantInformation;
+import ao.adnlogico.sigp.nuntius.security.UserTenantInformation;
 import ao.adnlogico.sigp.nuntius.util.JwtTokenUtil;
-import ao.adnlogico.sigp.nuntius.util.UserStatus;
+import ao.adnlogico.sigp.nuntius.constant.UserStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

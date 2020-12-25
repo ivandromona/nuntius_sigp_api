@@ -5,8 +5,8 @@
  */
 package ao.adnlogico.sigp.nuntius.client.config;
 
-import ao.adnlogico.sigp.nuntius.master.MasterTenant;
-import ao.adnlogico.sigp.nuntius.master.MasterTenantRepository;
+import ao.adnlogico.sigp.nuntius.master.entity.MasterTenant;
+import ao.adnlogico.sigp.nuntius.master.repository.MasterTenantRepository;
 import ao.adnlogico.sigp.nuntius.master.config.DBContextHolder;
 import ao.adnlogico.sigp.nuntius.util.DataSourceUtil;
 import java.util.List;

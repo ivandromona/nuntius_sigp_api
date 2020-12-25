@@ -1,8 +1,8 @@
-package ao.adnlogico.sigp.nuntius.jwt;
+package ao.adnlogico.sigp.nuntius.security;
 
-import ao.adnlogico.sigp.nuntius.master.MasterTenantService;
+import ao.adnlogico.sigp.nuntius.master.service.MasterTenantService;
 import ao.adnlogico.sigp.nuntius.master.config.DBContextHolder;
-import ao.adnlogico.sigp.nuntius.user.UserTenantInformation;
+import ao.adnlogico.sigp.nuntius.security.UserTenantInformation;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -29,7 +29,7 @@ public class RequestAuthorizationIntercept
     @Autowired
     MasterTenantService masterTenantService;
 
-    @Around("@annotation(com.amran.dynamic.multitenant.security.RequestAuthorization)")
+    @Around("@annotation(ao.adnlogico.sigp.nuntius.security.RequestAuthorization)")
     public Object checkPermission(ProceedingJoinPoint pjp) throws Throwable
     {
         UserTenantInformation tenantInformation = applicationContext.getBean(UserTenantInformation.class);

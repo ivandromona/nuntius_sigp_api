@@ -5,8 +5,8 @@
  */
 package ao.adnlogico.sigp.nuntius.master.config;
 
-import ao.adnlogico.sigp.nuntius.master.MasterTenant;
-import ao.adnlogico.sigp.nuntius.master.MasterTenantRepository;
+import ao.adnlogico.sigp.nuntius.master.entity.MasterTenant;
+import ao.adnlogico.sigp.nuntius.master.repository.MasterTenantRepository;
 import com.zaxxer.hikari.HikariDataSource;
 import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author domingos.fernando
  */
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = {"com.amran.dynamic.multitenant.mastertenant.entity", "com.amran.dynamic.multitenant.mastertenant.repository"},
+@EnableJpaRepositories(basePackages = {"ao.adnlogico.sigp.nuntius.master.entity", "ao.adnlogico.sigp.nuntius.master.repository"},
                        entityManagerFactoryRef = "masterEntityManagerFactory",
                        transactionManagerRef = "masterTransactionManager")
 public class MasterDatabaseConfig

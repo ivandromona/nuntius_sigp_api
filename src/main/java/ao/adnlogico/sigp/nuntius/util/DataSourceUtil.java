@@ -1,6 +1,6 @@
 package ao.adnlogico.sigp.nuntius.util;
 
-import ao.adnlogico.sigp.nuntius.master.MasterTenant;
+import ao.adnlogico.sigp.nuntius.master.entity.MasterTenant;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

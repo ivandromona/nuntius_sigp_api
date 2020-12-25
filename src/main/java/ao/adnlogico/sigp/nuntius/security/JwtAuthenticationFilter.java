@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.sigp.nuntius.jwt;
+package ao.adnlogico.sigp.nuntius.security;
 
-import ao.adnlogico.sigp.nuntius.master.MasterTenant;
-import ao.adnlogico.sigp.nuntius.master.MasterTenantService;
+import ao.adnlogico.sigp.nuntius.master.entity.MasterTenant;
+import ao.adnlogico.sigp.nuntius.master.service.MasterTenantService;
 import ao.adnlogico.sigp.nuntius.master.config.DBContextHolder;
-import ao.adnlogico.sigp.nuntius.util.JWTConstants;
+import ao.adnlogico.sigp.nuntius.constant.JWTConstants;
 import ao.adnlogico.sigp.nuntius.util.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;

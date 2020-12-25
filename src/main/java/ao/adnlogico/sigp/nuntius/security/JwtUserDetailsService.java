@@ -1,7 +1,7 @@
-package ao.adnlogico.sigp.nuntius.jwt;
+package ao.adnlogico.sigp.nuntius.security;
 
-import ao.adnlogico.sigp.nuntius.user.User;
-import ao.adnlogico.sigp.nuntius.user.UserRepository;
+import ao.adnlogico.sigp.nuntius.tenant.entity.User;
+import ao.adnlogico.sigp.nuntius.tenant.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

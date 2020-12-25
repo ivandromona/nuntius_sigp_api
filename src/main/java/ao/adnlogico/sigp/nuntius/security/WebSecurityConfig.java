@@ -5,9 +5,6 @@
  */
 package ao.adnlogico.sigp.nuntius.security;
 
-import ao.adnlogico.sigp.nuntius.jwt.JwtAuthenticationEntryPoint;
-import ao.adnlogico.sigp.nuntius.jwt.JwtAuthenticationFilter;
-import ao.adnlogico.sigp.nuntius.jwt.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

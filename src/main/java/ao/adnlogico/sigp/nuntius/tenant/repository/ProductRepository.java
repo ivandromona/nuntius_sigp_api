@@ -1,5 +1,6 @@
-package ao.adnlogico.sigp.nuntius.product;
+package ao.adnlogico.sigp.nuntius.tenant.repository;
 
+import ao.adnlogico.sigp.nuntius.tenant.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

@@ -1,4 +1,4 @@
-package ao.adnlogico.sigp.nuntius.user;
+package ao.adnlogico.sigp.nuntius.security;
 
 import java.util.HashMap;
 import java.util.Map;

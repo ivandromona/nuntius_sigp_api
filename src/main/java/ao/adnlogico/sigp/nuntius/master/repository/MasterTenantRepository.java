@@ -1,5 +1,6 @@
-package ao.adnlogico.sigp.nuntius.master;
+package ao.adnlogico.sigp.nuntius.master.repository;
 
+import ao.adnlogico.sigp.nuntius.master.entity.MasterTenant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

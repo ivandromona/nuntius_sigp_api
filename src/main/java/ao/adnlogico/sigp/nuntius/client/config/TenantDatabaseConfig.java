@@ -30,8 +30,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = {"com.amran.dynamic.multitenant.tenant.repository", "com.amran.dynamic.multitenant.tenant.entity"})
-@EnableJpaRepositories(basePackages = {"com.amran.dynamic.multitenant.tenant.repository", "com.amran.dynamic.multitenant.tenant.service"},
+@ComponentScan(basePackages = {"ao.adnlogico.sigp.nuntius.tenant.repository", "ao.adnlogico.sigp.nuntius.tenant.entity"})
+@EnableJpaRepositories(basePackages = {"ao.adnlogico.sigp.nuntius.tenant.repository", "ao.adnlogico.sigp.nuntius.tenant.service"},
                        entityManagerFactoryRef = "tenantEntityManagerFactory",
                        transactionManagerRef = "tenantTransactionManager")
 public class TenantDatabaseConfig
@@ -87,8 +87,8 @@ public class TenantDatabaseConfig
     @Bean(name = "tenantEntityManagerFactory")
     @ConditionalOnBean(name = "datasourceBasedMultitenantConnectionProvider")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-        @Qualifier("datasourceBasedMultitenantConnectionProvider") MultiTenantConnectionProvider connectionProvider,
-        @Qualifier("currentTenantIdentifierResolver") CurrentTenantIdentifierResolver tenantResolver)
+            @Qualifier("datasourceBasedMultitenantConnectionProvider") MultiTenantConnectionProvider connectionProvider,
+            @Qualifier("currentTenantIdentifierResolver") CurrentTenantIdentifierResolver tenantResolver)
     {
         LocalContainerEntityManagerFactoryBean emfBean = new LocalContainerEntityManagerFactoryBean();
         //All tenant related entities, repositories and service classes must be scanned

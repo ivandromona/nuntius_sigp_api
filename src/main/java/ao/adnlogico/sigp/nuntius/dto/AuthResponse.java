@@ -1,4 +1,4 @@
-package ao.adnlogico.sigp.nuntius.auth;
+package ao.adnlogico.sigp.nuntius.dto;
 
 import java.io.Serializable;
 

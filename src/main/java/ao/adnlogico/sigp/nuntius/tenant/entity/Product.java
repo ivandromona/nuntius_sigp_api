@@ -1,4 +1,4 @@
-package ao.adnlogico.sigp.nuntius.product;
+package ao.adnlogico.sigp.nuntius.tenant.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;

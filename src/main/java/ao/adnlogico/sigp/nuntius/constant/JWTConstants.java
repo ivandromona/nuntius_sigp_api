@@ -1,4 +1,4 @@
-package ao.adnlogico.sigp.nuntius.util;
+package ao.adnlogico.sigp.nuntius.constant;
 
 /**
  * @author Md. Amran Hossain

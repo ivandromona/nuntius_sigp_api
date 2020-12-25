@@ -1,6 +1,6 @@
-package ao.adnlogico.sigp.nuntius.auth;
+package ao.adnlogico.sigp.nuntius.controller;
 
-import ao.adnlogico.sigp.nuntius.user.UserTenantInformation;
+import ao.adnlogico.sigp.nuntius.security.UserTenantInformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

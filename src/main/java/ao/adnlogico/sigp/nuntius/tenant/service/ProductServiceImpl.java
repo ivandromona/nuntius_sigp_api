@@ -1,5 +1,7 @@
-package ao.adnlogico.sigp.nuntius.product;
+package ao.adnlogico.sigp.nuntius.tenant.service;
 
+import ao.adnlogico.sigp.nuntius.tenant.repository.ProductRepository;
+import ao.adnlogico.sigp.nuntius.tenant.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package ao.adnlogico.sigp.nuntius.jwt;
+package ao.adnlogico.sigp.nuntius.security;
 
 import java.lang.annotation.*;
 
