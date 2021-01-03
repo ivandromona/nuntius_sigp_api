@@ -15,7 +15,7 @@ multitenancy:
   mtapp:
     master:
       datasource:
-        url: jdbc:mysql://127.0.0.1:3306/master_db?useSSL=false
+        url: jdbc:mysql://127.0.0.1:3306/master_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
         username: root
         password: root
         driverClassName: com.mysql.cj.jdbc.Driver
