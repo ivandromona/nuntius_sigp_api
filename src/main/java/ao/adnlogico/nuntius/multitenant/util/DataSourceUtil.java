@@ -16,9 +16,9 @@ public final class DataSourceUtil {
 
     public static DataSource createAndConfigureDataSource(MasterTenant masterTenant) {
         HikariDataSource ds = new HikariDataSource();
-        ds.setUsername(masterTenant.getUserName());
-        ds.setPassword(masterTenant.getPassword());
-        ds.setJdbcUrl(masterTenant.getUrl());
+        ds.setUsername(masterTenant.getDbUserName());
+        ds.setPassword(masterTenant.getDbPassword());
+        ds.setJdbcUrl(masterTenant.getDbUrl());
         ds.setDriverClassName(masterTenant.getDriverClass());
         // HikariCP settings - could come from the master_tenant table but
         // hardcoded here for brevity

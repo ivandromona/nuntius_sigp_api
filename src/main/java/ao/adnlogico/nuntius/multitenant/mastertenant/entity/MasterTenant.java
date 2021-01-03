@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Md. Amran Hossain
  */
 @Entity
-@Table(name = "tbl_tenant_master")
+@Table(name = "master_tenant")
 public class MasterTenant implements Serializable
 {
 
@@ -21,19 +21,22 @@ public class MasterTenant implements Serializable
     @Column(name = "db_name", nullable = false)
     private String dbName;
 
-    @Size(max = 100)
-    @Column(name = "url", nullable = false)
-    private String url;
+    @Size(max = 255)
+    @Column(name = "db_url", nullable = false)
+    private String dbUrl;
 
     @Size(max = 50)
-    @Column(name = "user_name", nullable = false)
-    private String userName;
+    @Column(name = "db_user_name", nullable = false)
+    private String dbUserName;
+
     @Size(max = 100)
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "db_password", nullable = false)
+    private String dbPassword;
+
     @Size(max = 100)
     @Column(name = "driver_class", nullable = false)
     private String driverClass;
+
     @Size(max = 10)
     @Column(name = "status", nullable = false)
     private String status;
@@ -42,12 +45,23 @@ public class MasterTenant implements Serializable
     {
     }
 
+    public MasterTenant(Integer tenantClientId, String dbName, String dbUrl, String dbUserName, String dbPassword, String driverClass, String status)
+    {
+        this.tenantClientId = tenantClientId;
+        this.dbName = dbName;
+        this.dbUrl = dbUrl;
+        this.dbUserName = dbUserName;
+        this.dbPassword = dbPassword;
+        this.driverClass = driverClass;
+        this.status = status;
+    }
+
     public MasterTenant(@Size(max = 50) String dbName, @Size(max = 100) String url, @Size(max = 50) String userName, @Size(max = 100) String password, @Size(max = 100) String driverClass, @Size(max = 10) String status)
     {
         this.dbName = dbName;
-        this.url = url;
-        this.userName = userName;
-        this.password = password;
+        this.dbUrl = url;
+        this.dbUserName = userName;
+        this.dbPassword = password;
         this.driverClass = driverClass;
         this.status = status;
     }
@@ -74,36 +88,36 @@ public class MasterTenant implements Serializable
         return this;
     }
 
-    public String getUrl()
+    public String getDbUrl()
     {
-        return url;
+        return dbUrl;
     }
 
     public MasterTenant setUrl(String url)
     {
-        this.url = url;
+        this.dbUrl = url;
         return this;
     }
 
-    public String getUserName()
+    public String getDbUserName()
     {
-        return userName;
+        return dbUserName;
     }
 
     public MasterTenant setUserName(String userName)
     {
-        this.userName = userName;
+        this.dbUserName = userName;
         return this;
     }
 
-    public String getPassword()
+    public String getDbPassword()
     {
-        return password;
+        return dbPassword;
     }
 
     public MasterTenant setPassword(String password)
     {
-        this.password = password;
+        this.dbPassword = password;
         return this;
     }
 
@@ -128,4 +142,5 @@ public class MasterTenant implements Serializable
         this.status = status;
         return this;
     }
+
 }
