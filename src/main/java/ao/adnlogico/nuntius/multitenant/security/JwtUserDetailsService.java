@@ -1,6 +1,6 @@
 package ao.adnlogico.nuntius.multitenant.security;
 
-import ao.adnlogico.nuntius.multitenant.tenant.repository.UserRepository;
+import ao.adnlogico.nuntius.multitenant.tenant.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,21 +15,24 @@ import java.util.List;
  * @author Md. Amran Hossain
  */
 @Service
-public class JwtUserDetailsService implements UserDetailsService {
+public class JwtUserDetailsService implements UserDetailsService
+{
 
     @Autowired
     UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        ao.adnlogico.nuntius.multitenant.tenant.entity.User user = userRepository.findByUserName(userName);
-        if(null == user){
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException
+    {
+        ao.adnlogico.nuntius.multitenant.tenant.user.Users user = userRepository.findByUserName(userName);
+        if (null == user) {
             throw new UsernameNotFoundException("Invalid user name or password.");
         }
         return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), getAuthority());
     }
 
-    private List<SimpleGrantedAuthority> getAuthority() {
+    private List<SimpleGrantedAuthority> getAuthority()
+    {
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
 }

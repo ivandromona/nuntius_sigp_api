@@ -5,7 +5,8 @@ import ao.adnlogico.nuntius.multitenant.mastertenant.entity.MasterTenant;
 /**
  * @author Md. Amran Hossain
  */
-public interface MasterTenantService {
+public interface MasterTenantService
+{
 
-    MasterTenant findByClientId(Integer clientId);
+    MasterTenant findByClientId(String clientId);
 }

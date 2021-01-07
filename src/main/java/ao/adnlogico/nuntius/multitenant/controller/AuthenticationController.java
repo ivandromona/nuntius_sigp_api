@@ -55,6 +55,9 @@ public class AuthenticationController implements Serializable
     public ResponseEntity<?> userLogin(@RequestBody @NotNull UserLoginDTO userLoginDTO) throws AuthenticationException
     {
         LOGGER.info("userLogin() method call...");
+        String tenantId = userLoginDTO.getUserName().split("@")[1];
+        LOGGER.info("userLogin() method call... Print tenant ID  = " + tenantId);
+        userLoginDTO.setTenantOrClientId(tenantId);
         if (null == userLoginDTO.getUserName() || userLoginDTO.getUserName().isEmpty()) {
             return new ResponseEntity<>("User name is required", HttpStatus.BAD_REQUEST);
         }

@@ -20,9 +20,9 @@ public class MasterTenantServiceImpl implements MasterTenantService
     MasterTenantRepository masterTenantRepository;
 
     @Override
-    public MasterTenant findByClientId(Integer clientId)
+    public MasterTenant findByClientId(String clientId)
     {
         LOG.info("findByClientId() method call...");
-        return masterTenantRepository.findByTenantClientId(clientId);
+        return masterTenantRepository.findByClientId(clientId);
     }
 }

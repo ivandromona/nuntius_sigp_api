@@ -14,8 +14,12 @@ public class MasterTenant implements Serializable
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tenant_client_id")
-    private Integer tenantClientId;
+    @Column(name = "id")
+    private Integer id;
+
+    @Size(max = 150)
+    @Column(name = "client_id", nullable = false, unique = true)
+    private String clientId;
 
     @Size(max = 50)
     @Column(name = "db_name", nullable = false)
@@ -45,9 +49,10 @@ public class MasterTenant implements Serializable
     {
     }
 
-    public MasterTenant(Integer tenantClientId, String dbName, String dbUrl, String dbUserName, String dbPassword, String driverClass, String status)
+    public MasterTenant(Integer id, String clientId, String dbName, String dbUrl, String dbUserName, String dbPassword, String driverClass, String status)
     {
-        this.tenantClientId = tenantClientId;
+        this.id = id;
+        this.clientId = clientId;
         this.dbName = dbName;
         this.dbUrl = dbUrl;
         this.dbUserName = dbUserName;
@@ -66,14 +71,24 @@ public class MasterTenant implements Serializable
         this.status = status;
     }
 
-    public Integer getTenantClientId()
+    public Integer getId()
     {
-        return tenantClientId;
+        return id;
     }
 
-    public MasterTenant setTenantClientId(Integer tenantClientId)
+    public void setId(Integer id)
     {
-        this.tenantClientId = tenantClientId;
+        this.id = id;
+    }
+
+    public String getClientId()
+    {
+        return clientId;
+    }
+
+    public MasterTenant setClientId(String clientId)
+    {
+        this.clientId = clientId;
         return this;
     }
 

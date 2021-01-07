@@ -28,7 +28,8 @@ import java.util.Arrays;
  * @author Md. Amran Hossain
  */
 @Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter
+{
 
     @Autowired
     private JwtUserDetailsService jwtUserDetailsService;
@@ -38,30 +39,35 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     MasterTenantService masterTenantService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException
+    {
         String header = httpServletRequest.getHeader(JWTConstants.HEADER_STRING);
         String username = null;
         String audience = null; //tenantOrClientId
         String authToken = null;
         if (header != null && header.startsWith(JWTConstants.TOKEN_PREFIX)) {
-            authToken = header.replace(JWTConstants.TOKEN_PREFIX,"");
+            authToken = header.replace(JWTConstants.TOKEN_PREFIX, "");
             try {
                 username = jwtTokenUtil.getUsernameFromToken(authToken);
                 audience = jwtTokenUtil.getAudienceFromToken(authToken);
-                MasterTenant masterTenant = masterTenantService.findByClientId(Integer.valueOf(audience));
-                if(null == masterTenant){
+                MasterTenant masterTenant = masterTenantService.findByClientId(audience);
+                if (null == masterTenant) {
                     logger.error("An error during getting tenant name");
                     throw new BadCredentialsException("Invalid tenant and user.");
                 }
                 DBContextHolder.setCurrentDb(masterTenant.getDbName());
-            } catch (IllegalArgumentException ex) {
-                logger.error("An error during getting username from token", ex);
-            } catch (ExpiredJwtException ex) {
-                logger.warn("The token is expired and not valid anymore", ex);
-            } catch(SignatureException ex){
-                logger.error("Authentication Failed. Username or Password not valid.",ex);
             }
-        } else {
+            catch (IllegalArgumentException ex) {
+                logger.error("An error during getting username from token", ex);
+            }
+            catch (ExpiredJwtException ex) {
+                logger.warn("The token is expired and not valid anymore", ex);
+            }
+            catch (SignatureException ex) {
+                logger.error("Authentication Failed. Username or Password not valid.", ex);
+            }
+        }
+        else {
             logger.warn("Couldn't find bearer string, will ignore the header");
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
