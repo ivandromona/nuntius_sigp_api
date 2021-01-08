@@ -5,10 +5,10 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.progress;
 
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Departments;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Departments;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Steps;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Steps;
+
+import ao.adnlogico.nuntius.multitenant.tenant.department.Department;
+import ao.adnlogico.nuntius.multitenant.tenant.step.Step;
+import ao.adnlogico.nuntius.multitenant.tenant.step.Step;
 import ao.adnlogico.nuntius.multitenant.tenant.user.Users;
 import java.io.Serializable;
 import java.util.Collection;
@@ -61,10 +61,10 @@ public class Progress implements Serializable
     @Column(name = "fk_parent")
     private int fkParent;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProgress")
-    private Collection<Steps> stepsCollection;
+    private Collection<Step> stepsCollection;
     @JoinColumn(name = "fk_department", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Departments fkDepartment;
+    private Department fkDepartment;
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Users fkUser;
@@ -127,22 +127,22 @@ public class Progress implements Serializable
     }
 
     @XmlTransient
-    public Collection<Steps> getStepsCollection()
+    public Collection<Step> getStepsCollection()
     {
         return stepsCollection;
     }
 
-    public void setStepsCollection(Collection<Steps> stepsCollection)
+    public void setStepsCollection(Collection<Step> stepsCollection)
     {
         this.stepsCollection = stepsCollection;
     }
 
-    public Departments getFkDepartment()
+    public Department getFkDepartment()
     {
         return fkDepartment;
     }
 
-    public void setFkDepartment(Departments fkDepartment)
+    public void setFkDepartment(Department fkDepartment)
     {
         this.fkDepartment = fkDepartment;
     }

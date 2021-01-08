@@ -6,16 +6,16 @@
 package ao.adnlogico.nuntius.multitenant.tenant.process;
 
 import ao.adnlogico.nuntius.multitenant.tenant.category.Category;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Comments;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Documents;
+import ao.adnlogico.nuntius.multitenant.tenant.comment.Comment;
+import ao.adnlogico.nuntius.multitenant.tenant.document.Document;
 import ao.adnlogico.nuntius.multitenant.tenant.entity.Entities;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Explorers;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Forwarding;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Functions;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Persons;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.ProcessAttachments;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.RoleTypes;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Steps;
+import ao.adnlogico.nuntius.multitenant.tenant.forwarding.Forwarding;
+import ao.adnlogico.nuntius.multitenant.tenant.function.Function;
+import ao.adnlogico.nuntius.multitenant.tenant.person.Person;
+import ao.adnlogico.nuntius.multitenant.tenant.processatachments.ProcessAttachment;
+import ao.adnlogico.nuntius.multitenant.tenant.roletype.RoleType;
+import ao.adnlogico.nuntius.multitenant.tenant.step.Step;
+import ao.adnlogico.nuntius.multitenant.tenant.explorer.Explorer;
 import ao.adnlogico.nuntius.multitenant.tenant.user.Users;
 import java.io.Serializable;
 import java.util.Collection;
@@ -125,12 +125,12 @@ public class Process implements Serializable
         @JoinColumn(name = "fk_process", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "fk_step", referencedColumnName = "id")})
     @ManyToMany
-    private Collection<Steps> stepsCollection;
+    private Collection<Step> stepsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProcess")
-    private Collection<ProcessAttachments> processAttachmentsCollection;
+    private Collection<ProcessAttachment> processAttachmentsCollection;
     @JoinColumn(name = "fk_approval", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Functions fkApproval;
+    private Function fkApproval;
     @JoinColumn(name = "fk_category", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Category fkCategory;
@@ -139,10 +139,10 @@ public class Process implements Serializable
     private Entities fkClaimantEntity;
     @JoinColumn(name = "fk_claimant_person", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Persons fkClaimantPerson;
+    private Person fkClaimantPerson;
     @JoinColumn(name = "fk_explorer", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Explorers fkExplorer;
+    private Explorer fkExplorer;
     @JoinColumn(name = "fk_operator_user", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Users fkOperatorUser;
@@ -151,11 +151,11 @@ public class Process implements Serializable
     private Users fkResponsibleUser;
     @JoinColumn(name = "fk_role_type", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private RoleTypes fkRoleType;
+    private RoleType fkRoleType;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProcess")
-    private Collection<Comments> commentsCollection;
+    private Collection<Comment> commentsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProcess")
-    private Collection<Documents> documentsCollection;
+    private Collection<Document> documentsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProcesso")
     private Collection<Forwarding> forwardingCollection;
 
@@ -347,33 +347,33 @@ public class Process implements Serializable
     }
 
     @XmlTransient
-    public Collection<Steps> getStepsCollection()
+    public Collection<Step> getStepsCollection()
     {
         return stepsCollection;
     }
 
-    public void setStepsCollection(Collection<Steps> stepsCollection)
+    public void setStepsCollection(Collection<Step> stepsCollection)
     {
         this.stepsCollection = stepsCollection;
     }
 
     @XmlTransient
-    public Collection<ProcessAttachments> getProcessAttachmentsCollection()
+    public Collection<ProcessAttachment> getProcessAttachmentsCollection()
     {
         return processAttachmentsCollection;
     }
 
-    public void setProcessAttachmentsCollection(Collection<ProcessAttachments> processAttachmentsCollection)
+    public void setProcessAttachmentsCollection(Collection<ProcessAttachment> processAttachmentsCollection)
     {
         this.processAttachmentsCollection = processAttachmentsCollection;
     }
 
-    public Functions getFkApproval()
+    public Function getFkApproval()
     {
         return fkApproval;
     }
 
-    public void setFkApproval(Functions fkApproval)
+    public void setFkApproval(Function fkApproval)
     {
         this.fkApproval = fkApproval;
     }
@@ -398,22 +398,22 @@ public class Process implements Serializable
         this.fkClaimantEntity = fkClaimantEntity;
     }
 
-    public Persons getFkClaimantPerson()
+    public Person getFkClaimantPerson()
     {
         return fkClaimantPerson;
     }
 
-    public void setFkClaimantPerson(Persons fkClaimantPerson)
+    public void setFkClaimantPerson(Person fkClaimantPerson)
     {
         this.fkClaimantPerson = fkClaimantPerson;
     }
 
-    public Explorers getFkExplorer()
+    public Explorer getFkExplorer()
     {
         return fkExplorer;
     }
 
-    public void setFkExplorer(Explorers fkExplorer)
+    public void setFkExplorer(Explorer fkExplorer)
     {
         this.fkExplorer = fkExplorer;
     }
@@ -438,34 +438,34 @@ public class Process implements Serializable
         this.fkResponsibleUser = fkResponsibleUser;
     }
 
-    public RoleTypes getFkRoleType()
+    public RoleType getFkRoleType()
     {
         return fkRoleType;
     }
 
-    public void setFkRoleType(RoleTypes fkRoleType)
+    public void setFkRoleType(RoleType fkRoleType)
     {
         this.fkRoleType = fkRoleType;
     }
 
     @XmlTransient
-    public Collection<Comments> getCommentsCollection()
+    public Collection<Comment> getCommentsCollection()
     {
         return commentsCollection;
     }
 
-    public void setCommentsCollection(Collection<Comments> commentsCollection)
+    public void setCommentsCollection(Collection<Comment> commentsCollection)
     {
         this.commentsCollection = commentsCollection;
     }
 
     @XmlTransient
-    public Collection<Documents> getDocumentsCollection()
+    public Collection<Document> getDocumentsCollection()
     {
         return documentsCollection;
     }
 
-    public void setDocumentsCollection(Collection<Documents> documentsCollection)
+    public void setDocumentsCollection(Collection<Document> documentsCollection)
     {
         this.documentsCollection = documentsCollection;
     }

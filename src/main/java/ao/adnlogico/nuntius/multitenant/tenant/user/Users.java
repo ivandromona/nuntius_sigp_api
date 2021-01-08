@@ -5,16 +5,16 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.user;
 
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Comments;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.DocTemplates;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Documents;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Forwarding;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Functions;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Messages;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.NotificationUsers;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Persons;
+import ao.adnlogico.nuntius.multitenant.tenant.comment.Comment;
+import ao.adnlogico.nuntius.multitenant.tenant.doctemplate.DocTemplate;
+import ao.adnlogico.nuntius.multitenant.tenant.document.Document;
+import ao.adnlogico.nuntius.multitenant.tenant.forwarding.Forwarding;
+import ao.adnlogico.nuntius.multitenant.tenant.function.Function;
+import ao.adnlogico.nuntius.multitenant.tenant.message.Message;
+import ao.adnlogico.nuntius.multitenant.tenant.notificationuser.NotificationUser;
+import ao.adnlogico.nuntius.multitenant.tenant.person.Person;
 import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Roles;
+import ao.adnlogico.nuntius.multitenant.tenant.role.Role;
 import ao.adnlogico.nuntius.multitenant.tenant.progress.Progress;
 import java.io.Serializable;
 import java.util.Collection;
@@ -103,33 +103,33 @@ public class Users implements Serializable
     @OneToMany(mappedBy = "fkResponsibleUser")
     private Collection<Process> processCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkUser")
-    private Collection<Comments> commentsCollection;
+    private Collection<Comment> commentsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkUser")
-    private Collection<Documents> documentsCollection;
+    private Collection<Document> documentsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkUser")
     private Collection<Forwarding> forwardingCollection;
     @JoinColumn(name = "fk_function", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Functions fkFunction;
+    private Function fkFunction;
     @JoinColumn(name = "fk_person", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Persons fkPerson;
+    private Person fkPerson;
     @JoinColumn(name = "fk_role", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Roles fkRole;
+    private Role fkRole;
     @Size(max = 10)
     @Column(name = "status", nullable = false)
     private String status;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
-    private Collection<DocTemplates> docTemplatesCollection;
+    private Collection<DocTemplate> docTemplatesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver")
-    private Collection<Messages> messagesCollection;
+    private Collection<Message> messagesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sender")
-    private Collection<Messages> messagesCollection1;
+    private Collection<Message> messagesCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkUser")
     private Collection<Progress> progressCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
-    private Collection<NotificationUsers> notificationUsersCollection;
+    private Collection<NotificationUser> notificationUsersCollection;
 
     public Users()
     {
@@ -287,23 +287,23 @@ public class Users implements Serializable
     }
 
     @XmlTransient
-    public Collection<Comments> getCommentsCollection()
+    public Collection<Comment> getCommentsCollection()
     {
         return commentsCollection;
     }
 
-    public void setCommentsCollection(Collection<Comments> commentsCollection)
+    public void setCommentsCollection(Collection<Comment> commentsCollection)
     {
         this.commentsCollection = commentsCollection;
     }
 
     @XmlTransient
-    public Collection<Documents> getDocumentsCollection()
+    public Collection<Document> getDocumentsCollection()
     {
         return documentsCollection;
     }
 
-    public void setDocumentsCollection(Collection<Documents> documentsCollection)
+    public void setDocumentsCollection(Collection<Document> documentsCollection)
     {
         this.documentsCollection = documentsCollection;
     }
@@ -319,32 +319,32 @@ public class Users implements Serializable
         this.forwardingCollection = forwardingCollection;
     }
 
-    public Functions getFkFunction()
+    public Function getFkFunction()
     {
         return fkFunction;
     }
 
-    public void setFkFunction(Functions fkFunction)
+    public void setFkFunction(Function fkFunction)
     {
         this.fkFunction = fkFunction;
     }
 
-    public Persons getFkPerson()
+    public Person getFkPerson()
     {
         return fkPerson;
     }
 
-    public void setFkPerson(Persons fkPerson)
+    public void setFkPerson(Person fkPerson)
     {
         this.fkPerson = fkPerson;
     }
 
-    public Roles getFkRole()
+    public Role getFkRole()
     {
         return fkRole;
     }
 
-    public void setFkRole(Roles fkRole)
+    public void setFkRole(Role fkRole)
     {
         this.fkRole = fkRole;
     }
@@ -372,34 +372,34 @@ public class Users implements Serializable
     }
 
     @XmlTransient
-    public Collection<DocTemplates> getDocTemplatesCollection()
+    public Collection<DocTemplate> getDocTemplatesCollection()
     {
         return docTemplatesCollection;
     }
 
-    public void setDocTemplatesCollection(Collection<DocTemplates> docTemplatesCollection)
+    public void setDocTemplatesCollection(Collection<DocTemplate> docTemplatesCollection)
     {
         this.docTemplatesCollection = docTemplatesCollection;
     }
 
     @XmlTransient
-    public Collection<Messages> getMessagesCollection()
+    public Collection<Message> getMessagesCollection()
     {
         return messagesCollection;
     }
 
-    public void setMessagesCollection(Collection<Messages> messagesCollection)
+    public void setMessagesCollection(Collection<Message> messagesCollection)
     {
         this.messagesCollection = messagesCollection;
     }
 
     @XmlTransient
-    public Collection<Messages> getMessagesCollection1()
+    public Collection<Message> getMessagesCollection1()
     {
         return messagesCollection1;
     }
 
-    public void setMessagesCollection1(Collection<Messages> messagesCollection1)
+    public void setMessagesCollection1(Collection<Message> messagesCollection1)
     {
         this.messagesCollection1 = messagesCollection1;
     }
@@ -416,12 +416,12 @@ public class Users implements Serializable
     }
 
     @XmlTransient
-    public Collection<NotificationUsers> getNotificationUsersCollection()
+    public Collection<NotificationUser> getNotificationUsersCollection()
     {
         return notificationUsersCollection;
     }
 
-    public void setNotificationUsersCollection(Collection<NotificationUsers> notificationUsersCollection)
+    public void setNotificationUsersCollection(Collection<NotificationUser> notificationUsersCollection)
     {
         this.notificationUsersCollection = notificationUsersCollection;
     }

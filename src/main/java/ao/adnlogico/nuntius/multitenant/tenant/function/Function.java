@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.category;
+package ao.adnlogico.nuntius.multitenant.tenant.function;
 
-import ao.adnlogico.nuntius.multitenant.tenant.doctemplate.DocTemplate;
+import ao.adnlogico.nuntius.multitenant.tenant.department.Department;
 import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
+import ao.adnlogico.nuntius.multitenant.tenant.user.Users;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -30,15 +31,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Sebastião Paulo
  */
 @Entity
-@Table(name = "categories")
+@Table(name = "functions")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
-    @NamedQuery(name = "Category.findById", query = "SELECT c FROM Category c WHERE c.id = :id"),
-    @NamedQuery(name = "Category.findByName", query = "SELECT c FROM Category c WHERE c.name = :name"),
-    @NamedQuery(name = "Category.findByDescription", query = "SELECT c FROM Category c WHERE c.description = :description"),
-    @NamedQuery(name = "Category.findByDispatchTime", query = "SELECT c FROM Category c WHERE c.dispatchTime = :dispatchTime")})
-public class Category implements Serializable
+    @NamedQuery(name = "Functions.findAll", query = "SELECT f FROM Functions f"),
+    @NamedQuery(name = "Functions.findById", query = "SELECT f FROM Functions f WHERE f.id = :id"),
+    @NamedQuery(name = "Functions.findByName", query = "SELECT f FROM Functions f WHERE f.name = :name"),
+    @NamedQuery(name = "Functions.findByDescription", query = "SELECT f FROM Functions f WHERE f.description = :description")})
+public class Function implements Serializable
 {
 
     private static final long serialVersionUID = 1L;
@@ -52,31 +52,29 @@ public class Category implements Serializable
     private String name;
     @Basic(optional = false)
     @Column(name = "description")
-    private int description;
-    @Basic(optional = false)
-    @Column(name = "dispatch_time")
-    private int dispatchTime;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkCategory")
+    private String description;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkApproval")
     private Collection<Process> processCollection;
-    @JoinColumn(name = "fk_doc_template", referencedColumnName = "id")
-    @ManyToOne
-    private DocTemplate fkDocTemplate;
+    @JoinColumn(name = "fk_department", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Department fkDepartment;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkFunction")
+    private Collection<Users> usersCollection;
 
-    public Category()
+    public Function()
     {
     }
 
-    public Category(Integer id)
+    public Function(Integer id)
     {
         this.id = id;
     }
 
-    public Category(Integer id, String name, int description, int dispatchTime)
+    public Function(Integer id, String name, String description)
     {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.dispatchTime = dispatchTime;
     }
 
     public Integer getId()
@@ -99,24 +97,14 @@ public class Category implements Serializable
         this.name = name;
     }
 
-    public int getDescription()
+    public String getDescription()
     {
         return description;
     }
 
-    public void setDescription(int description)
+    public void setDescription(String description)
     {
         this.description = description;
-    }
-
-    public int getDispatchTime()
-    {
-        return dispatchTime;
-    }
-
-    public void setDispatchTime(int dispatchTime)
-    {
-        this.dispatchTime = dispatchTime;
     }
 
     @XmlTransient
@@ -130,14 +118,25 @@ public class Category implements Serializable
         this.processCollection = processCollection;
     }
 
-    public DocTemplate getFkDocTemplate()
+    public Department getFkDepartment()
     {
-        return fkDocTemplate;
+        return fkDepartment;
     }
 
-    public void setFkDocTemplate(DocTemplate fkDocTemplate)
+    public void setFkDepartment(Department fkDepartment)
     {
-        this.fkDocTemplate = fkDocTemplate;
+        this.fkDepartment = fkDepartment;
+    }
+
+    @XmlTransient
+    public Collection<Users> getUsersCollection()
+    {
+        return usersCollection;
+    }
+
+    public void setUsersCollection(Collection<Users> usersCollection)
+    {
+        this.usersCollection = usersCollection;
     }
 
     @Override
@@ -152,10 +151,10 @@ public class Category implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof Function)) {
             return false;
         }
-        Category other = (Category) object;
+        Function other = (Function) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -165,7 +164,7 @@ public class Category implements Serializable
     @Override
     public String toString()
     {
-        return "entities.Category[ id=" + id + " ]";
+        return "entities.Functions[ id=" + id + " ]";
     }
 
 }
