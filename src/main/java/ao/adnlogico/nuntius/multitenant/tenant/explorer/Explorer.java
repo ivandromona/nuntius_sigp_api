@@ -6,7 +6,6 @@
 package ao.adnlogico.nuntius.multitenant.tenant.explorer;
 
 import ao.adnlogico.nuntius.multitenant.tenant.department.Department;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.*;
 import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
 import java.io.Serializable;
 import java.util.Collection;
@@ -20,13 +19,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -35,14 +31,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "explorers")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Explorers.findAll", query = "SELECT e FROM Explorers e"),
-    @NamedQuery(name = "Explorers.findById", query = "SELECT e FROM Explorers e WHERE e.id = :id"),
-    @NamedQuery(name = "Explorers.findBySubject", query = "SELECT e FROM Explorers e WHERE e.subject = :subject"),
-    @NamedQuery(name = "Explorers.findByType", query = "SELECT e FROM Explorers e WHERE e.type = :type"),
-    @NamedQuery(name = "Explorers.findByCreatedAt", query = "SELECT e FROM Explorers e WHERE e.createdAt = :createdAt"),
-    @NamedQuery(name = "Explorers.findByUpdatedAt", query = "SELECT e FROM Explorers e WHERE e.updatedAt = :updatedAt")})
 public class Explorer implements Serializable
 {
 

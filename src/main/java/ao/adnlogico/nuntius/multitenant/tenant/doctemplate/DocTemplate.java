@@ -21,13 +21,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -36,15 +33,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "doc_templates")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "DocTemplates.findAll", query = "SELECT d FROM DocTemplates d"),
-    @NamedQuery(name = "DocTemplates.findById", query = "SELECT d FROM DocTemplates d WHERE d.id = :id"),
-    @NamedQuery(name = "DocTemplates.findByName", query = "SELECT d FROM DocTemplates d WHERE d.name = :name"),
-    @NamedQuery(name = "DocTemplates.findByFileUrl", query = "SELECT d FROM DocTemplates d WHERE d.fileUrl = :fileUrl"),
-    @NamedQuery(name = "DocTemplates.findByDescription", query = "SELECT d FROM DocTemplates d WHERE d.description = :description"),
-    @NamedQuery(name = "DocTemplates.findByCreatedAt", query = "SELECT d FROM DocTemplates d WHERE d.createdAt = :createdAt"),
-    @NamedQuery(name = "DocTemplates.findByUpdatedAt", query = "SELECT d FROM DocTemplates d WHERE d.updatedAt = :updatedAt")})
 public class DocTemplate implements Serializable
 {
 

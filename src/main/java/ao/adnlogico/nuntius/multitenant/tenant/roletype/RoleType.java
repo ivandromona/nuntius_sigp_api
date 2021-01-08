@@ -17,11 +17,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -30,14 +27,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "role_types")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "RoleTypes.findAll", query = "SELECT r FROM RoleTypes r"),
-    @NamedQuery(name = "RoleTypes.findById", query = "SELECT r FROM RoleTypes r WHERE r.id = :id"),
-    @NamedQuery(name = "RoleTypes.findByName", query = "SELECT r FROM RoleTypes r WHERE r.name = :name"),
-    @NamedQuery(name = "RoleTypes.findByKey", query = "SELECT r FROM RoleTypes r WHERE r.key = :key"),
-    @NamedQuery(name = "RoleTypes.findByWeight", query = "SELECT r FROM RoleTypes r WHERE r.weight = :weight"),
-    @NamedQuery(name = "RoleTypes.findByDescription", query = "SELECT r FROM RoleTypes r WHERE r.description = :description")})
 public class RoleType implements Serializable
 {
 

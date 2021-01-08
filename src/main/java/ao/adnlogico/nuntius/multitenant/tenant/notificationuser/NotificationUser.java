@@ -15,12 +15,9 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -28,13 +25,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "notification_users")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "NotificationUsers.findAll", query = "SELECT n FROM NotificationUsers n"),
-    @NamedQuery(name = "NotificationUsers.findByFkNotification", query = "SELECT n FROM NotificationUsers n WHERE n.notificationUsersPK.fkNotification = :fkNotification"),
-    @NamedQuery(name = "NotificationUsers.findByFkUser", query = "SELECT n FROM NotificationUsers n WHERE n.notificationUsersPK.fkUser = :fkUser"),
-    @NamedQuery(name = "NotificationUsers.findByIsDismiss", query = "SELECT n FROM NotificationUsers n WHERE n.isDismiss = :isDismiss"),
-    @NamedQuery(name = "NotificationUsers.findByDismissedAt", query = "SELECT n FROM NotificationUsers n WHERE n.dismissedAt = :dismissedAt")})
 public class NotificationUser implements Serializable
 {
 

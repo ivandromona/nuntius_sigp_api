@@ -31,13 +31,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -46,25 +43,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "process")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Process.findAll", query = "SELECT p FROM Process p"),
-    @NamedQuery(name = "Process.findById", query = "SELECT p FROM Process p WHERE p.id = :id"),
-    @NamedQuery(name = "Process.findByOrigin", query = "SELECT p FROM Process p WHERE p.origin = :origin"),
-    @NamedQuery(name = "Process.findByOriginDate", query = "SELECT p FROM Process p WHERE p.originDate = :originDate"),
-    @NamedQuery(name = "Process.findByDeadline", query = "SELECT p FROM Process p WHERE p.deadline = :deadline"),
-    @NamedQuery(name = "Process.findByProcessNumber", query = "SELECT p FROM Process p WHERE p.processNumber = :processNumber"),
-    @NamedQuery(name = "Process.findByExternalReference", query = "SELECT p FROM Process p WHERE p.externalReference = :externalReference"),
-    @NamedQuery(name = "Process.findBySubject", query = "SELECT p FROM Process p WHERE p.subject = :subject"),
-    @NamedQuery(name = "Process.findByDescription", query = "SELECT p FROM Process p WHERE p.description = :description"),
-    @NamedQuery(name = "Process.findByConfidential", query = "SELECT p FROM Process p WHERE p.confidential = :confidential"),
-    @NamedQuery(name = "Process.findByStatus", query = "SELECT p FROM Process p WHERE p.status = :status"),
-    @NamedQuery(name = "Process.findByFiled", query = "SELECT p FROM Process p WHERE p.filed = :filed"),
-    @NamedQuery(name = "Process.findByCreatedAt", query = "SELECT p FROM Process p WHERE p.createdAt = :createdAt"),
-    @NamedQuery(name = "Process.findByUpdatedAt", query = "SELECT p FROM Process p WHERE p.updatedAt = :updatedAt"),
-    @NamedQuery(name = "Process.findByProcessType", query = "SELECT p FROM Process p WHERE p.processType = :processType"),
-    @NamedQuery(name = "Process.findByExisting", query = "SELECT p FROM Process p WHERE p.existing = :existing"),
-    @NamedQuery(name = "Process.findByClaimant", query = "SELECT p FROM Process p WHERE p.claimant = :claimant")})
 public class Process implements Serializable
 {
 

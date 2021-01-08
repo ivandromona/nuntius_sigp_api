@@ -17,13 +17,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -32,17 +29,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "persons")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Persons.findAll", query = "SELECT p FROM Persons p"),
-    @NamedQuery(name = "Persons.findById", query = "SELECT p FROM Persons p WHERE p.id = :id"),
-    @NamedQuery(name = "Persons.findByFirstName", query = "SELECT p FROM Persons p WHERE p.firstName = :firstName"),
-    @NamedQuery(name = "Persons.findByLastName", query = "SELECT p FROM Persons p WHERE p.lastName = :lastName"),
-    @NamedQuery(name = "Persons.findByBirthdate", query = "SELECT p FROM Persons p WHERE p.birthdate = :birthdate"),
-    @NamedQuery(name = "Persons.findByIdentityNumber", query = "SELECT p FROM Persons p WHERE p.identityNumber = :identityNumber"),
-    @NamedQuery(name = "Persons.findByGender", query = "SELECT p FROM Persons p WHERE p.gender = :gender"),
-    @NamedQuery(name = "Persons.findByCreatedAt", query = "SELECT p FROM Persons p WHERE p.createdAt = :createdAt"),
-    @NamedQuery(name = "Persons.findByUpdatedAt", query = "SELECT p FROM Persons p WHERE p.updatedAt = :updatedAt")})
 public class Person implements Serializable
 {
 

@@ -13,10 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -24,12 +21,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "settings")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Settings.findAll", query = "SELECT s FROM Settings s"),
-    @NamedQuery(name = "Settings.findById", query = "SELECT s FROM Settings s WHERE s.id = :id"),
-    @NamedQuery(name = "Settings.findByKey", query = "SELECT s FROM Settings s WHERE s.key = :key"),
-    @NamedQuery(name = "Settings.findByDescription", query = "SELECT s FROM Settings s WHERE s.description = :description")})
 public class Setting implements Serializable
 {
 

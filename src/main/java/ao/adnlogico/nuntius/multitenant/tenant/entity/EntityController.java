@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
 import ao.adnlogico.nuntius.multitenant.controller.AuthenticationController;
@@ -25,7 +30,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
- * @author Md. Amran Hossain | amrancse930@gmail.com
+ *
+ * @author domingos.fernando
  */
 @RestController
 @RequestMapping("/nuntius/v1/api")

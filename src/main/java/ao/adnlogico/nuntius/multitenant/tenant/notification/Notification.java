@@ -15,11 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -28,15 +25,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "notifications")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Notifications.findAll", query = "SELECT n FROM Notifications n"),
-    @NamedQuery(name = "Notifications.findById", query = "SELECT n FROM Notifications n WHERE n.id = :id"),
-    @NamedQuery(name = "Notifications.findByContent", query = "SELECT n FROM Notifications n WHERE n.content = :content"),
-    @NamedQuery(name = "Notifications.findByType", query = "SELECT n FROM Notifications n WHERE n.type = :type"),
-    @NamedQuery(name = "Notifications.findByEntity", query = "SELECT n FROM Notifications n WHERE n.entity = :entity"),
-    @NamedQuery(name = "Notifications.findByEntityId", query = "SELECT n FROM Notifications n WHERE n.entityId = :entityId"),
-    @NamedQuery(name = "Notifications.findByCreatedAt", query = "SELECT n FROM Notifications n WHERE n.createdAt = :createdAt")})
 public class Notification implements Serializable
 {
 

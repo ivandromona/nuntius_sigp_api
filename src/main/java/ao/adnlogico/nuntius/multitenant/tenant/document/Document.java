@@ -19,12 +19,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -32,12 +29,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "documents")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Documents.findAll", query = "SELECT d FROM Documents d"),
-    @NamedQuery(name = "Documents.findById", query = "SELECT d FROM Documents d WHERE d.id = :id"),
-    @NamedQuery(name = "Documents.findByCreatedAt", query = "SELECT d FROM Documents d WHERE d.createdAt = :createdAt"),
-    @NamedQuery(name = "Documents.findByUpdatedAt", query = "SELECT d FROM Documents d WHERE d.updatedAt = :updatedAt")})
 public class Document implements Serializable
 {
 

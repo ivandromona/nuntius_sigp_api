@@ -17,12 +17,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -30,16 +27,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "modules")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Modules.findAll", query = "SELECT m FROM Modules m"),
-    @NamedQuery(name = "Modules.findById", query = "SELECT m FROM Modules m WHERE m.id = :id"),
-    @NamedQuery(name = "Modules.findByName", query = "SELECT m FROM Modules m WHERE m.name = :name"),
-    @NamedQuery(name = "Modules.findByKey", query = "SELECT m FROM Modules m WHERE m.key = :key"),
-    @NamedQuery(name = "Modules.findByActive", query = "SELECT m FROM Modules m WHERE m.active = :active"),
-    @NamedQuery(name = "Modules.findByIcon", query = "SELECT m FROM Modules m WHERE m.icon = :icon"),
-    @NamedQuery(name = "Modules.findByCreatedAt", query = "SELECT m FROM Modules m WHERE m.createdAt = :createdAt"),
-    @NamedQuery(name = "Modules.findByDeletedAt", query = "SELECT m FROM Modules m WHERE m.deletedAt = :deletedAt")})
 public class Module implements Serializable
 {
 

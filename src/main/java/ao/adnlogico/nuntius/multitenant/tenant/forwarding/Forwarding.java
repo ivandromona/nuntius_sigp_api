@@ -19,12 +19,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -32,13 +29,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "forwarding")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Forwarding.findAll", query = "SELECT f FROM Forwarding f"),
-    @NamedQuery(name = "Forwarding.findById", query = "SELECT f FROM Forwarding f WHERE f.id = :id"),
-    @NamedQuery(name = "Forwarding.findByDispatch", query = "SELECT f FROM Forwarding f WHERE f.dispatch = :dispatch"),
-    @NamedQuery(name = "Forwarding.findByCreatedAt", query = "SELECT f FROM Forwarding f WHERE f.createdAt = :createdAt"),
-    @NamedQuery(name = "Forwarding.findByAction", query = "SELECT f FROM Forwarding f WHERE f.action = :action")})
 public class Forwarding implements Serializable
 {
 

@@ -16,11 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -29,12 +26,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "entities")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Entities.findAll", query = "SELECT e FROM Entities e"),
-    @NamedQuery(name = "Entities.findById", query = "SELECT e FROM Entities e WHERE e.id = :id"),
-    @NamedQuery(name = "Entities.findByName", query = "SELECT e FROM Entities e WHERE e.name = :name"),
-    @NamedQuery(name = "Entities.findByType", query = "SELECT e FROM Entities e WHERE e.type = :type")})
 public class Entities implements Serializable
 {
 

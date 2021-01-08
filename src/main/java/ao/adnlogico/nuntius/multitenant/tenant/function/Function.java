@@ -19,11 +19,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -32,12 +29,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "functions")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Functions.findAll", query = "SELECT f FROM Functions f"),
-    @NamedQuery(name = "Functions.findById", query = "SELECT f FROM Functions f WHERE f.id = :id"),
-    @NamedQuery(name = "Functions.findByName", query = "SELECT f FROM Functions f WHERE f.name = :name"),
-    @NamedQuery(name = "Functions.findByDescription", query = "SELECT f FROM Functions f WHERE f.description = :description")})
 public class Function implements Serializable
 {
 

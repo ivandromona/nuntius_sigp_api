@@ -20,11 +20,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -33,13 +30,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "steps")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Steps.findAll", query = "SELECT s FROM Steps s"),
-    @NamedQuery(name = "Steps.findById", query = "SELECT s FROM Steps s WHERE s.id = :id"),
-    @NamedQuery(name = "Steps.findByName", query = "SELECT s FROM Steps s WHERE s.name = :name"),
-    @NamedQuery(name = "Steps.findBySortOrder", query = "SELECT s FROM Steps s WHERE s.sortOrder = :sortOrder"),
-    @NamedQuery(name = "Steps.findByDescriprions", query = "SELECT s FROM Steps s WHERE s.descriprions = :descriprions")})
 public class Step implements Serializable
 {
 

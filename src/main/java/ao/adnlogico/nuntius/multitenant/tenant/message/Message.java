@@ -18,12 +18,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -31,12 +28,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "messages")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Messages.findAll", query = "SELECT m FROM Messages m"),
-    @NamedQuery(name = "Messages.findById", query = "SELECT m FROM Messages m WHERE m.id = :id"),
-    @NamedQuery(name = "Messages.findByIsReaded", query = "SELECT m FROM Messages m WHERE m.isReaded = :isReaded"),
-    @NamedQuery(name = "Messages.findBySendedAt", query = "SELECT m FROM Messages m WHERE m.sendedAt = :sendedAt")})
 public class Message implements Serializable
 {
 

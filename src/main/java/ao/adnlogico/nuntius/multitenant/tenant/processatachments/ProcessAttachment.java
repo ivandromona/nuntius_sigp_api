@@ -16,12 +16,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -29,16 +26,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "process_attachments")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "ProcessAttachments.findAll", query = "SELECT p FROM ProcessAttachments p"),
-    @NamedQuery(name = "ProcessAttachments.findById", query = "SELECT p FROM ProcessAttachments p WHERE p.id = :id"),
-    @NamedQuery(name = "ProcessAttachments.findByName", query = "SELECT p FROM ProcessAttachments p WHERE p.name = :name"),
-    @NamedQuery(name = "ProcessAttachments.findByDescription", query = "SELECT p FROM ProcessAttachments p WHERE p.description = :description"),
-    @NamedQuery(name = "ProcessAttachments.findByFileUrl", query = "SELECT p FROM ProcessAttachments p WHERE p.fileUrl = :fileUrl"),
-    @NamedQuery(name = "ProcessAttachments.findByFile", query = "SELECT p FROM ProcessAttachments p WHERE p.file = :file"),
-    @NamedQuery(name = "ProcessAttachments.findByCreatedAt", query = "SELECT p FROM ProcessAttachments p WHERE p.createdAt = :createdAt"),
-    @NamedQuery(name = "ProcessAttachments.findByExtension", query = "SELECT p FROM ProcessAttachments p WHERE p.extension = :extension")})
 public class ProcessAttachment implements Serializable
 {
 

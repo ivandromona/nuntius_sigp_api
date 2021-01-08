@@ -16,13 +16,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -31,14 +28,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "conversations")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Conversations.findAll", query = "SELECT c FROM Conversations c"),
-    @NamedQuery(name = "Conversations.findById", query = "SELECT c FROM Conversations c WHERE c.id = :id"),
-    @NamedQuery(name = "Conversations.findByKey", query = "SELECT c FROM Conversations c WHERE c.key = :key"),
-    @NamedQuery(name = "Conversations.findByExisting", query = "SELECT c FROM Conversations c WHERE c.existing = :existing"),
-    @NamedQuery(name = "Conversations.findByCreatedAt", query = "SELECT c FROM Conversations c WHERE c.createdAt = :createdAt"),
-    @NamedQuery(name = "Conversations.findByUpdatedAt", query = "SELECT c FROM Conversations c WHERE c.updatedAt = :updatedAt")})
 public class Conversation implements Serializable
 {
 

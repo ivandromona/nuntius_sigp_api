@@ -5,9 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.progress;
 
-
 import ao.adnlogico.nuntius.multitenant.tenant.department.Department;
-import ao.adnlogico.nuntius.multitenant.tenant.step.Step;
 import ao.adnlogico.nuntius.multitenant.tenant.step.Step;
 import ao.adnlogico.nuntius.multitenant.tenant.user.Users;
 import java.io.Serializable;
@@ -22,11 +20,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -35,12 +30,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "progress")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Progress.findAll", query = "SELECT p FROM Progress p"),
-    @NamedQuery(name = "Progress.findById", query = "SELECT p FROM Progress p WHERE p.id = :id"),
-    @NamedQuery(name = "Progress.findByName", query = "SELECT p FROM Progress p WHERE p.name = :name"),
-    @NamedQuery(name = "Progress.findByFkParent", query = "SELECT p FROM Progress p WHERE p.fkParent = :fkParent")})
 public class Progress implements Serializable
 {
 

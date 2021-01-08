@@ -18,11 +18,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -31,26 +28,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "roles")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Roles.findAll", query = "SELECT r FROM Roles r"),
-    @NamedQuery(name = "Roles.findById", query = "SELECT r FROM Roles r WHERE r.id = :id"),
-    @NamedQuery(name = "Roles.findByName", query = "SELECT r FROM Roles r WHERE r.name = :name"),
-    @NamedQuery(name = "Roles.findByDescription", query = "SELECT r FROM Roles r WHERE r.description = :description"),
-    @NamedQuery(name = "Roles.findByCreateProcess", query = "SELECT r FROM Roles r WHERE r.createProcess = :createProcess"),
-    @NamedQuery(name = "Roles.findByEditProcess", query = "SELECT r FROM Roles r WHERE r.editProcess = :editProcess"),
-    @NamedQuery(name = "Roles.findByDeleteProcess", query = "SELECT r FROM Roles r WHERE r.deleteProcess = :deleteProcess"),
-    @NamedQuery(name = "Roles.findByViewProcess", query = "SELECT r FROM Roles r WHERE r.viewProcess = :viewProcess"),
-    @NamedQuery(name = "Roles.findByApprove", query = "SELECT r FROM Roles r WHERE r.approve = :approve"),
-    @NamedQuery(name = "Roles.findByReject", query = "SELECT r FROM Roles r WHERE r.reject = :reject"),
-    @NamedQuery(name = "Roles.findByForward", query = "SELECT r FROM Roles r WHERE r.forward = :forward"),
-    @NamedQuery(name = "Roles.findByComment", query = "SELECT r FROM Roles r WHERE r.comment = :comment"),
-    @NamedQuery(name = "Roles.findByAddAttach", query = "SELECT r FROM Roles r WHERE r.addAttach = :addAttach"),
-    @NamedQuery(name = "Roles.findByRemoveAttach", query = "SELECT r FROM Roles r WHERE r.removeAttach = :removeAttach"),
-    @NamedQuery(name = "Roles.findByViewAttach", query = "SELECT r FROM Roles r WHERE r.viewAttach = :viewAttach"),
-    @NamedQuery(name = "Roles.findByViewDoc", query = "SELECT r FROM Roles r WHERE r.viewDoc = :viewDoc"),
-    @NamedQuery(name = "Roles.findByEditDoc", query = "SELECT r FROM Roles r WHERE r.editDoc = :editDoc"),
-    @NamedQuery(name = "Roles.findByAddDoc", query = "SELECT r FROM Roles r WHERE r.addDoc = :addDoc")})
 public class Role implements Serializable
 {
 

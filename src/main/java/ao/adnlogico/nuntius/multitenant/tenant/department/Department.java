@@ -20,11 +20,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -33,12 +30,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "departments")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Departments.findAll", query = "SELECT d FROM Departments d"),
-    @NamedQuery(name = "Departments.findById", query = "SELECT d FROM Departments d WHERE d.id = :id"),
-    @NamedQuery(name = "Departments.findByName", query = "SELECT d FROM Departments d WHERE d.name = :name"),
-    @NamedQuery(name = "Departments.findByOrder", query = "SELECT d FROM Departments d WHERE d.order = :order")})
 public class Department implements Serializable
 {
 
