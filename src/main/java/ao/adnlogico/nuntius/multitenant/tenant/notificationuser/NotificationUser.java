@@ -6,7 +6,7 @@
 package ao.adnlogico.nuntius.multitenant.tenant.notificationuser;
 
 import ao.adnlogico.nuntius.multitenant.tenant.notification.Notification;
-import ao.adnlogico.nuntius.multitenant.tenant.user.Users;
+import ao.adnlogico.nuntius.multitenant.tenant.user.User;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -42,7 +42,7 @@ public class NotificationUser implements Serializable
     private Notification notifications;
     @JoinColumn(name = "fk_user", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Users users;
+    private User users;
 
     public NotificationUser()
     {
@@ -104,12 +104,12 @@ public class NotificationUser implements Serializable
         this.notifications = notifications;
     }
 
-    public Users getUsers()
+    public User getUsers()
     {
         return users;
     }
 
-    public void setUsers(Users users)
+    public void setUsers(User users)
     {
         this.users = users;
     }

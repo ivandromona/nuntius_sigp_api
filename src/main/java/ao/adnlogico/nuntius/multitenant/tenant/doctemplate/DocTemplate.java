@@ -7,7 +7,7 @@ package ao.adnlogico.nuntius.multitenant.tenant.doctemplate;
 
 import ao.adnlogico.nuntius.multitenant.tenant.category.Category;
 import ao.adnlogico.nuntius.multitenant.tenant.document.Document;
-import ao.adnlogico.nuntius.multitenant.tenant.user.Users;
+import ao.adnlogico.nuntius.multitenant.tenant.user.User;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -67,7 +67,7 @@ public class DocTemplate implements Serializable
     private Collection<Document> documentsCollection;
     @JoinColumn(name = "created_by", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Users createdBy;
+    private User createdBy;
     @OneToMany(mappedBy = "fkDocTemplate")
     private Collection<Category> categoriesCollection;
 
@@ -172,12 +172,12 @@ public class DocTemplate implements Serializable
         this.documentsCollection = documentsCollection;
     }
 
-    public Users getCreatedBy()
+    public User getCreatedBy()
     {
         return createdBy;
     }
 
-    public void setCreatedBy(Users createdBy)
+    public void setCreatedBy(User createdBy)
     {
         this.createdBy = createdBy;
     }

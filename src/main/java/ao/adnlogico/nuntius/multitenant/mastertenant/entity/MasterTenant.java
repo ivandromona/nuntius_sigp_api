@@ -45,6 +45,10 @@ public class MasterTenant implements Serializable
     @Column(name = "status", nullable = false)
     private String status;
 
+    @Size(max = 255)
+    @Column(name = "settings")
+    private String settings;
+
     public MasterTenant()
     {
     }
@@ -156,6 +160,16 @@ public class MasterTenant implements Serializable
     {
         this.status = status;
         return this;
+    }
+
+    public String getSettings()
+    {
+        return settings;
+    }
+
+    public void setSettings(String settings)
+    {
+        this.settings = settings;
     }
 
 }

@@ -7,7 +7,7 @@ package ao.adnlogico.nuntius.multitenant.tenant.document;
 
 import ao.adnlogico.nuntius.multitenant.tenant.doctemplate.DocTemplate;
 import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
-import ao.adnlogico.nuntius.multitenant.tenant.user.Users;
+import ao.adnlogico.nuntius.multitenant.tenant.user.User;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -58,7 +58,7 @@ public class Document implements Serializable
     private Process fkProcess;
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Users fkUser;
+    private User fkUser;
 
     public Document()
     {
@@ -137,12 +137,12 @@ public class Document implements Serializable
         this.fkProcess = fkProcess;
     }
 
-    public Users getFkUser()
+    public User getFkUser()
     {
         return fkUser;
     }
 
-    public void setFkUser(Users fkUser)
+    public void setFkUser(User fkUser)
     {
         this.fkUser = fkUser;
     }

@@ -7,7 +7,7 @@ package ao.adnlogico.nuntius.multitenant.tenant.function;
 
 import ao.adnlogico.nuntius.multitenant.tenant.department.Department;
 import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
-import ao.adnlogico.nuntius.multitenant.tenant.user.Users;
+import ao.adnlogico.nuntius.multitenant.tenant.user.User;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -50,7 +50,7 @@ public class Function implements Serializable
     @ManyToOne(optional = false)
     private Department fkDepartment;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkFunction")
-    private Collection<Users> usersCollection;
+    private Collection<User> usersCollection;
 
     public Function()
     {
@@ -120,12 +120,12 @@ public class Function implements Serializable
     }
 
     @XmlTransient
-    public Collection<Users> getUsersCollection()
+    public Collection<User> getUsersCollection()
     {
         return usersCollection;
     }
 
-    public void setUsersCollection(Collection<Users> usersCollection)
+    public void setUsersCollection(Collection<User> usersCollection)
     {
         this.usersCollection = usersCollection;
     }

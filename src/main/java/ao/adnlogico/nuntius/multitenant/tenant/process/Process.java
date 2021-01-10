@@ -16,7 +16,7 @@ import ao.adnlogico.nuntius.multitenant.tenant.processatachments.ProcessAttachme
 import ao.adnlogico.nuntius.multitenant.tenant.roletype.RoleType;
 import ao.adnlogico.nuntius.multitenant.tenant.step.Step;
 import ao.adnlogico.nuntius.multitenant.tenant.explorer.Explorer;
-import ao.adnlogico.nuntius.multitenant.tenant.user.Users;
+import ao.adnlogico.nuntius.multitenant.tenant.user.User;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -123,10 +123,10 @@ public class Process implements Serializable
     private Explorer fkExplorer;
     @JoinColumn(name = "fk_operator_user", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Users fkOperatorUser;
+    private User fkOperatorUser;
     @JoinColumn(name = "fk_responsible_user", referencedColumnName = "id")
     @ManyToOne
-    private Users fkResponsibleUser;
+    private User fkResponsibleUser;
     @JoinColumn(name = "fk_role_type", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private RoleType fkRoleType;
@@ -396,22 +396,22 @@ public class Process implements Serializable
         this.fkExplorer = fkExplorer;
     }
 
-    public Users getFkOperatorUser()
+    public User getFkOperatorUser()
     {
         return fkOperatorUser;
     }
 
-    public void setFkOperatorUser(Users fkOperatorUser)
+    public void setFkOperatorUser(User fkOperatorUser)
     {
         this.fkOperatorUser = fkOperatorUser;
     }
 
-    public Users getFkResponsibleUser()
+    public User getFkResponsibleUser()
     {
         return fkResponsibleUser;
     }
 
-    public void setFkResponsibleUser(Users fkResponsibleUser)
+    public void setFkResponsibleUser(User fkResponsibleUser)
     {
         this.fkResponsibleUser = fkResponsibleUser;
     }

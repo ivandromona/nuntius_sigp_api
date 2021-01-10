@@ -6,7 +6,7 @@
 package ao.adnlogico.nuntius.multitenant.tenant.person;
 
 import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
-import ao.adnlogico.nuntius.multitenant.tenant.user.Users;
+import ao.adnlogico.nuntius.multitenant.tenant.user.User;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -65,7 +65,7 @@ public class Person implements Serializable
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkClaimantPerson")
     private Collection<Process> processCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkPerson")
-    private Collection<Users> usersCollection;
+    private Collection<User> usersCollection;
 
     public Person()
     {
@@ -180,12 +180,12 @@ public class Person implements Serializable
     }
 
     @XmlTransient
-    public Collection<Users> getUsersCollection()
+    public Collection<User> getUsersCollection()
     {
         return usersCollection;
     }
 
-    public void setUsersCollection(Collection<Users> usersCollection)
+    public void setUsersCollection(Collection<User> usersCollection)
     {
         this.usersCollection = usersCollection;
     }

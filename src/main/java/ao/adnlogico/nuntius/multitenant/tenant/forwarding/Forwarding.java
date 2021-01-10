@@ -7,7 +7,7 @@ package ao.adnlogico.nuntius.multitenant.tenant.forwarding;
 
 import ao.adnlogico.nuntius.multitenant.tenant.step.Step;
 import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
-import ao.adnlogico.nuntius.multitenant.tenant.user.Users;
+import ao.adnlogico.nuntius.multitenant.tenant.user.User;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -59,7 +59,7 @@ public class Forwarding implements Serializable
     private Process fkProcesso;
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Users fkUser;
+    private User fkUser;
 
     public Forwarding()
     {
@@ -148,12 +148,12 @@ public class Forwarding implements Serializable
         this.fkProcesso = fkProcesso;
     }
 
-    public Users getFkUser()
+    public User getFkUser()
     {
         return fkUser;
     }
 
-    public void setFkUser(Users fkUser)
+    public void setFkUser(User fkUser)
     {
         this.fkUser = fkUser;
     }

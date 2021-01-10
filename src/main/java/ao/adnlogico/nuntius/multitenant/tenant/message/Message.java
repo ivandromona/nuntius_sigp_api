@@ -6,7 +6,7 @@
 package ao.adnlogico.nuntius.multitenant.tenant.message;
 
 import ao.adnlogico.nuntius.multitenant.tenant.conversations.Conversation;
-import ao.adnlogico.nuntius.multitenant.tenant.user.Users;
+import ao.adnlogico.nuntius.multitenant.tenant.user.User;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -53,10 +53,10 @@ public class Message implements Serializable
     private Conversation fkConversation;
     @JoinColumn(name = "receiver", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Users receiver;
+    private User receiver;
     @JoinColumn(name = "sender", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Users sender;
+    private User sender;
 
     public Message()
     {
@@ -125,22 +125,22 @@ public class Message implements Serializable
         this.fkConversation = fkConversation;
     }
 
-    public Users getReceiver()
+    public User getReceiver()
     {
         return receiver;
     }
 
-    public void setReceiver(Users receiver)
+    public void setReceiver(User receiver)
     {
         this.receiver = receiver;
     }
 
-    public Users getSender()
+    public User getSender()
     {
         return sender;
     }
 
-    public void setSender(Users sender)
+    public void setSender(User sender)
     {
         this.sender = sender;
     }

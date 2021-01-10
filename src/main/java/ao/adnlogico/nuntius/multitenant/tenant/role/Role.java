@@ -6,7 +6,7 @@
 package ao.adnlogico.nuntius.multitenant.tenant.role;
 
 import ao.adnlogico.nuntius.multitenant.tenant.roletype.RoleType;
-import ao.adnlogico.nuntius.multitenant.tenant.user.Users;
+import ao.adnlogico.nuntius.multitenant.tenant.user.User;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -89,7 +89,7 @@ public class Role implements Serializable
     @ManyToOne(optional = false)
     private RoleType fkRoleType;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkRole")
-    private Collection<Users> usersCollection;
+    private Collection<User> usersCollection;
 
     public Role()
     {
@@ -302,12 +302,12 @@ public class Role implements Serializable
     }
 
     @XmlTransient
-    public Collection<Users> getUsersCollection()
+    public Collection<User> getUsersCollection()
     {
         return usersCollection;
     }
 
-    public void setUsersCollection(Collection<Users> usersCollection)
+    public void setUsersCollection(Collection<User> usersCollection)
     {
         this.usersCollection = usersCollection;
     }

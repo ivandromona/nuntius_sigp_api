@@ -7,7 +7,7 @@ package ao.adnlogico.nuntius.multitenant.tenant.progress;
 
 import ao.adnlogico.nuntius.multitenant.tenant.department.Department;
 import ao.adnlogico.nuntius.multitenant.tenant.step.Step;
-import ao.adnlogico.nuntius.multitenant.tenant.user.Users;
+import ao.adnlogico.nuntius.multitenant.tenant.user.User;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -56,7 +56,7 @@ public class Progress implements Serializable
     private Department fkDepartment;
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Users fkUser;
+    private User fkUser;
 
     public Progress()
     {
@@ -136,12 +136,12 @@ public class Progress implements Serializable
         this.fkDepartment = fkDepartment;
     }
 
-    public Users getFkUser()
+    public User getFkUser()
     {
         return fkUser;
     }
 
-    public void setFkUser(Users fkUser)
+    public void setFkUser(User fkUser)
     {
         this.fkUser = fkUser;
     }

@@ -25,8 +25,8 @@ import java.util.Map;
  */
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = {"ao.adnlogico.nuntius.multitenant.tenant.repository", "ao.adnlogico.nuntius.multitenant.tenant.entity"})
-@EnableJpaRepositories(basePackages = {"ao.adnlogico.nuntius.multitenant.tenant.repository", "ao.adnlogico.nuntius.multitenant.tenant.service"},
+@ComponentScan(basePackages = {"ao.adnlogico.nuntius.multitenant.tenant"})
+@EnableJpaRepositories(basePackages = {"ao.adnlogico.nuntius.multitenant.tenant"},
                        entityManagerFactoryRef = "tenantEntityManagerFactory",
                        transactionManagerRef = "tenantTransactionManager")
 public class TenantDatabaseConfig
@@ -82,8 +82,8 @@ public class TenantDatabaseConfig
     @Bean(name = "tenantEntityManagerFactory")
     @ConditionalOnBean(name = "datasourceBasedMultitenantConnectionProvider")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-            @Qualifier("datasourceBasedMultitenantConnectionProvider") MultiTenantConnectionProvider connectionProvider,
-            @Qualifier("currentTenantIdentifierResolver") CurrentTenantIdentifierResolver tenantResolver)
+        @Qualifier("datasourceBasedMultitenantConnectionProvider") MultiTenantConnectionProvider connectionProvider,
+        @Qualifier("currentTenantIdentifierResolver") CurrentTenantIdentifierResolver tenantResolver)
     {
         LocalContainerEntityManagerFactoryBean emfBean = new LocalContainerEntityManagerFactoryBean();
         //All tenant related entities, repositories and service classes must be scanned
@@ -97,7 +97,7 @@ public class TenantDatabaseConfig
         properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
         properties.put(Environment.SHOW_SQL, true);
         properties.put(Environment.FORMAT_SQL, true);
-        properties.put(Environment.HBM2DDL_AUTO, "update");
+        properties.put(Environment.HBM2DDL_AUTO, "create");
         emfBean.setJpaPropertyMap(properties);
         return emfBean;
     }

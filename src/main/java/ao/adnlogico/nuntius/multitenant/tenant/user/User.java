@@ -41,7 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "users")
-public class Users implements Serializable
+public class User implements Serializable
 {
 
     private static final long serialVersionUID = 1L;
@@ -114,16 +114,16 @@ public class Users implements Serializable
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
     private Collection<NotificationUser> notificationUsersCollection;
 
-    public Users()
+    public User()
     {
     }
 
-    public Users(Integer id)
+    public User(Integer id)
     {
         this.id = id;
     }
 
-    public Users(Integer id, String email, String phone, String phoneAlt, String mechanographicNumber, String description, String password, Date createdAt, Date updatedAt)
+    public User(Integer id, String email, String phone, String phoneAlt, String mechanographicNumber, String description, String password, Date createdAt, Date updatedAt)
     {
         this.id = id;
         this.email = email;
@@ -201,7 +201,7 @@ public class Users implements Serializable
         return password;
     }
 
-    public Users setPassword(String password)
+    public User setPassword(String password)
     {
         this.password = password;
         return this;
@@ -337,7 +337,7 @@ public class Users implements Serializable
         return status;
     }
 
-    public Users setStatus(String status)
+    public User setStatus(String status)
     {
         this.status = status;
         return this;
@@ -348,7 +348,7 @@ public class Users implements Serializable
         return this.email;
     }
 
-    public Users setUserName(String email)
+    public User setUserName(String email)
     {
         this.email = email;
         return this;
@@ -421,10 +421,10 @@ public class Users implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Users)) {
+        if (!(object instanceof User)) {
             return false;
         }
-        Users other = (Users) object;
+        User other = (User) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
