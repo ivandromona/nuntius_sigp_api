@@ -21,13 +21,14 @@ import java.util.TreeMap;
  * @author Md. Amran Hossain
  */
 @Configuration
-public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDataSourceBasedMultiTenantConnectionProviderImpl {
+public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDataSourceBasedMultiTenantConnectionProviderImpl
+{
 
     private static final Logger LOG = LoggerFactory.getLogger(DataSourceBasedMultiTenantConnectionProviderImpl.class);
 
     private static final long serialVersionUID = 1L;
 
-    private Map<String, DataSource> dataSourcesMtApp = new TreeMap<>();
+    private final Map<String, DataSource> dataSourcesMtApp = new TreeMap<>();
 
     @Autowired
     private MasterTenantRepository masterTenantRepository;
@@ -36,30 +37,32 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
     ApplicationContext applicationContext;
 
     @Override
-    protected DataSource selectAnyDataSource() {
+    protected DataSource selectAnyDataSource()
+    {
         // This method is called more than once. So check if the data source map
         // is empty. If it is then rescan master_tenant table for all tenant
         if (dataSourcesMtApp.isEmpty()) {
             List<MasterTenant> masterTenants = masterTenantRepository.findAll();
             LOG.info("selectAnyDataSource() method call...Total tenants:" + masterTenants.size());
-            for (MasterTenant masterTenant : masterTenants) {
+            masterTenants.forEach(masterTenant -> {
                 dataSourcesMtApp.put(masterTenant.getDbName(), DataSourceUtil.createAndConfigureDataSource(masterTenant));
-            }
+            });
         }
         return this.dataSourcesMtApp.values().iterator().next();
     }
 
     @Override
-    protected DataSource selectDataSource(String tenantIdentifier) {
+    protected DataSource selectDataSource(String tenantIdentifier)
+    {
         // If the requested tenant id is not present check for it in the master
         // database 'master_tenant' table
         tenantIdentifier = initializeTenantIfLost(tenantIdentifier);
         if (!this.dataSourcesMtApp.containsKey(tenantIdentifier)) {
             List<MasterTenant> masterTenants = masterTenantRepository.findAll();
             LOG.info("selectDataSource() method call...Tenant:" + tenantIdentifier + " Total tenants:" + masterTenants.size());
-            for (MasterTenant masterTenant : masterTenants) {
+            masterTenants.forEach(masterTenant -> {
                 dataSourcesMtApp.put(masterTenant.getDbName(), DataSourceUtil.createAndConfigureDataSource(masterTenant));
-            }
+            });
         }
         //check again if tenant exist in map after rescan master_db, if not, throw UsernameNotFoundException
         if (!this.dataSourcesMtApp.containsKey(tenantIdentifier)) {
@@ -69,7 +72,8 @@ public class DataSourceBasedMultiTenantConnectionProviderImpl extends AbstractDa
         return this.dataSourcesMtApp.get(tenantIdentifier);
     }
 
-    private String initializeTenantIfLost(String tenantIdentifier) {
+    private String initializeTenantIfLost(String tenantIdentifier)
+    {
         if (tenantIdentifier != DBContextHolder.getCurrentDb()) {
             tenantIdentifier = DBContextHolder.getCurrentDb();
         }

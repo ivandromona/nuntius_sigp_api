@@ -16,24 +16,24 @@ import io.swagger.annotations.SwaggerDefinition;
  * @author domingos.fernando
  */
 @SwaggerDefinition(
-    info = @Info(
-        description = "Sistema Integrado de Gestão Processual NUNTIUS v1.0.0",
-        version = "V1.0.0",
-        title = "S.I.G.P NUNTIUS",
-        contact = @Contact(
-            name = "Domingos M. Fernando",
-            email = "domingos.fernando@adnlogico.ao",
-            url = "http://www.nuntius.ao"
+        info = @Info(
+                description = "Sistema Integrado de Gestão Processual NUNTIUS v1.0.0",
+                version = "V1.0.0",
+                title = "S.I.G.P NUNTIUS",
+                contact = @Contact(
+                        name = "Domingos M. Fernando",
+                        email = "domingos.fernando@adnlogico.ao",
+                        url = "http://www.nuntius.ao"
+                ),
+                license = @License(
+                        name = "N/A",
+                        url = "http://www.nuntius.ao"
+                )
         ),
-        license = @License(
-            name = "N/A",
-            url = "http://www.nuntius.ao"
-        )
-    ),
-    consumes = {"application/json", "application/xml"},
-    produces = {"application/json", "application/xml"},
-    schemes = {SwaggerDefinition.Scheme.HTTP, SwaggerDefinition.Scheme.HTTPS},
-    externalDocs = @ExternalDocs(value = "Contact ADN Lógico", url = "http://www.nuntius.ao")
+        consumes = {"application/json", "application/xml"},
+        produces = {"application/json", "application/xml"},
+        schemes = {SwaggerDefinition.Scheme.HTTP, SwaggerDefinition.Scheme.HTTPS},
+        externalDocs = @ExternalDocs(value = "Contact ADN Lógico", url = "http://www.nuntius.ao")
 )
 public class ApiDocumentationConfig
 {

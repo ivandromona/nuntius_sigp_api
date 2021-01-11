@@ -61,8 +61,8 @@ public class ProcessController implements Serializable
     public CollectionModel<EntityModel<Process>> all()
     {
         List<EntityModel<Process>> processs = repository.findAll().stream() //
-            .map(assembler::toModel) //
-            .collect(Collectors.toList());
+                .map(assembler::toModel) //
+                .collect(Collectors.toList());
 
         return CollectionModel.of(processs, linkTo(methodOn(ProcessController.class).all()).withSelfRel());
     }
@@ -74,8 +74,8 @@ public class ProcessController implements Serializable
         EntityModel<Process> entityModel = assembler.toModel(repository.save(process));
 
         return ResponseEntity //
-            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-            .body(entityModel);
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+                .body(entityModel);
     }
 
     @RequestAuthorization
@@ -83,7 +83,7 @@ public class ProcessController implements Serializable
     public EntityModel<Process> findById(@PathVariable Integer id)
     {
         Process process = repository.findById(id) //
-            .orElseThrow(() -> new EntityNotFoundException(new Process(), id));
+                .orElseThrow(() -> new EntityNotFoundException(new Process(), id));
 
         return assembler.toModel(process);
     }
@@ -93,20 +93,20 @@ public class ProcessController implements Serializable
     public ResponseEntity<?> update(@RequestBody Process newProcess, @PathVariable Integer id)
     {
         Process updatedProcess = repository.findById(id) //
-            .map(process -> {
-                process.setProcessNumber(newProcess.getProcessNumber());
-                return repository.save(process);
-            }) //
-            .orElseGet(() -> {
-                newProcess.setId(id);
-                return repository.save(newProcess);
-            });
+                .map(process -> {
+                    process.setProcessNumber(newProcess.getProcessNumber());
+                    return repository.save(process);
+                }) //
+                .orElseGet(() -> {
+                    newProcess.setId(id);
+                    return repository.save(newProcess);
+                });
 
         EntityModel<Process> entityModel = assembler.toModel(updatedProcess);
 
         return ResponseEntity //
-            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-            .body(entityModel);
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+                .body(entityModel);
     }
 
     @RequestAuthorization

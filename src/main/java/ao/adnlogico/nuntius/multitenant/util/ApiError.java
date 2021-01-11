@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus;
  *
  * @author domingos.fernando
  */
-public class ApiError
+public final class ApiError
 {
 
     private HttpStatus status;

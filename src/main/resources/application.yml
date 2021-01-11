@@ -25,7 +25,7 @@
 #        minIdle: 5
 #        poolName: masterdb-connection-pool
 multitenancy:
-  mtapp:
+  nuntius:
     master:
       datasource:
         url: jdbc:mysql://127.0.0.1:3306/nuntius_master_db_v1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false

@@ -25,7 +25,7 @@ import java.util.Map;
  */
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = {"ao.adnlogico.nuntius.multitenant.tenant"})
+@ComponentScan(basePackages = {"ao.adnlogico.nuntius.multitenant.tenant", "ao.adnlogico.nuntius.multitenant.mastertenant"})
 @EnableJpaRepositories(basePackages = {"ao.adnlogico.nuntius.multitenant.tenant"},
                        entityManagerFactoryRef = "tenantEntityManagerFactory",
                        transactionManagerRef = "tenantTransactionManager")
@@ -82,12 +82,13 @@ public class TenantDatabaseConfig
     @Bean(name = "tenantEntityManagerFactory")
     @ConditionalOnBean(name = "datasourceBasedMultitenantConnectionProvider")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-        @Qualifier("datasourceBasedMultitenantConnectionProvider") MultiTenantConnectionProvider connectionProvider,
-        @Qualifier("currentTenantIdentifierResolver") CurrentTenantIdentifierResolver tenantResolver)
+            @Qualifier("datasourceBasedMultitenantConnectionProvider") MultiTenantConnectionProvider connectionProvider,
+            @Qualifier("currentTenantIdentifierResolver") CurrentTenantIdentifierResolver tenantResolver)
     {
         LocalContainerEntityManagerFactoryBean emfBean = new LocalContainerEntityManagerFactoryBean();
         //All tenant related entities, repositories and service classes must be scanned
         emfBean.setPackagesToScan("ao.adnlogico.nuntius.multitenant");
+        emfBean.setPackagesToScan("ao.adnlogico.nuntius.multitenant.tenant");
         emfBean.setJpaVendorAdapter(jpaVendorAdapter());
         emfBean.setPersistenceUnitName("tenantdb-persistence-unit");
         Map<String, Object> properties = new HashMap<>();

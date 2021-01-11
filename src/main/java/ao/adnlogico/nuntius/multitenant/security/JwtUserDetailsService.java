@@ -19,13 +19,12 @@ public class JwtUserDetailsService implements UserDetailsService
 {
 
     @Autowired
-    UserRepository userRepository;
+    UserRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException
     {
-//        ao.adnlogico.nuntius.multitenant.tenant.user.User user = userRepository.findByUserName(userName);
-        ao.adnlogico.nuntius.multitenant.tenant.user.User user = userRepository.findByEmail(userName);
+        ao.adnlogico.nuntius.multitenant.tenant.user.User user = repository.findByEmail(userName);
         if (null == user) {
             throw new UsernameNotFoundException("Invalid user name or password.");
         }
@@ -36,4 +35,5 @@ public class JwtUserDetailsService implements UserDetailsService
     {
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
+
 }

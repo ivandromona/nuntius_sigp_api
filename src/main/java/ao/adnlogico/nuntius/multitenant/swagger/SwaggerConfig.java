@@ -26,23 +26,23 @@ public class SwaggerConfig
 {
 
     public static final Contact DEFAULT_CONTACT = new Contact(
-        "Domingos M. Fernando", "http://www.nuntius.ao", "domingos.fernando@nuntius.ao");
+            "Domingos M. Fernando", "http://www.nuntius.ao", "domingos.fernando@nuntius.ao");
 
     public static final ApiInfo DEFAULT_API_INFO = new ApiInfo(
-        "S.I.G.C PAPE", "Sistema Integrado Gestão Processual Nuntius", "1.0",
-        "urn:tos", DEFAULT_CONTACT,
-        "N/A", "", Arrays.asList());
+            "S.I.G.C PAPE", "Sistema Integrado Gestão Processual Nuntius", "1.0",
+            "urn:tos", DEFAULT_CONTACT,
+            "N/A", "", Arrays.asList());
 
     private static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES
-        = new HashSet<String>(Arrays.asList("application/json",
-            "application/xml"));
+            = new HashSet<String>(Arrays.asList("application/json",
+                    "application/xml"));
 
     @Bean
     public Docket api()
     {
         return new Docket(DocumentationType.SWAGGER_2)
-            .apiInfo(DEFAULT_API_INFO)
-            .produces(DEFAULT_PRODUCES_AND_CONSUMES)
-            .consumes(DEFAULT_PRODUCES_AND_CONSUMES);
+                .apiInfo(DEFAULT_API_INFO)
+                .produces(DEFAULT_PRODUCES_AND_CONSUMES)
+                .consumes(DEFAULT_PRODUCES_AND_CONSUMES);
     }
 }

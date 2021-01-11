@@ -7,8 +7,9 @@ import org.springframework.context.annotation.Configuration;
  * @author Md. Amran Hossain
  */
 @Configuration
-@ConfigurationProperties("multitenancy.mtapp.master.datasource")
-public class MasterDatabaseConfigProperties {
+@ConfigurationProperties("multitenancy.nuntius.master.datasource")
+public class MasterDatabaseConfigProperties
+{
 
     private String url;
     private String username;
@@ -22,7 +23,8 @@ public class MasterDatabaseConfigProperties {
 
     //Initialization of HikariCP.
     @Override
-    public String toString() {
+    public String toString()
+    {
         StringBuilder builder = new StringBuilder();
         builder.append("MasterDatabaseConfigProperties [url=");
         builder.append(url);
@@ -46,83 +48,101 @@ public class MasterDatabaseConfigProperties {
         return builder.toString();
     }
 
-    public String getUrl() {
+    public String getUrl()
+    {
         return url;
     }
 
-    public MasterDatabaseConfigProperties setUrl(String url) {
+    public MasterDatabaseConfigProperties setUrl(String url)
+    {
         this.url = url;
         return this;
     }
 
-    public String getUsername() {
+    public String getUsername()
+    {
         return username;
     }
 
-    public MasterDatabaseConfigProperties setUsername(String username) {
+    public MasterDatabaseConfigProperties setUsername(String username)
+    {
         this.username = username;
         return this;
     }
 
-    public String getPassword() {
+    public String getPassword()
+    {
         return password;
     }
 
-    public MasterDatabaseConfigProperties setPassword(String password) {
+    public MasterDatabaseConfigProperties setPassword(String password)
+    {
         this.password = password;
         return this;
     }
 
-    public String getDriverClassName() {
+    public String getDriverClassName()
+    {
         return driverClassName;
     }
 
-    public MasterDatabaseConfigProperties setDriverClassName(String driverClassName) {
+    public MasterDatabaseConfigProperties setDriverClassName(String driverClassName)
+    {
         this.driverClassName = driverClassName;
         return this;
     }
 
-    public long getConnectionTimeout() {
+    public long getConnectionTimeout()
+    {
         return connectionTimeout;
     }
 
-    public MasterDatabaseConfigProperties setConnectionTimeout(long connectionTimeout) {
+    public MasterDatabaseConfigProperties setConnectionTimeout(long connectionTimeout)
+    {
         this.connectionTimeout = connectionTimeout;
         return this;
     }
 
-    public int getMaxPoolSize() {
+    public int getMaxPoolSize()
+    {
         return maxPoolSize;
     }
 
-    public MasterDatabaseConfigProperties setMaxPoolSize(int maxPoolSize) {
+    public MasterDatabaseConfigProperties setMaxPoolSize(int maxPoolSize)
+    {
         this.maxPoolSize = maxPoolSize;
         return this;
     }
 
-    public long getIdleTimeout() {
+    public long getIdleTimeout()
+    {
         return idleTimeout;
     }
 
-    public MasterDatabaseConfigProperties setIdleTimeout(long idleTimeout) {
+    public MasterDatabaseConfigProperties setIdleTimeout(long idleTimeout)
+    {
         this.idleTimeout = idleTimeout;
         return this;
     }
 
-    public int getMinIdle() {
+    public int getMinIdle()
+    {
         return minIdle;
     }
 
-    public MasterDatabaseConfigProperties setMinIdle(int minIdle) {
+    public MasterDatabaseConfigProperties setMinIdle(int minIdle)
+    {
         this.minIdle = minIdle;
         return this;
     }
 
-    public String getPoolName() {
+    public String getPoolName()
+    {
         return poolName;
     }
 
-    public MasterDatabaseConfigProperties setPoolName(String poolName) {
+    public MasterDatabaseConfigProperties setPoolName(String poolName)
+    {
         this.poolName = poolName;
         return this;
     }
