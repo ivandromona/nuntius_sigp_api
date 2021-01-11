@@ -19,15 +19,18 @@ import java.util.Map;
  * @author Md. Amran Hossain
  */
 @RestController
-@RequestMapping("/api/product/logout")
-public class LogoutController implements Serializable {
+@RequestMapping("/nuntius/v1/api/logout")
+public class LogoutController implements Serializable
+{
+
     private static final Logger LOGGER = LoggerFactory.getLogger(LogoutController.class);
 
     @Autowired
     ApplicationContext applicationContext;
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public ResponseEntity<?> logoutFromApp(Principal principal) {
+    public ResponseEntity<?> logoutFromApp(Principal principal)
+    {
         LOGGER.info("AuthenticationController::logoutFromApp() method call..");
         UserTenantInformation userCharityInfo = applicationContext.getBean(UserTenantInformation.class);
         Map<String, String> map = userCharityInfo.getMap();

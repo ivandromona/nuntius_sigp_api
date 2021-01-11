@@ -5,8 +5,6 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.function;
 
-import ao.adnlogico.nuntius.multitenant.tenant.department.*;
-import ao.adnlogico.nuntius.multitenant.tenant.category.*;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
@@ -22,11 +20,11 @@ public class FunctionModelAssembler implements RepresentationModelAssembler<Func
 {
 
     @Override
-    public EntityModel<Function> toModel(Function process)
+    public EntityModel<Function> toModel(Function function)
     {
 
-        return EntityModel.of(process, //
-                linkTo(methodOn(FunctionController.class).findById(process.getId())).withSelfRel(),
-                linkTo(methodOn(FunctionController.class).all()).withRel("provinces"));
+        return EntityModel.of(function, //
+            linkTo(methodOn(FunctionController.class).findById(function.getId())).withSelfRel(),
+            linkTo(methodOn(FunctionController.class).all()).withRel("functions"));
     }
 }

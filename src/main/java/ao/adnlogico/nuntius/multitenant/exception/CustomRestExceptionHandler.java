@@ -47,7 +47,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler
     protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request)
     {
         logger.info(ex.getClass().getName());
-        System.err.println("PAssou pelo bad Request");
+//        System.err.println("Passou pelo bad Request");
         //
         final List<String> errors = new ArrayList<>();
         for (final FieldError error : ex.getBindingResult().getFieldErrors()) {

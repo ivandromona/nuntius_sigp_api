@@ -35,7 +35,7 @@ import java.util.Map;
  * @author Md. Amran Hossain
  */
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/nuntius/v1/api/auth")
 public class AuthenticationController implements Serializable
 {
 

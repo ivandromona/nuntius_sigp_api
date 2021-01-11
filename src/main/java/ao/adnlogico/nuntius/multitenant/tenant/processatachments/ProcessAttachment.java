@@ -6,6 +6,7 @@
 package ao.adnlogico.nuntius.multitenant.tenant.processatachments;
 
 import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
+import io.swagger.annotations.ApiModel;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -26,6 +27,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "process_attachments")
+@ApiModel(description = "All details about the Process Attachment. ")
 public class ProcessAttachment implements Serializable
 {
 

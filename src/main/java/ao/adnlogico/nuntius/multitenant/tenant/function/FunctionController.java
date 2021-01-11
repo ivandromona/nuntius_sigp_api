@@ -1,6 +1,5 @@
 package ao.adnlogico.nuntius.multitenant.tenant.function;
 
-import ao.adnlogico.nuntius.multitenant.tenant.department.*;
 import ao.adnlogico.nuntius.multitenant.controller.AuthenticationController;
 import ao.adnlogico.nuntius.multitenant.exception.EntityNotFoundException;
 import ao.adnlogico.nuntius.multitenant.security.RequestAuthorization;
@@ -36,7 +35,7 @@ public class FunctionController implements Serializable
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 
 //    @Autowired
-//    departmentService service;
+//    functionService service;
     private final FunctionRepository repository;
     private final FunctionModelAssembler assembler;
 
@@ -48,60 +47,60 @@ public class FunctionController implements Serializable
     }
 
     @RequestAuthorization
-    @GetMapping("/department")
+    @GetMapping("/function")
     public CollectionModel<EntityModel<Function>> all()
     {
-        List<EntityModel<Function>> departments = repository.findAll().stream() //
-                .map(assembler::toModel) //
-                .collect(Collectors.toList());
+        List<EntityModel<Function>> functions = repository.findAll().stream() //
+            .map(assembler::toModel) //
+            .collect(Collectors.toList());
 
-        return CollectionModel.of(departments, linkTo(methodOn(FunctionController.class).all()).withSelfRel());
+        return CollectionModel.of(functions, linkTo(methodOn(FunctionController.class).all()).withSelfRel());
     }
 
     @RequestAuthorization
-    @PostMapping("/department")
-    public ResponseEntity<?> save(@RequestBody Function department)
+    @PostMapping("/function")
+    public ResponseEntity<?> save(@RequestBody Function function)
     {
-        EntityModel<Function> entityModel = assembler.toModel(repository.save(department));
+        EntityModel<Function> entityModel = assembler.toModel(repository.save(function));
 
         return ResponseEntity //
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-                .body(entityModel);
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+            .body(entityModel);
     }
 
     @RequestAuthorization
-    @GetMapping("/department/{id}")
+    @GetMapping("/function/{id}")
     public EntityModel<Function> findById(@PathVariable Integer id)
     {
-        Function department = repository.findById(id) //
-                .orElseThrow(() -> new EntityNotFoundException(new Function(), id));
+        Function function = repository.findById(id) //
+            .orElseThrow(() -> new EntityNotFoundException(new Function(), id));
 
-        return assembler.toModel(department);
+        return assembler.toModel(function);
     }
 
     @RequestAuthorization
-    @PutMapping("/department/{id}")
-    public ResponseEntity<?> update(@RequestBody Function newdepartment, @PathVariable Integer id)
+    @PutMapping("/function/{id}")
+    public ResponseEntity<?> update(@RequestBody Function newFunction, @PathVariable Integer id)
     {
-        Function updateddepartment = repository.findById(id) //
-                .map(department -> {
-                    department.setName(newdepartment.getName());
-                    return repository.save(department);
-                }) //
-                .orElseGet(() -> {
-                    newdepartment.setId(id);
-                    return repository.save(newdepartment);
-                });
+        Function updatedFunction = repository.findById(id) //
+            .map(function -> {
+                function.setName(newFunction.getName());
+                return repository.save(function);
+            }) //
+            .orElseGet(() -> {
+                newFunction.setId(id);
+                return repository.save(newFunction);
+            });
 
-        EntityModel<Function> entityModel = assembler.toModel(updateddepartment);
+        EntityModel<Function> entityModel = assembler.toModel(updatedFunction);
 
         return ResponseEntity //
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-                .body(entityModel);
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+            .body(entityModel);
     }
 
     @RequestAuthorization
-    @DeleteMapping("/department/{id}")
+    @DeleteMapping("/function/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id)
     {
         repository.deleteById(id);

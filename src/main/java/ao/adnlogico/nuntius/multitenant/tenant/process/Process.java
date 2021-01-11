@@ -17,6 +17,7 @@ import ao.adnlogico.nuntius.multitenant.tenant.roletype.RoleType;
 import ao.adnlogico.nuntius.multitenant.tenant.step.Step;
 import ao.adnlogico.nuntius.multitenant.tenant.explorer.Explorer;
 import ao.adnlogico.nuntius.multitenant.tenant.user.User;
+import io.swagger.annotations.ApiModel;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -43,6 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "process")
+@ApiModel(description = "All details about the Process. ")
 public class Process implements Serializable
 {
 

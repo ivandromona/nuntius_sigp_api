@@ -22,9 +22,10 @@ public class JwtUserDetailsService implements UserDetailsService
     UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException
+    public UserDetails loadUserByUsername(String userNameOrEmail) throws UsernameNotFoundException
     {
-        ao.adnlogico.nuntius.multitenant.tenant.user.User user = userRepository.findByUserName(userName);
+//        ao.adnlogico.nuntius.multitenant.tenant.user.User user = userRepository.findByUserName(userName);
+        ao.adnlogico.nuntius.multitenant.tenant.user.User user = userRepository.findByEmail(userNameOrEmail);
         if (null == user) {
             throw new UsernameNotFoundException("Invalid user name or password.");
         }

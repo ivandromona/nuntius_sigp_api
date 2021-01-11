@@ -8,6 +8,7 @@ package ao.adnlogico.nuntius.multitenant.tenant.progress;
 import ao.adnlogico.nuntius.multitenant.tenant.department.Department;
 import ao.adnlogico.nuntius.multitenant.tenant.step.Step;
 import ao.adnlogico.nuntius.multitenant.tenant.user.User;
+import io.swagger.annotations.ApiModel;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -30,6 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "progress")
+@ApiModel(description = "All details about the Progress. ")
 public class Progress implements Serializable
 {
 
