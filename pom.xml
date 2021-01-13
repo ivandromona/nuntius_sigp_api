@@ -8,10 +8,10 @@
         <version>2.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>ao.adnlogico.nuntius</groupId>
-    <artifactId>multitenant</artifactId>
+    <groupId>ao.adnlogico.multitenant</groupId>
+    <artifactId>nuntius</artifactId>
     <version>2.0.0</version>
-    <name>multitenant</name>
+    <name>nuntius</name>
     <description>Sistema Integrado De Gestão de Processos</description>
 
     <properties>
@@ -270,5 +270,5 @@
             </properties>
         </profile>
     </profiles>
-
+    <packaging>jar</packaging>
 </project>
