@@ -1,4 +1,4 @@
-package ao.adnlogico.multitenant.nuntius.controller;
+package ao.adnlogico.multitenant.nuntius.tenant.user;
 
 import ao.adnlogico.multitenant.nuntius.security.UserTenantInformation;
 import org.slf4j.Logger;

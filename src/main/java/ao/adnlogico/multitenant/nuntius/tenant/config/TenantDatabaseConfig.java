@@ -87,7 +87,7 @@ public class TenantDatabaseConfig
     {
         LocalContainerEntityManagerFactoryBean emfBean = new LocalContainerEntityManagerFactoryBean();
         //All tenant related entities, repositories and service classes must be scanned
-        emfBean.setPackagesToScan("ao.adnlogico.multitenant.nuntius");
+//        emfBean.setPackagesToScan("ao.adnlogico.multitenant.nuntius");
         emfBean.setPackagesToScan("ao.adnlogico.multitenant.nuntius.tenant");
         emfBean.setJpaVendorAdapter(jpaVendorAdapter());
         emfBean.setPersistenceUnitName("tenantdb-persistence-unit");

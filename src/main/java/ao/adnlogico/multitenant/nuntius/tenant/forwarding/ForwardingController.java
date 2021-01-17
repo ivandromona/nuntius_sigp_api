@@ -1,6 +1,6 @@
 package ao.adnlogico.multitenant.nuntius.tenant.forwarding;
 
-import ao.adnlogico.multitenant.nuntius.controller.AuthenticationController;
+import ao.adnlogico.multitenant.nuntius.tenant.user.AuthenticationController;
 import ao.adnlogico.multitenant.nuntius.exception.EntityNotFoundException;
 import ao.adnlogico.multitenant.nuntius.security.RequestAuthorization;
 import org.slf4j.Logger;

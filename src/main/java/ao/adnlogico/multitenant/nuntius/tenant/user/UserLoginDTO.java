@@ -1,4 +1,4 @@
-package ao.adnlogico.multitenant.nuntius.dto;
+package ao.adnlogico.multitenant.nuntius.tenant.user;
 
 import java.io.Serializable;
 

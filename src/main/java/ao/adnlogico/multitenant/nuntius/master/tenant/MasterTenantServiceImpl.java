@@ -1,7 +1,5 @@
-package ao.adnlogico.multitenant.nuntius.mastertenant.service;
+package ao.adnlogico.multitenant.nuntius.master.tenant;
 
-import ao.adnlogico.multitenant.nuntius.mastertenant.entity.MasterTenant;
-import ao.adnlogico.multitenant.nuntius.mastertenant.repository.MasterTenantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

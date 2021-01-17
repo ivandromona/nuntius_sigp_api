@@ -1,11 +1,9 @@
-package ao.adnlogico.multitenant.nuntius.controller;
+package ao.adnlogico.multitenant.nuntius.tenant.user;
 
 import ao.adnlogico.multitenant.nuntius.constant.UserStatus;
-import ao.adnlogico.multitenant.nuntius.dto.AuthResponse;
-import ao.adnlogico.multitenant.nuntius.dto.UserLoginDTO;
-import ao.adnlogico.multitenant.nuntius.mastertenant.config.DBContextHolder;
-import ao.adnlogico.multitenant.nuntius.mastertenant.entity.MasterTenant;
-import ao.adnlogico.multitenant.nuntius.mastertenant.service.MasterTenantService;
+import ao.adnlogico.multitenant.nuntius.master.config.DBContextHolder;
+import ao.adnlogico.multitenant.nuntius.master.tenant.MasterTenant;
+import ao.adnlogico.multitenant.nuntius.master.tenant.MasterTenantService;
 import ao.adnlogico.multitenant.nuntius.security.UserTenantInformation;
 import ao.adnlogico.multitenant.nuntius.util.JwtTokenUtil;
 import org.slf4j.Logger;

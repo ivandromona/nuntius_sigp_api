@@ -1,6 +1,5 @@
-package ao.adnlogico.multitenant.nuntius.mastertenant.repository;
+package ao.adnlogico.multitenant.nuntius.master.tenant;
 
-import ao.adnlogico.multitenant.nuntius.mastertenant.entity.MasterTenant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

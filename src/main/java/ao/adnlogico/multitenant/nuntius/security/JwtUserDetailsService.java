@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Domingos M. Fernando
@@ -17,17 +18,13 @@ import java.util.List;
 public class JwtUserDetailsService implements UserDetailsService
 {
 
-    private final UserRepository repository;
-
-    public JwtUserDetailsService(UserRepository repository)
-    {
-        this.repository = repository;
-    }
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException
     {
-        ao.adnlogico.multitenant.nuntius.tenant.user.User user = repository.findByEmail(userName);
+        ao.adnlogico.multitenant.nuntius.tenant.user.User user = userRepository.findByEmail(userName);
         if (null == user) {
             throw new UsernameNotFoundException("Invalid user name or password.");
         }

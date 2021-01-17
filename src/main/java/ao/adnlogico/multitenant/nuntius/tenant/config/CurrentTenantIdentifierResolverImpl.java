@@ -1,6 +1,6 @@
 package ao.adnlogico.multitenant.nuntius.tenant.config;
 
-import ao.adnlogico.multitenant.nuntius.mastertenant.config.DBContextHolder;
+import ao.adnlogico.multitenant.nuntius.master.config.DBContextHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 

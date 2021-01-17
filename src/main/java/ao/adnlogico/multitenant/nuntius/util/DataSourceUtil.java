@@ -1,6 +1,6 @@
 package ao.adnlogico.multitenant.nuntius.util;
 
-import ao.adnlogico.multitenant.nuntius.mastertenant.entity.MasterTenant;
+import ao.adnlogico.multitenant.nuntius.master.tenant.MasterTenant;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

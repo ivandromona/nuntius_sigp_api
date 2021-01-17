@@ -1,4 +1,4 @@
-package ao.adnlogico.multitenant.nuntius.mastertenant.entity;
+package ao.adnlogico.multitenant.nuntius.master.tenant;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;

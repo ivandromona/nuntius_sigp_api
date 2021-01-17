@@ -1,4 +1,4 @@
-package ao.adnlogico.multitenant.nuntius.mastertenant.config;
+package ao.adnlogico.multitenant.nuntius.master.config;
 
 /**
  *

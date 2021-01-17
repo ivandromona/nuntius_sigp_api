@@ -1,7 +1,7 @@
-package ao.adnlogico.multitenant.nuntius.mastertenant.config;
+package ao.adnlogico.multitenant.nuntius.master.config;
 
-import ao.adnlogico.multitenant.nuntius.mastertenant.entity.MasterTenant;
-import ao.adnlogico.multitenant.nuntius.mastertenant.repository.MasterTenantRepository;
+import ao.adnlogico.multitenant.nuntius.master.tenant.MasterTenant;
+import ao.adnlogico.multitenant.nuntius.master.tenant.MasterTenantRepository;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ import java.util.Properties;
  */
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = {"ao.adnlogico.multitenant.nuntius.mastertenant.entity", "ao.adnlogico.multitenant.nuntius.mastertenant.repository"},
+@EnableJpaRepositories(basePackages = {"ao.adnlogico.multitenant.nuntius.master.tenant"},
                        entityManagerFactoryRef = "masterEntityManagerFactory",
                        transactionManagerRef = "masterTransactionManager")
 public class MasterDatabaseConfig
