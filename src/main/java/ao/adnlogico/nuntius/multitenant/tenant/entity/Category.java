@@ -39,7 +39,7 @@ public class Category implements Serializable
     private String name;
     @Basic(optional = false)
     @Column(name = "description")
-    private int description;
+    private String description;
     @Basic(optional = false)
     @Column(name = "dispatch_time")
     private int dispatchTime;
@@ -58,7 +58,7 @@ public class Category implements Serializable
         this.id = id;
     }
 
-    public Category(Long id, String name, int description, int dispatchTime)
+    public Category(Long id, String name, String description, int dispatchTime)
     {
         this.id = id;
         this.name = name;
@@ -86,12 +86,12 @@ public class Category implements Serializable
         this.name = name;
     }
 
-    public int getDescription()
+    public String getDescription()
     {
         return description;
     }
 
-    public void setDescription(int description)
+    public void setDescription(String description)
     {
         this.description = description;
     }
