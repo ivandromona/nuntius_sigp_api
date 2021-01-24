@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
  * @author Sebastião Paulo
  */
 @Entity
-@Table(name = "forwarding")
+@Table(name = "forwardings")
 public class Forwarding implements Serializable
 {
 
@@ -50,9 +50,9 @@ public class Forwarding implements Serializable
     @JoinColumn(name = "fk_previous_step", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Step fkPreviousStep;
-    @JoinColumn(name = "fk_processo", referencedColumnName = "id")
+    @JoinColumn(name = "fk_process", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Process fkProcesso;
+    private Process fkProcess;
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User fkUser;
@@ -134,14 +134,14 @@ public class Forwarding implements Serializable
         this.fkPreviousStep = fkPreviousStep;
     }
 
-    public Process getFkProcesso()
+    public Process getFkProcess()
     {
-        return fkProcesso;
+        return fkProcess;
     }
 
-    public void setFkProcesso(Process fkProcesso)
+    public void setFkProcess(Process fkProcess)
     {
-        this.fkProcesso = fkProcesso;
+        this.fkProcess = fkProcess;
     }
 
     public User getFkUser()

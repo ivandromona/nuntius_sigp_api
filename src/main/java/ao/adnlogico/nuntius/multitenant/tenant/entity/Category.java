@@ -5,6 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -18,7 +19,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -106,7 +106,8 @@ public class Category implements Serializable
         this.dispatchTime = dispatchTime;
     }
 
-    @XmlTransient
+//    @JsonIgnoreProperties({"fkCategory", ""})
+    @JsonIgnore
     public Collection<Process> getProcessCollection()
     {
         return processCollection;

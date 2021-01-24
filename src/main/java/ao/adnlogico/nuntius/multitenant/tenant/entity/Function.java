@@ -5,7 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Department;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -19,7 +19,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -95,7 +94,7 @@ public class Function implements Serializable
         this.description = description;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Process> getProcessCollection()
     {
         return processCollection;
@@ -116,7 +115,7 @@ public class Function implements Serializable
         this.fkDepartment = fkDepartment;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<User> getUsersCollection()
     {
         return usersCollection;

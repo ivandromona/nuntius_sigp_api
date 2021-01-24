@@ -5,7 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Category;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -23,7 +23,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -158,7 +157,7 @@ public class DocTemplate implements Serializable
         this.updatedAt = updatedAt;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Document> getDocumentsCollection()
     {
         return documentsCollection;
@@ -179,7 +178,7 @@ public class DocTemplate implements Serializable
         this.createdBy = createdBy;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Category> getCategoriesCollection()
     {
         return categoriesCollection;

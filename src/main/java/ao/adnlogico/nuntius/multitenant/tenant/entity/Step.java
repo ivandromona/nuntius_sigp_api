@@ -5,9 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Forwarding;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Progress;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Process;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -22,7 +20,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -45,8 +42,8 @@ public class Step implements Serializable
     @Column(name = "sort_order")
     private int sortOrder;
     @Basic(optional = false)
-    @Column(name = "descriprions")
-    private String descriprions;
+    @Column(name = "description")
+    private String description;
     @ManyToMany(mappedBy = "stepsCollection")
     private Collection<Process> processCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkPreviousStep")
@@ -74,7 +71,7 @@ public class Step implements Serializable
         this.id = id;
         this.name = name;
         this.sortOrder = sortOrder;
-        this.descriprions = descriprions;
+        this.description = descriprions;
     }
 
     public Long getId()
@@ -107,17 +104,17 @@ public class Step implements Serializable
         this.sortOrder = sortOrder;
     }
 
-    public String getDescriprions()
+    public String getDescription()
     {
-        return descriprions;
+        return description;
     }
 
-    public void setDescriprions(String descriprions)
+    public void setDescription(String description)
     {
-        this.descriprions = descriprions;
+        this.description = description;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Process> getProcessCollection()
     {
         return processCollection;
@@ -128,7 +125,7 @@ public class Step implements Serializable
         this.processCollection = processCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Forwarding> getForwardingCollection()
     {
         return forwardingCollection;
@@ -139,7 +136,7 @@ public class Step implements Serializable
         this.forwardingCollection = forwardingCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Step> getStepsCollection()
     {
         return stepsCollection;

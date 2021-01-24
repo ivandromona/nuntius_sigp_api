@@ -5,7 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Explorer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -20,7 +20,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -44,8 +43,8 @@ public class Department implements Serializable
     @Column(name = "description")
     private String description;
     @Basic(optional = false)
-    @Column(name = "order")
-    private int order;
+    @Column(name = "order_level")
+    private int orderLevel;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkDepartment")
     private Collection<Function> functionsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkDepartment")
@@ -72,7 +71,7 @@ public class Department implements Serializable
         this.id = id;
         this.name = name;
         this.description = description;
-        this.order = order;
+        this.orderLevel = order;
     }
 
     public Long getId()
@@ -105,17 +104,17 @@ public class Department implements Serializable
         this.description = description;
     }
 
-    public int getOrder()
+    public int getOrderLevel()
     {
-        return order;
+        return orderLevel;
     }
 
-    public void setOrder(int order)
+    public void setOrderLevel(int orderLevel)
     {
-        this.order = order;
+        this.orderLevel = orderLevel;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Function> getFunctionsCollection()
     {
         return functionsCollection;
@@ -126,7 +125,7 @@ public class Department implements Serializable
         this.functionsCollection = functionsCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Explorer> getExplorersCollection()
     {
         return explorersCollection;
@@ -137,7 +136,7 @@ public class Department implements Serializable
         this.explorersCollection = explorersCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Progress> getProgressCollection()
     {
         return progressCollection;
@@ -148,7 +147,7 @@ public class Department implements Serializable
         this.progressCollection = progressCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Department> getDepartmentsCollection()
     {
         return departmentsCollection;

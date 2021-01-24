@@ -38,8 +38,8 @@ public class Module implements Serializable
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "key")
-    private String key;
+    @Column(name = "module_key")
+    private String moduleKey;
     @Basic(optional = false)
     @Column(name = "active")
     private boolean active;
@@ -76,7 +76,7 @@ public class Module implements Serializable
     {
         this.id = id;
         this.name = name;
-        this.key = key;
+        this.moduleKey = key;
         this.active = active;
         this.createdAt = createdAt;
         this.deletedAt = deletedAt;
@@ -102,14 +102,14 @@ public class Module implements Serializable
         this.name = name;
     }
 
-    public String getKey()
+    public String getModuleKey()
     {
-        return key;
+        return moduleKey;
     }
 
-    public void setKey(String key)
+    public void setModuleKey(String moduleKey)
     {
-        this.key = key;
+        this.moduleKey = moduleKey;
     }
 
     public boolean getActive()

@@ -30,8 +30,8 @@ public class Setting implements Serializable
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @Column(name = "key")
-    private String key;
+    @Column(name = "setting_key")
+    private String settingKey;
     @Basic(optional = false)
     @Lob
     @Column(name = "value")
@@ -52,7 +52,7 @@ public class Setting implements Serializable
     public Setting(Long id, String key, String value, String description)
     {
         this.id = id;
-        this.key = key;
+        this.settingKey = key;
         this.value = value;
         this.description = description;
     }
@@ -67,14 +67,14 @@ public class Setting implements Serializable
         this.id = id;
     }
 
-    public String getKey()
+    public String getSettingKey()
     {
-        return key;
+        return settingKey;
     }
 
-    public void setKey(String key)
+    public void setSettingKey(String settingKey)
     {
-        this.key = key;
+        this.settingKey = settingKey;
     }
 
     public String getValue()

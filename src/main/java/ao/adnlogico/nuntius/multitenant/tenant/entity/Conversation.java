@@ -5,6 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -19,7 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,8 +36,8 @@ public class Conversation implements Serializable
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @Column(name = "key")
-    private String key;
+    @Column(name = "chat_key")
+    private String chatKey;
     @Basic(optional = false)
     @Column(name = "existing")
     private short existing;
@@ -64,7 +64,7 @@ public class Conversation implements Serializable
     public Conversation(Long id, String key, short existing, Date createdAt, Date updatedAt)
     {
         this.id = id;
-        this.key = key;
+        this.chatKey = key;
         this.existing = existing;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -80,14 +80,14 @@ public class Conversation implements Serializable
         this.id = id;
     }
 
-    public String getKey()
+    public String getChatKey()
     {
-        return key;
+        return chatKey;
     }
 
-    public void setKey(String key)
+    public void setChatKey(String chatKey)
     {
-        this.key = key;
+        this.chatKey = chatKey;
     }
 
     public short getExisting()
@@ -120,7 +120,7 @@ public class Conversation implements Serializable
         this.updatedAt = updatedAt;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Message> getMessagesCollection()
     {
         return messagesCollection;

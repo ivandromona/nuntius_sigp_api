@@ -5,6 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -18,7 +19,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -298,7 +298,7 @@ public class Role implements Serializable
         this.fkRoleType = fkRoleType;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<User> getUsersCollection()
     {
         return usersCollection;

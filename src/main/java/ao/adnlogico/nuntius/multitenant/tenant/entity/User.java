@@ -5,6 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -40,14 +41,14 @@ public class User implements Serializable
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 100)
+    @Size(max = 255)
     @Basic(optional = false)
     @Column(name = "email", nullable = false, unique = true)
     private String email;
     @Basic(optional = false)
     @Column(name = "phone", unique = true)
     private String phone;
-    @Basic(optional = false)
+
     @Column(name = "phone_alt", unique = true)
     private String phoneAlt;
     @Basic(optional = false)
@@ -71,8 +72,10 @@ public class User implements Serializable
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkOperatorUser")
     private Collection<Process> processCollection;
+
     @OneToMany(mappedBy = "fkResponsibleUser")
     private Collection<Process> processCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkUser")
@@ -101,11 +104,12 @@ public class User implements Serializable
     private Collection<Message> messagesCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkUser")
     private Collection<Progress> progressCollection;
-    @ManyToMany
+
     @JoinTable(
         name = "user_notifications",
         joinColumns = @JoinColumn(name = "fk_user"),
         inverseJoinColumns = @JoinColumn(name = "fk_notification"))
+    @ManyToMany
     private Collection<Notification> notifications;
 
     public User()
@@ -241,7 +245,7 @@ public class User implements Serializable
         this.updatedAt = updatedAt;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Process> getProcessCollection()
     {
         return processCollection;
@@ -252,7 +256,7 @@ public class User implements Serializable
         this.processCollection = processCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Process> getProcessCollection1()
     {
         return processCollection1;
@@ -263,7 +267,7 @@ public class User implements Serializable
         this.processCollection1 = processCollection1;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Comment> getCommentsCollection()
     {
         return commentsCollection;
@@ -274,7 +278,7 @@ public class User implements Serializable
         this.commentsCollection = commentsCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Document> getDocumentsCollection()
     {
         return documentsCollection;
@@ -285,7 +289,7 @@ public class User implements Serializable
         this.documentsCollection = documentsCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Forwarding> getForwardingCollection()
     {
         return forwardingCollection;
@@ -359,7 +363,7 @@ public class User implements Serializable
         this.docTemplatesCollection = docTemplatesCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Message> getMessagesCollection()
     {
         return messagesCollection;
@@ -370,7 +374,7 @@ public class User implements Serializable
         this.messagesCollection = messagesCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Message> getMessagesCollection1()
     {
         return messagesCollection1;
@@ -381,7 +385,7 @@ public class User implements Serializable
         this.messagesCollection1 = messagesCollection1;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Progress> getProgressCollection()
     {
         return progressCollection;
@@ -392,7 +396,7 @@ public class User implements Serializable
         this.progressCollection = progressCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Notification> getNotifications()
     {
         return notifications;

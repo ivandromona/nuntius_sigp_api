@@ -5,7 +5,6 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Conversation;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;

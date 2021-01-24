@@ -5,6 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -16,7 +17,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -45,7 +45,7 @@ public class Notification implements Serializable
     @Column(name = "entity_id")
     private int entityId;
     @Basic(optional = false)
-    @Column(name = "created-at")
+    @Column(name = "created_at")
     private int createdAt;
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "notifications")
     private Collection<User> users;
@@ -129,7 +129,7 @@ public class Notification implements Serializable
         this.createdAt = createdAt;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<User> getNotificationUsersCollection()
     {
         return users;

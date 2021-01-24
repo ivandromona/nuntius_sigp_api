@@ -5,6 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -16,7 +17,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,8 +36,8 @@ public class RoleType implements Serializable
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "key")
-    private String key;
+    @Column(name = "role_key")
+    private String roleKey;
     @Basic(optional = false)
     @Column(name = "weight")
     private short weight;
@@ -64,7 +64,7 @@ public class RoleType implements Serializable
     {
         this.id = id;
         this.name = name;
-        this.key = key;
+        this.roleKey = key;
         this.weight = weight;
         this.description = description;
     }
@@ -89,14 +89,14 @@ public class RoleType implements Serializable
         this.name = name;
     }
 
-    public String getKey()
+    public String getRoleKey()
     {
-        return key;
+        return roleKey;
     }
 
-    public void setKey(String key)
+    public void setRoleKey(String roleKey)
     {
-        this.key = key;
+        this.roleKey = roleKey;
     }
 
     public short getWeight()
@@ -119,7 +119,7 @@ public class RoleType implements Serializable
         this.description = description;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Process> getProcessCollection()
     {
         return processCollection;
@@ -130,7 +130,7 @@ public class RoleType implements Serializable
         this.processCollection = processCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Role> getRolesCollection()
     {
         return rolesCollection;
@@ -141,7 +141,7 @@ public class RoleType implements Serializable
         this.rolesCollection = rolesCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Module> getModulesCollection()
     {
         return modulesCollection;

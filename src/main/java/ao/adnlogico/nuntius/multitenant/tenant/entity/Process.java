@@ -5,6 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -23,7 +24,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "process")
-//@ApiModel(description = "All details about the Process. ")
 public class Process implements Serializable
 {
 
@@ -40,90 +39,118 @@ public class Process implements Serializable
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+
     @Basic(optional = false)
     @Column(name = "origin")
     private String origin;
+
     @Basic(optional = false)
     @Column(name = "origin_date")
     @Temporal(TemporalType.DATE)
     private Date originDate;
+
     @Basic(optional = false)
     @Column(name = "deadline")
     @Temporal(TemporalType.DATE)
     private Date deadline;
+
     @Basic(optional = false)
     @Column(name = "process_number")
     private String processNumber;
+
     @Basic(optional = false)
     @Column(name = "external_reference")
     private String externalReference;
+
     @Basic(optional = false)
     @Column(name = "subject")
     private String subject;
+
     @Column(name = "description")
     private String description;
+
     @Basic(optional = false)
     @Column(name = "confidential")
     private short confidential;
+
     @Basic(optional = false)
     @Column(name = "status")
     private String status;
+
     @Basic(optional = false)
     @Column(name = "filed")
     private short filed;
+
     @Basic(optional = false)
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
     @Basic(optional = false)
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+
     @Basic(optional = false)
     @Column(name = "process_type")
     private String processType;
+
     @Basic(optional = false)
     @Column(name = "existing")
     private short existing;
+
     @Column(name = "claimant")
     private String claimant;
-    @JoinTable(name = "process_progress", joinColumns = {
-        @JoinColumn(name = "fk_process", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "fk_step", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<Step> stepsCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProcess")
-    private Collection<ProcessAttachment> processAttachmentsCollection;
-    @JoinColumn(name = "fk_approval", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Function fkApproval;
-    @JoinColumn(name = "fk_category", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Category fkCategory;
-    @JoinColumn(name = "fk_claimant_entity", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Entities fkClaimantEntity;
-    @JoinColumn(name = "fk_claimant_person", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Person fkClaimantPerson;
-    @JoinColumn(name = "fk_explorer", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Explorer fkExplorer;
-    @JoinColumn(name = "fk_operator_user", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private User fkOperatorUser;
-    @JoinColumn(name = "fk_responsible_user", referencedColumnName = "id")
-    @ManyToOne
-    private User fkResponsibleUser;
+
     @JoinColumn(name = "fk_role_type", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private RoleType fkRoleType;
+
+    @JoinColumn(name = "fk_claimant_entity", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Entities fkClaimantEntity;
+
+    @JoinColumn(name = "fk_approval", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Function fkApproval;
+
+    @JoinColumn(name = "fk_operator_user", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private User fkOperatorUser;
+
+    @JoinColumn(name = "fk_responsible_user", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private User fkResponsibleUser;
+
+    @JoinColumn(name = "fk_claimant_person", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Person fkClaimantPerson;
+
+    @JoinColumn(name = "fk_category", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Category fkCategory;
+
+    @JoinColumn(name = "fk_explorer", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Explorer fkExplorer;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProcess")
     private Collection<Comment> commentsCollection;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProcess")
     private Collection<Document> documentsCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProcesso")
-    private Collection<Forwarding> forwardingCollection;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProcess")
+    private Collection<Forwarding> forwardingsCollection;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProcess")
+    private Collection<ProcessAttachment> processAttachmentsCollection;
+
+    @JoinTable(name = "process_progress", joinColumns
+               = @JoinColumn(name = "fk_process", referencedColumnName = "id"), inverseJoinColumns
+               = @JoinColumn(name = "fk_step", referencedColumnName = "id"))
+    @ManyToMany
+    private Collection<Step> stepsCollection;
 
     public Process()
     {
@@ -312,7 +339,7 @@ public class Process implements Serializable
         this.claimant = claimant;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Step> getStepsCollection()
     {
         return stepsCollection;
@@ -323,7 +350,7 @@ public class Process implements Serializable
         this.stepsCollection = stepsCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<ProcessAttachment> getProcessAttachmentsCollection()
     {
         return processAttachmentsCollection;
@@ -414,7 +441,7 @@ public class Process implements Serializable
         this.fkRoleType = fkRoleType;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Comment> getCommentsCollection()
     {
         return commentsCollection;
@@ -425,7 +452,7 @@ public class Process implements Serializable
         this.commentsCollection = commentsCollection;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Document> getDocumentsCollection()
     {
         return documentsCollection;
@@ -436,15 +463,15 @@ public class Process implements Serializable
         this.documentsCollection = documentsCollection;
     }
 
-    @XmlTransient
-    public Collection<Forwarding> getForwardingCollection()
+    @JsonIgnore
+    public Collection<Forwarding> getForwardingsCollection()
     {
-        return forwardingCollection;
+        return forwardingsCollection;
     }
 
-    public void setForwardingCollection(Collection<Forwarding> forwardingCollection)
+    public void setForwardingsCollection(Collection<Forwarding> forwardingsCollection)
     {
-        this.forwardingCollection = forwardingCollection;
+        this.forwardingsCollection = forwardingsCollection;
     }
 
     @Override

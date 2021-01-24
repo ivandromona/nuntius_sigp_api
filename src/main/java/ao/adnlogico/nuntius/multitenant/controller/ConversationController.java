@@ -86,7 +86,7 @@ public class ConversationController implements Serializable
     {
         Conversation updatedconversation = repository.findById(id) //
                 .map(conversation -> {
-                    conversation.setKey(newconversation.getKey());
+                    conversation.setChatKey(newconversation.getChatKey());
                     return repository.save(conversation);
                 }) //
                 .orElseGet(() -> {

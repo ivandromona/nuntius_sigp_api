@@ -5,6 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -20,7 +21,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -101,7 +101,7 @@ public class Comment implements Serializable
         this.createdAt = createdAt;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<Comment> getCommentsCollection()
     {
         return commentsCollection;

@@ -86,7 +86,7 @@ public class SettingController implements Serializable
     {
         Setting updatedsetting = repository.findById(id) //
                 .map(setting -> {
-                    setting.setKey(newsetting.getKey());
+                    setting.setSettingKey(newsetting.getSettingKey());
                     return repository.save(setting);
                 }) //
                 .orElseGet(() -> {
