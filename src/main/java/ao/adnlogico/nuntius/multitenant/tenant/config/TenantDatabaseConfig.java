@@ -83,8 +83,8 @@ public class TenantDatabaseConfig
     @Bean(name = "tenantEntityManagerFactory")
     @ConditionalOnBean(name = "datasourceBasedMultitenantConnectionProvider")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-        @Qualifier("datasourceBasedMultitenantConnectionProvider") MultiTenantConnectionProvider connectionProvider,
-        @Qualifier("currentTenantIdentifierResolver") CurrentTenantIdentifierResolver tenantResolver)
+            @Qualifier("datasourceBasedMultitenantConnectionProvider") MultiTenantConnectionProvider connectionProvider,
+            @Qualifier("currentTenantIdentifierResolver") CurrentTenantIdentifierResolver tenantResolver)
     {
         LocalContainerEntityManagerFactoryBean emfBean = new LocalContainerEntityManagerFactoryBean();
         //All tenant related entities, repositories and service classes must be scanned

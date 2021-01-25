@@ -25,7 +25,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -106,9 +105,9 @@ public class User implements Serializable
     private Collection<Progress> progressCollection;
 
     @JoinTable(
-        name = "user_notifications",
-        joinColumns = @JoinColumn(name = "fk_user"),
-        inverseJoinColumns = @JoinColumn(name = "fk_notification"))
+            name = "user_notifications",
+            joinColumns = @JoinColumn(name = "fk_user"),
+            inverseJoinColumns = @JoinColumn(name = "fk_notification"))
     @ManyToMany
     private Collection<Notification> notifications;
 
@@ -352,7 +351,7 @@ public class User implements Serializable
         return this;
     }
 
-    @XmlTransient
+    @JsonIgnore
     public Collection<DocTemplate> getDocTemplatesCollection()
     {
         return docTemplatesCollection;
