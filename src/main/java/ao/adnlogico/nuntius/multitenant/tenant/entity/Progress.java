@@ -6,6 +6,7 @@
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -22,6 +23,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
+ * To track a progress of process each progress have many steps and on progress
+ * parent.
  *
  * @author Sebastião Paulo
  */
@@ -42,8 +45,11 @@ public class Progress implements Serializable
     @Lob
     @Column(name = "description")
     private String description;
-    @Column(name = "fk_parent")
-    private int fkParent;
+    @ManyToOne
+    @JoinColumn(name = "fk_parent_progress")
+    private Progress fkParent;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkParent")
+    private Collection<Progress> progressCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProgress")
     private Collection<Step> stepsCollection;
     @JoinColumn(name = "fk_department", referencedColumnName = "id")
@@ -62,7 +68,7 @@ public class Progress implements Serializable
         this.id = id;
     }
 
-    public Progress(Long id, String name, String description, int fkParent)
+    public Progress(Long id, String name, String description, Progress fkParent)
     {
         this.id = id;
         this.name = name;
@@ -100,12 +106,24 @@ public class Progress implements Serializable
         this.description = description;
     }
 
-    public int getFkParent()
+    @JsonIgnore
+    public Collection<Progress> getProgressCollection()
+    {
+        return progressCollection;
+    }
+
+    public void setProgressCollection(Collection<Progress> progressCollection)
+    {
+        this.progressCollection = progressCollection;
+    }
+
+    @JsonIgnoreProperties({"fkParent, progressCollection"})
+    public Progress getFkParent()
     {
         return fkParent;
     }
 
-    public void setFkParent(int fkParent)
+    public void setFkParent(Progress fkParent)
     {
         this.fkParent = fkParent;
     }

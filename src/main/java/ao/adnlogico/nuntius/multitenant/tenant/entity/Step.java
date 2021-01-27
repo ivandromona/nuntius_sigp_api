@@ -6,7 +6,6 @@
 package ao.adnlogico.nuntius.multitenant.tenant.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -115,7 +114,7 @@ public class Step implements Serializable
         this.description = description;
     }
 
-    @JsonIgnoreProperties({"fkProcess"})
+    @JsonIgnore
     public Collection<Process> getProcessCollection()
     {
         return processCollection;
@@ -126,7 +125,7 @@ public class Step implements Serializable
         this.processCollection = processCollection;
     }
 
-    @JsonIgnoreProperties({"fkProcess"})
+    @JsonIgnore
     public Collection<Forwarding> getForwardingCollection()
     {
         return forwardingCollection;
