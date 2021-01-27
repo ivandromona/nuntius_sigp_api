@@ -17,9 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -49,8 +49,8 @@ public class UserController implements Serializable
     }
 
     @RequestAuthorization
-    @RequestMapping(value = "/current/{userName}", method = RequestMethod.POST)
-    public ResponseEntity<?> userInfo(@PathVariable String userName) throws AuthenticationException
+    @RequestMapping(value = "/current", method = RequestMethod.POST)
+    public ResponseEntity<?> userInfo(@RequestParam String userName) throws AuthenticationException
     {
         User current = repository.findByEmail(userName);
         AuthResponse response = new AuthResponse(current.getId(), current.getEmail(), "");
