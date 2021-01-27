@@ -49,7 +49,7 @@ public class UserController implements Serializable
     }
 
     @RequestAuthorization
-    @RequestMapping(value = "/current", method = RequestMethod.POST)
+    @RequestMapping(value = "/current/{userName}", method = RequestMethod.POST)
     public ResponseEntity<?> userInfo(@PathVariable String userName) throws AuthenticationException
     {
         User current = repository.findByEmail(userName);
