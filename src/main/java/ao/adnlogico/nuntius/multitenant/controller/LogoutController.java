@@ -20,7 +20,7 @@ import java.util.Map;
  * @author domingos.fernando
  */
 @RestController
-@RequestMapping("/nuntius/v1/api/logout")
+@RequestMapping("/nuntius/v1/api/auth")
 public class LogoutController implements Serializable
 {
 

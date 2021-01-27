@@ -11,11 +11,29 @@ public class AuthResponse implements Serializable
 
     private String userName;
     private String token;
+    private Long id;
+
+    public AuthResponse(Long id, String userName, String token)
+    {
+        this.userName = userName;
+        this.token = token;
+        this.id = id;
+    }
 
     public AuthResponse(String userName, String token)
     {
         this.userName = userName;
         this.token = token;
+    }
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
     }
 
     public String getUserName()

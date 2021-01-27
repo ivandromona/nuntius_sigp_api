@@ -93,7 +93,29 @@ public class ProcessController implements Serializable
     {
         Process updatedProcess = repository.findById(id) //
             .map(process -> {
-                process.setProcessNumber(newProcess.getProcessNumber());
+                process.setOrigin(newProcess.getOrigin());
+                process.setOriginDate(newProcess.getOriginDate());
+                process.setDeadline(newProcess.getDeadline());
+//                process.setProcessNumber(newProcess.getProcessNumber());
+                process.setExternalReference(newProcess.getExternalReference());
+                process.setSubject(newProcess.getSubject());
+                process.setDescription(newProcess.getDescription());
+                process.setConfidential(newProcess.getConfidential());
+                process.setStatus(newProcess.getStatus());
+                process.setFiled(newProcess.getFiled());
+//                process.setCreatedAt(newProcess.getCreatedAt());
+                process.setUpdatedAt(newProcess.getUpdatedAt());
+                process.setProcessType(newProcess.getProcessType());
+                process.setExisting(newProcess.getExisting());
+                process.setClaimant(newProcess.getClaimant());
+                process.setFkRoleType(newProcess.getFkRoleType());
+                process.setFkClaimantEntity(newProcess.getFkClaimantEntity());
+                process.setFkApproval(newProcess.getFkApproval());
+                process.setFkOperatorUser(newProcess.getFkOperatorUser());
+                process.setFkResponsibleUser(newProcess.getFkResponsibleUser());
+                process.setFkClaimantPerson(newProcess.getFkClaimantPerson());
+                process.setFkCategory(newProcess.getFkCategory());
+                process.setFkExplorer(newProcess.getFkExplorer());
                 return repository.save(process);
             }) //
             .orElseGet(() -> {
