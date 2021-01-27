@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author domingos.fernando
  */
 @RestController
-@RequestMapping("/nuntius/v1/api")
+@RequestMapping("/nuntius/v1/api/user")
 public class UserController implements Serializable
 {
 
