@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.entity;
+package ao.adnlogico.nuntius.multitenant.tenant.step;
 
+import ao.adnlogico.nuntius.multitenant.tenant.progress.Progress;
+import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
+import ao.adnlogico.nuntius.multitenant.tenant.forwarding.Forwarding;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
@@ -15,6 +18,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,8 +29,8 @@ import javax.persistence.Table;
  * @author Sebastião Paulo
  */
 @Entity
-@Table(name = "role_types")
-public class RoleType implements Serializable
+@Table(name = "steps")
+public class Step implements Serializable
 {
 
     @Id
@@ -36,37 +42,39 @@ public class RoleType implements Serializable
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "role_key")
-    private String roleKey;
-    @Basic(optional = false)
-    @Column(name = "weight")
-    private short weight;
+    @Column(name = "sort_order")
+    private int sortOrder;
     @Basic(optional = false)
     @Column(name = "description")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkRoleType")
+    @ManyToMany(mappedBy = "stepsCollection")
     private Collection<Process> processCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkRoleType")
-    private Collection<Role> rolesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkRoleType")
-    private Collection<Module> modulesCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkPreviousStep")
+    private Collection<Forwarding> forwardingCollection;
+    @OneToMany(mappedBy = "fkNextStep")
+    private Collection<Step> stepsCollection;
+    @JoinColumn(name = "fk_next_step", referencedColumnName = "id")
+    @ManyToOne
+    private Step fkNextStep;
+    @JoinColumn(name = "fk_progress", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Progress fkProgress;
 
-    public RoleType()
+    public Step()
     {
     }
 
-    public RoleType(Long id)
+    public Step(Long id)
     {
         this.id = id;
     }
 
-    public RoleType(Long id, String name, String key, short weight, String description)
+    public Step(Long id, String name, int sortOrder, String descriprions)
     {
         this.id = id;
         this.name = name;
-        this.roleKey = key;
-        this.weight = weight;
-        this.description = description;
+        this.sortOrder = sortOrder;
+        this.description = descriprions;
     }
 
     public Long getId()
@@ -89,24 +97,14 @@ public class RoleType implements Serializable
         this.name = name;
     }
 
-    public String getRoleKey()
+    public int getSortOrder()
     {
-        return roleKey;
+        return sortOrder;
     }
 
-    public void setRoleKey(String roleKey)
+    public void setSortOrder(int sortOrder)
     {
-        this.roleKey = roleKey;
-    }
-
-    public short getWeight()
-    {
-        return weight;
-    }
-
-    public void setWeight(short weight)
-    {
-        this.weight = weight;
+        this.sortOrder = sortOrder;
     }
 
     public String getDescription()
@@ -131,25 +129,45 @@ public class RoleType implements Serializable
     }
 
     @JsonIgnore
-    public Collection<Role> getRolesCollection()
+    public Collection<Forwarding> getForwardingCollection()
     {
-        return rolesCollection;
+        return forwardingCollection;
     }
 
-    public void setRolesCollection(Collection<Role> rolesCollection)
+    public void setForwardingCollection(Collection<Forwarding> forwardingCollection)
     {
-        this.rolesCollection = rolesCollection;
+        this.forwardingCollection = forwardingCollection;
     }
 
     @JsonIgnore
-    public Collection<Module> getModulesCollection()
+    public Collection<Step> getStepsCollection()
     {
-        return modulesCollection;
+        return stepsCollection;
     }
 
-    public void setModulesCollection(Collection<Module> modulesCollection)
+    public void setStepsCollection(Collection<Step> stepsCollection)
     {
-        this.modulesCollection = modulesCollection;
+        this.stepsCollection = stepsCollection;
+    }
+
+    public Step getFkNextStep()
+    {
+        return fkNextStep;
+    }
+
+    public void setFkNextStep(Step fkNextStep)
+    {
+        this.fkNextStep = fkNextStep;
+    }
+
+    public Progress getFkProgress()
+    {
+        return fkProgress;
+    }
+
+    public void setFkProgress(Progress fkProgress)
+    {
+        this.fkProgress = fkProgress;
     }
 
     @Override
@@ -164,10 +182,10 @@ public class RoleType implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RoleType)) {
+        if (!(object instanceof Step)) {
             return false;
         }
-        RoleType other = (RoleType) object;
+        Step other = (Step) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -177,7 +195,7 @@ public class RoleType implements Serializable
     @Override
     public String toString()
     {
-        return "entities.RoleTypes[ id=" + id + " ]";
+        return "entities.Steps[ id=" + id + " ]";
     }
 
 }

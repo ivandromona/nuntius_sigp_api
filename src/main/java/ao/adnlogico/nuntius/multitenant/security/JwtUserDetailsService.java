@@ -24,7 +24,7 @@ public class JwtUserDetailsService implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException
     {
-        ao.adnlogico.nuntius.multitenant.tenant.entity.User user = userRepository.findByEmail(userName);
+        ao.adnlogico.nuntius.multitenant.tenant.user.User user = userRepository.findByEmail(userName);
         if (null == user) {
             throw new UsernameNotFoundException("Invalid user name or password.");
         }

@@ -1,7 +1,7 @@
 package ao.adnlogico.nuntius.multitenant.controller;
 
 import ao.adnlogico.nuntius.multitenant.tenant.repository.ForwardingRepository;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Forwarding;
+import ao.adnlogico.nuntius.multitenant.tenant.forwarding.Forwarding;
 import ao.adnlogico.nuntius.multitenant.exception.EntityNotFoundException;
 import ao.adnlogico.nuntius.multitenant.security.RequestAuthorization;
 import ao.adnlogico.nuntius.multitenant.tenant.model_assembler.ForwardingModelAssembler;

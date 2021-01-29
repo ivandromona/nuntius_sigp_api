@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.entity;
+package ao.adnlogico.nuntius.multitenant.tenant.module;
 
+import ao.adnlogico.nuntius.multitenant.tenant.role_type.RoleType;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;

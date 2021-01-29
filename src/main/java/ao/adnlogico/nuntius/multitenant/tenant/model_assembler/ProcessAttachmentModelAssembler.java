@@ -6,7 +6,7 @@
 package ao.adnlogico.nuntius.multitenant.tenant.model_assembler;
 
 import ao.adnlogico.nuntius.multitenant.controller.ProcessAttachmentController;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.ProcessAttachment;
+import ao.adnlogico.nuntius.multitenant.tenant.process_atachment.ProcessAttachment;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;

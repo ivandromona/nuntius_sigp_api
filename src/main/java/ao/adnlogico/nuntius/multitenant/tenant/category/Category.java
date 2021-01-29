@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.entity;
+package ao.adnlogico.nuntius.multitenant.tenant.category;
 
+import ao.adnlogico.nuntius.multitenant.tenant.doc_template.DocTemplate;
+import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
@@ -16,7 +18,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -26,8 +27,8 @@ import javax.persistence.Table;
  * @author Sebastião Paulo
  */
 @Entity
-@Table(name = "steps")
-public class Step implements Serializable
+@Table(name = "categories")
+public class Category implements Serializable
 {
 
     @Id
@@ -39,39 +40,32 @@ public class Step implements Serializable
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "sort_order")
-    private int sortOrder;
-    @Basic(optional = false)
     @Column(name = "description")
     private String description;
-    @ManyToMany(mappedBy = "stepsCollection")
+    @Basic(optional = false)
+    @Column(name = "dispatch_time")
+    private int dispatchTime;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkCategory")
     private Collection<Process> processCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkPreviousStep")
-    private Collection<Forwarding> forwardingCollection;
-    @OneToMany(mappedBy = "fkNextStep")
-    private Collection<Step> stepsCollection;
-    @JoinColumn(name = "fk_next_step", referencedColumnName = "id")
+    @JoinColumn(name = "fk_doc_template", referencedColumnName = "id")
     @ManyToOne
-    private Step fkNextStep;
-    @JoinColumn(name = "fk_progress", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Progress fkProgress;
+    private DocTemplate fkDocTemplate;
 
-    public Step()
+    public Category()
     {
     }
 
-    public Step(Long id)
+    public Category(Long id)
     {
         this.id = id;
     }
 
-    public Step(Long id, String name, int sortOrder, String descriprions)
+    public Category(Long id, String name, String description, int dispatchTime)
     {
         this.id = id;
         this.name = name;
-        this.sortOrder = sortOrder;
-        this.description = descriprions;
+        this.description = description;
+        this.dispatchTime = dispatchTime;
     }
 
     public Long getId()
@@ -94,16 +88,6 @@ public class Step implements Serializable
         this.name = name;
     }
 
-    public int getSortOrder()
-    {
-        return sortOrder;
-    }
-
-    public void setSortOrder(int sortOrder)
-    {
-        this.sortOrder = sortOrder;
-    }
-
     public String getDescription()
     {
         return description;
@@ -114,6 +98,17 @@ public class Step implements Serializable
         this.description = description;
     }
 
+    public int getDispatchTime()
+    {
+        return dispatchTime;
+    }
+
+    public void setDispatchTime(int dispatchTime)
+    {
+        this.dispatchTime = dispatchTime;
+    }
+
+//    @JsonIgnoreProperties({"fkCategory", ""})
     @JsonIgnore
     public Collection<Process> getProcessCollection()
     {
@@ -125,46 +120,14 @@ public class Step implements Serializable
         this.processCollection = processCollection;
     }
 
-    @JsonIgnore
-    public Collection<Forwarding> getForwardingCollection()
+    public DocTemplate getFkDocTemplate()
     {
-        return forwardingCollection;
+        return fkDocTemplate;
     }
 
-    public void setForwardingCollection(Collection<Forwarding> forwardingCollection)
+    public void setFkDocTemplate(DocTemplate fkDocTemplate)
     {
-        this.forwardingCollection = forwardingCollection;
-    }
-
-    @JsonIgnore
-    public Collection<Step> getStepsCollection()
-    {
-        return stepsCollection;
-    }
-
-    public void setStepsCollection(Collection<Step> stepsCollection)
-    {
-        this.stepsCollection = stepsCollection;
-    }
-
-    public Step getFkNextStep()
-    {
-        return fkNextStep;
-    }
-
-    public void setFkNextStep(Step fkNextStep)
-    {
-        this.fkNextStep = fkNextStep;
-    }
-
-    public Progress getFkProgress()
-    {
-        return fkProgress;
-    }
-
-    public void setFkProgress(Progress fkProgress)
-    {
-        this.fkProgress = fkProgress;
+        this.fkDocTemplate = fkDocTemplate;
     }
 
     @Override
@@ -179,10 +142,10 @@ public class Step implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Step)) {
+        if (!(object instanceof Category)) {
             return false;
         }
-        Step other = (Step) object;
+        Category other = (Category) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -192,7 +155,7 @@ public class Step implements Serializable
     @Override
     public String toString()
     {
-        return "entities.Steps[ id=" + id + " ]";
+        return "entities.Category[ id=" + id + " ]";
     }
 
 }

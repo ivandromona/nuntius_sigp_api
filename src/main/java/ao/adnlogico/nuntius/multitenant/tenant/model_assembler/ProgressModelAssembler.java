@@ -6,7 +6,7 @@
 package ao.adnlogico.nuntius.multitenant.tenant.model_assembler;
 
 import ao.adnlogico.nuntius.multitenant.controller.ProgressController;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Progress;
+import ao.adnlogico.nuntius.multitenant.tenant.progress.Progress;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;

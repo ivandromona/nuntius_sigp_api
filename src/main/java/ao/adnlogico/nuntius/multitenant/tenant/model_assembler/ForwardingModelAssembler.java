@@ -6,7 +6,7 @@
 package ao.adnlogico.nuntius.multitenant.tenant.model_assembler;
 
 import ao.adnlogico.nuntius.multitenant.controller.ForwardingController;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Forwarding;
+import ao.adnlogico.nuntius.multitenant.tenant.forwarding.Forwarding;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;

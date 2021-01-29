@@ -2,7 +2,7 @@ package ao.adnlogico.nuntius.multitenant.controller;
 
 import ao.adnlogico.nuntius.multitenant.tenant.model_assembler.DocTemplateModelAssembler;
 import ao.adnlogico.nuntius.multitenant.tenant.repository.DocTemplateRepository;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.DocTemplate;
+import ao.adnlogico.nuntius.multitenant.tenant.doc_template.DocTemplate;
 import ao.adnlogico.nuntius.multitenant.exception.EntityNotFoundException;
 import ao.adnlogico.nuntius.multitenant.security.RequestAuthorization;
 import org.slf4j.Logger;

@@ -6,7 +6,7 @@
 package ao.adnlogico.nuntius.multitenant.tenant.model_assembler;
 
 import ao.adnlogico.nuntius.multitenant.controller.SettingController;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Setting;
+import ao.adnlogico.nuntius.multitenant.tenant.settings.Setting;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;

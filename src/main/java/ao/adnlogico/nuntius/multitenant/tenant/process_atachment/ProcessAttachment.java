@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.entity;
+package ao.adnlogico.nuntius.multitenant.tenant.process_atachment;
 
+import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;

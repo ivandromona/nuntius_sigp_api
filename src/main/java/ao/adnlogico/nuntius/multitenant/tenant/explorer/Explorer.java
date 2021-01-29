@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.entity;
+package ao.adnlogico.nuntius.multitenant.tenant.explorer;
 
+import ao.adnlogico.nuntius.multitenant.tenant.department.Department;
+import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
@@ -16,6 +18,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,8 +30,8 @@ import javax.persistence.TemporalType;
  * @author Sebastião Paulo
  */
 @Entity
-@Table(name = "conversations")
-public class Conversation implements Serializable
+@Table(name = "explorers")
+public class Explorer implements Serializable
 {
 
     @Id
@@ -36,11 +40,11 @@ public class Conversation implements Serializable
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @Column(name = "chat_key")
-    private String chatKey;
+    @Column(name = "subject")
+    private String subject;
     @Basic(optional = false)
-    @Column(name = "existing")
-    private short existing;
+    @Column(name = "type")
+    private String type;
     @Basic(optional = false)
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -49,23 +53,31 @@ public class Conversation implements Serializable
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkConversation")
-    private Collection<Message> messagesCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkExplorer")
+    private Collection<Process> processCollection;
+    @JoinColumn(name = "fk_department", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Department fkDepartment;
+    @OneToMany(mappedBy = "fkExplorerFather")
+    private Collection<Explorer> explorersCollection;
+    @JoinColumn(name = "fk_explorer_father", referencedColumnName = "id")
+    @ManyToOne
+    private Explorer fkExplorerFather;
 
-    public Conversation()
+    public Explorer()
     {
     }
 
-    public Conversation(Long id)
+    public Explorer(Long id)
     {
         this.id = id;
     }
 
-    public Conversation(Long id, String key, short existing, Date createdAt, Date updatedAt)
+    public Explorer(Long id, String subject, String type, Date createdAt, Date updatedAt)
     {
         this.id = id;
-        this.chatKey = key;
-        this.existing = existing;
+        this.subject = subject;
+        this.type = type;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -80,24 +92,24 @@ public class Conversation implements Serializable
         this.id = id;
     }
 
-    public String getChatKey()
+    public String getSubject()
     {
-        return chatKey;
+        return subject;
     }
 
-    public void setChatKey(String chatKey)
+    public void setSubject(String subject)
     {
-        this.chatKey = chatKey;
+        this.subject = subject;
     }
 
-    public short getExisting()
+    public String getType()
     {
-        return existing;
+        return type;
     }
 
-    public void setExisting(short existing)
+    public void setType(String type)
     {
-        this.existing = existing;
+        this.type = type;
     }
 
     public Date getCreatedAt()
@@ -121,14 +133,45 @@ public class Conversation implements Serializable
     }
 
     @JsonIgnore
-    public Collection<Message> getMessagesCollection()
+    public Collection<Process> getProcessCollection()
     {
-        return messagesCollection;
+        return processCollection;
     }
 
-    public void setMessagesCollection(Collection<Message> messagesCollection)
+    public void setProcessCollection(Collection<Process> processCollection)
     {
-        this.messagesCollection = messagesCollection;
+        this.processCollection = processCollection;
+    }
+
+    public Department getFkDepartment()
+    {
+        return fkDepartment;
+    }
+
+    public void setFkDepartment(Department fkDepartment)
+    {
+        this.fkDepartment = fkDepartment;
+    }
+
+    @JsonIgnore
+    public Collection<Explorer> getExplorersCollection()
+    {
+        return explorersCollection;
+    }
+
+    public void setExplorersCollection(Collection<Explorer> explorersCollection)
+    {
+        this.explorersCollection = explorersCollection;
+    }
+
+    public Explorer getFkExplorerFather()
+    {
+        return fkExplorerFather;
+    }
+
+    public void setFkExplorerFather(Explorer fkExplorerFather)
+    {
+        this.fkExplorerFather = fkExplorerFather;
     }
 
     @Override
@@ -143,10 +186,10 @@ public class Conversation implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Conversation)) {
+        if (!(object instanceof Explorer)) {
             return false;
         }
-        Conversation other = (Conversation) object;
+        Explorer other = (Explorer) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -156,7 +199,7 @@ public class Conversation implements Serializable
     @Override
     public String toString()
     {
-        return "entities.Conversations[ id=" + id + " ]";
+        return "entities.Explorers[ id=" + id + " ]";
     }
 
 }

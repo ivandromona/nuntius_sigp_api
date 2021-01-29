@@ -3,19 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.entity;
+package ao.adnlogico.nuntius.multitenant.tenant.conversation;
 
+import ao.adnlogico.nuntius.multitenant.tenant.message.Message;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,8 +27,8 @@ import javax.persistence.TemporalType;
  * @author Sebastião Paulo
  */
 @Entity
-@Table(name = "forwardings")
-public class Forwarding implements Serializable
+@Table(name = "conversations")
+public class Conversation implements Serializable
 {
 
     @Id
@@ -35,43 +37,38 @@ public class Forwarding implements Serializable
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @Column(name = "dispatch")
-    private String dispatch;
-    @Lob
-    @Column(name = "comment")
-    private String comment;
+    @Column(name = "chat_key")
+    private String chatKey;
+    @Basic(optional = false)
+    @Column(name = "existing")
+    private short existing;
     @Basic(optional = false)
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @Basic(optional = false)
-    @Column(name = "action")
-    private String action;
-    @JoinColumn(name = "fk_previous_step", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Step fkPreviousStep;
-    @JoinColumn(name = "fk_process", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Process fkProcess;
-    @JoinColumn(name = "fk_user", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private User fkUser;
+    @Column(name = "updated_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkConversation")
+    private Collection<Message> messagesCollection;
 
-    public Forwarding()
+    public Conversation()
     {
     }
 
-    public Forwarding(Long id)
+    public Conversation(Long id)
     {
         this.id = id;
     }
 
-    public Forwarding(Long id, String dispatch, Date createdAt, String action)
+    public Conversation(Long id, String key, short existing, Date createdAt, Date updatedAt)
     {
         this.id = id;
-        this.dispatch = dispatch;
+        this.chatKey = key;
+        this.existing = existing;
         this.createdAt = createdAt;
-        this.action = action;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId()
@@ -84,24 +81,24 @@ public class Forwarding implements Serializable
         this.id = id;
     }
 
-    public String getDispatch()
+    public String getChatKey()
     {
-        return dispatch;
+        return chatKey;
     }
 
-    public void setDispatch(String dispatch)
+    public void setChatKey(String chatKey)
     {
-        this.dispatch = dispatch;
+        this.chatKey = chatKey;
     }
 
-    public String getComment()
+    public short getExisting()
     {
-        return comment;
+        return existing;
     }
 
-    public void setComment(String comment)
+    public void setExisting(short existing)
     {
-        this.comment = comment;
+        this.existing = existing;
     }
 
     public Date getCreatedAt()
@@ -114,44 +111,25 @@ public class Forwarding implements Serializable
         this.createdAt = createdAt;
     }
 
-    public String getAction()
+    public Date getUpdatedAt()
     {
-        return action;
+        return updatedAt;
     }
 
-    public void setAction(String action)
+    public void setUpdatedAt(Date updatedAt)
     {
-        this.action = action;
+        this.updatedAt = updatedAt;
     }
 
-    public Step getFkPreviousStep()
+    @JsonIgnore
+    public Collection<Message> getMessagesCollection()
     {
-        return fkPreviousStep;
+        return messagesCollection;
     }
 
-    public void setFkPreviousStep(Step fkPreviousStep)
+    public void setMessagesCollection(Collection<Message> messagesCollection)
     {
-        this.fkPreviousStep = fkPreviousStep;
-    }
-
-    public Process getFkProcess()
-    {
-        return fkProcess;
-    }
-
-    public void setFkProcess(Process fkProcess)
-    {
-        this.fkProcess = fkProcess;
-    }
-
-    public User getFkUser()
-    {
-        return fkUser;
-    }
-
-    public void setFkUser(User fkUser)
-    {
-        this.fkUser = fkUser;
+        this.messagesCollection = messagesCollection;
     }
 
     @Override
@@ -166,10 +144,10 @@ public class Forwarding implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Forwarding)) {
+        if (!(object instanceof Conversation)) {
             return false;
         }
-        Forwarding other = (Forwarding) object;
+        Conversation other = (Conversation) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -179,7 +157,7 @@ public class Forwarding implements Serializable
     @Override
     public String toString()
     {
-        return "entities.Forwarding[ id=" + id + " ]";
+        return "entities.Conversations[ id=" + id + " ]";
     }
 
 }

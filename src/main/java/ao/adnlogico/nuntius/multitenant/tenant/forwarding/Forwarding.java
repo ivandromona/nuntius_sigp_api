@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.entity;
+package ao.adnlogico.nuntius.multitenant.tenant.forwarding;
 
+import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
+import ao.adnlogico.nuntius.multitenant.tenant.step.Step;
+import ao.adnlogico.nuntius.multitenant.tenant.user.User;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -25,8 +28,8 @@ import javax.persistence.TemporalType;
  * @author Sebastião Paulo
  */
 @Entity
-@Table(name = "documents")
-public class Document implements Serializable
+@Table(name = "forwardings")
+public class Forwarding implements Serializable
 {
 
     @Id
@@ -35,20 +38,21 @@ public class Document implements Serializable
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
+    @Column(name = "dispatch")
+    private String dispatch;
     @Lob
-    @Column(name = "content")
-    private String content;
+    @Column(name = "comment")
+    private String comment;
     @Basic(optional = false)
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @Basic(optional = false)
-    @Column(name = "updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
-    @JoinColumn(name = "fk_doc_template", referencedColumnName = "id")
+    @Column(name = "action")
+    private String action;
+    @JoinColumn(name = "fk_previous_step", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private DocTemplate fkDocTemplate;
+    private Step fkPreviousStep;
     @JoinColumn(name = "fk_process", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Process fkProcess;
@@ -56,21 +60,21 @@ public class Document implements Serializable
     @ManyToOne(optional = false)
     private User fkUser;
 
-    public Document()
+    public Forwarding()
     {
     }
 
-    public Document(Long id)
+    public Forwarding(Long id)
     {
         this.id = id;
     }
 
-    public Document(Long id, String content, Date createdAt, Date updatedAt)
+    public Forwarding(Long id, String dispatch, Date createdAt, String action)
     {
         this.id = id;
-        this.content = content;
+        this.dispatch = dispatch;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.action = action;
     }
 
     public Long getId()
@@ -83,14 +87,24 @@ public class Document implements Serializable
         this.id = id;
     }
 
-    public String getContent()
+    public String getDispatch()
     {
-        return content;
+        return dispatch;
     }
 
-    public void setContent(String content)
+    public void setDispatch(String dispatch)
     {
-        this.content = content;
+        this.dispatch = dispatch;
+    }
+
+    public String getComment()
+    {
+        return comment;
+    }
+
+    public void setComment(String comment)
+    {
+        this.comment = comment;
     }
 
     public Date getCreatedAt()
@@ -103,24 +117,24 @@ public class Document implements Serializable
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt()
+    public String getAction()
     {
-        return updatedAt;
+        return action;
     }
 
-    public void setUpdatedAt(Date updatedAt)
+    public void setAction(String action)
     {
-        this.updatedAt = updatedAt;
+        this.action = action;
     }
 
-    public DocTemplate getFkDocTemplate()
+    public Step getFkPreviousStep()
     {
-        return fkDocTemplate;
+        return fkPreviousStep;
     }
 
-    public void setFkDocTemplate(DocTemplate fkDocTemplate)
+    public void setFkPreviousStep(Step fkPreviousStep)
     {
-        this.fkDocTemplate = fkDocTemplate;
+        this.fkPreviousStep = fkPreviousStep;
     }
 
     public Process getFkProcess()
@@ -155,10 +169,10 @@ public class Document implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Document)) {
+        if (!(object instanceof Forwarding)) {
             return false;
         }
-        Document other = (Document) object;
+        Forwarding other = (Forwarding) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -168,7 +182,7 @@ public class Document implements Serializable
     @Override
     public String toString()
     {
-        return "entities.Documents[ id=" + id + " ]";
+        return "entities.Forwarding[ id=" + id + " ]";
     }
 
 }

@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.entity;
+package ao.adnlogico.nuntius.multitenant.tenant.department;
 
+import ao.adnlogico.nuntius.multitenant.tenant.explorer.Explorer;
+import ao.adnlogico.nuntius.multitenant.tenant.function.Function;
+import ao.adnlogico.nuntius.multitenant.tenant.progress.Progress;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;

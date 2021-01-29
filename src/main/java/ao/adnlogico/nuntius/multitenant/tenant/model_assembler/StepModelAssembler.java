@@ -6,7 +6,7 @@
 package ao.adnlogico.nuntius.multitenant.tenant.model_assembler;
 
 import ao.adnlogico.nuntius.multitenant.controller.StepController;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Step;
+import ao.adnlogico.nuntius.multitenant.tenant.step.Step;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;

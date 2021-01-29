@@ -5,7 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.model_assembler;
 
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Notification;
+import ao.adnlogico.nuntius.multitenant.tenant.notification.Notification;
 import ao.adnlogico.nuntius.multitenant.controller.NotificationController;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;

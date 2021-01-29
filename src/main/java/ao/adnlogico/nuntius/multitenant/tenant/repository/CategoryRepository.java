@@ -1,6 +1,6 @@
 package ao.adnlogico.nuntius.multitenant.tenant.repository;
 
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Category;
+import ao.adnlogico.nuntius.multitenant.tenant.category.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -5,7 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.model_assembler;
 
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Message;
+import ao.adnlogico.nuntius.multitenant.tenant.message.Message;
 import ao.adnlogico.nuntius.multitenant.controller.MessageController;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;

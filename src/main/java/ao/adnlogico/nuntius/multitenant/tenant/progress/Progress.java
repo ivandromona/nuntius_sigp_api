@@ -3,9 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.entity;
+package ao.adnlogico.nuntius.multitenant.tenant.progress;
 
+import ao.adnlogico.nuntius.multitenant.tenant.department.Department;
+import ao.adnlogico.nuntius.multitenant.tenant.step.Step;
+import ao.adnlogico.nuntius.multitenant.tenant.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -16,17 +20,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
+ * To track a progress of process each progress have many steps and on progress
+ * parent.
  *
  * @author Sebastião Paulo
  */
 @Entity
-@Table(name = "functions")
-public class Function implements Serializable
+@Table(name = "progress")
+public class Progress implements Serializable
 {
 
     @Id
@@ -38,30 +45,38 @@ public class Function implements Serializable
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
+    @Lob
     @Column(name = "description")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkApproval")
-    private Collection<Process> processCollection;
+    @ManyToOne
+    @JoinColumn(name = "fk_parent_progress")
+    private Progress fkParent;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkParent")
+    private Collection<Progress> progressCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProgress")
+    private Collection<Step> stepsCollection;
     @JoinColumn(name = "fk_department", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Department fkDepartment;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkFunction")
-    private Collection<User> usersCollection;
+    @JoinColumn(name = "fk_user", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private User fkUser;
 
-    public Function()
+    public Progress()
     {
     }
 
-    public Function(Long id)
+    public Progress(Long id)
     {
         this.id = id;
     }
 
-    public Function(Long id, String name, String description)
+    public Progress(Long id, String name, String description, Progress fkParent)
     {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.fkParent = fkParent;
     }
 
     public Long getId()
@@ -95,14 +110,36 @@ public class Function implements Serializable
     }
 
     @JsonIgnore
-    public Collection<Process> getProcessCollection()
+    public Collection<Progress> getProgressCollection()
     {
-        return processCollection;
+        return progressCollection;
     }
 
-    public void setProcessCollection(Collection<Process> processCollection)
+    public void setProgressCollection(Collection<Progress> progressCollection)
     {
-        this.processCollection = processCollection;
+        this.progressCollection = progressCollection;
+    }
+
+    @JsonIgnoreProperties({"fkParent, progressCollection"})
+    public Progress getFkParent()
+    {
+        return fkParent;
+    }
+
+    public void setFkParent(Progress fkParent)
+    {
+        this.fkParent = fkParent;
+    }
+
+    @JsonIgnore
+    public Collection<Step> getStepsCollection()
+    {
+        return stepsCollection;
+    }
+
+    public void setStepsCollection(Collection<Step> stepsCollection)
+    {
+        this.stepsCollection = stepsCollection;
     }
 
     public Department getFkDepartment()
@@ -115,15 +152,14 @@ public class Function implements Serializable
         this.fkDepartment = fkDepartment;
     }
 
-    @JsonIgnore
-    public Collection<User> getUsersCollection()
+    public User getFkUser()
     {
-        return usersCollection;
+        return fkUser;
     }
 
-    public void setUsersCollection(Collection<User> usersCollection)
+    public void setFkUser(User fkUser)
     {
-        this.usersCollection = usersCollection;
+        this.fkUser = fkUser;
     }
 
     @Override
@@ -138,10 +174,10 @@ public class Function implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Function)) {
+        if (!(object instanceof Progress)) {
             return false;
         }
-        Function other = (Function) object;
+        Progress other = (Progress) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -151,7 +187,7 @@ public class Function implements Serializable
     @Override
     public String toString()
     {
-        return "entities.Functions[ id=" + id + " ]";
+        return "entities.Progress[ id=" + id + " ]";
     }
 
 }

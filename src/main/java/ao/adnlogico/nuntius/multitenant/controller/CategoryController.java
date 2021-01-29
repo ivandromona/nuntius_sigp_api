@@ -2,7 +2,7 @@ package ao.adnlogico.nuntius.multitenant.controller;
 
 import ao.adnlogico.nuntius.multitenant.exception.EntityNotFoundException;
 import ao.adnlogico.nuntius.multitenant.security.RequestAuthorization;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Category;
+import ao.adnlogico.nuntius.multitenant.tenant.category.Category;
 import ao.adnlogico.nuntius.multitenant.tenant.model_assembler.CategoryModelAssembler;
 import ao.adnlogico.nuntius.multitenant.tenant.repository.CategoryRepository;
 import org.slf4j.Logger;

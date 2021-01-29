@@ -1,6 +1,6 @@
 package ao.adnlogico.nuntius.multitenant.tenant.repository;
 
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Message;
+import ao.adnlogico.nuntius.multitenant.tenant.message.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

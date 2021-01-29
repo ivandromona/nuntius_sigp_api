@@ -5,7 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.service;
 
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Process;
+import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
 import java.util.List;
 
 /**

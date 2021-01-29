@@ -5,7 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.model_assembler;
 
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Comment;
+import ao.adnlogico.nuntius.multitenant.tenant.comment.Comment;
 import ao.adnlogico.nuntius.multitenant.controller.CommentController;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;

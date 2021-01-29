@@ -1,6 +1,6 @@
 package ao.adnlogico.nuntius.multitenant.tenant.repository;
 
-import ao.adnlogico.nuntius.multitenant.tenant.entity.Explorer;
+import ao.adnlogico.nuntius.multitenant.tenant.explorer.Explorer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

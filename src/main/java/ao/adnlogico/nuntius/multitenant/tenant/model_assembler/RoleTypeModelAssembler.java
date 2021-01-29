@@ -6,7 +6,7 @@
 package ao.adnlogico.nuntius.multitenant.tenant.model_assembler;
 
 import ao.adnlogico.nuntius.multitenant.controller.RoleTypeController;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.RoleType;
+import ao.adnlogico.nuntius.multitenant.tenant.role_type.RoleType;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;

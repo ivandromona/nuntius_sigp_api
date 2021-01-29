@@ -7,7 +7,7 @@ package ao.adnlogico.nuntius.multitenant.controller;
 
 import ao.adnlogico.nuntius.multitenant.dto.AuthResponse;
 import ao.adnlogico.nuntius.multitenant.security.RequestAuthorization;
-import ao.adnlogico.nuntius.multitenant.tenant.entity.User;
+import ao.adnlogico.nuntius.multitenant.tenant.user.User;
 import ao.adnlogico.nuntius.multitenant.tenant.model_assembler.UserModelAssembler;
 import ao.adnlogico.nuntius.multitenant.tenant.repository.UserRepository;
 import java.io.Serializable;

@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.entity;
+package ao.adnlogico.nuntius.multitenant.tenant.role_type;
 
+import ao.adnlogico.nuntius.multitenant.tenant.role.Role;
+import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
+import ao.adnlogico.nuntius.multitenant.tenant.module.Module;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
@@ -15,8 +18,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,8 +26,8 @@ import javax.persistence.Table;
  * @author Sebastião Paulo
  */
 @Entity
-@Table(name = "categories")
-public class Category implements Serializable
+@Table(name = "role_types")
+public class RoleType implements Serializable
 {
 
     @Id
@@ -38,32 +39,37 @@ public class Category implements Serializable
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
+    @Column(name = "role_key")
+    private String roleKey;
+    @Basic(optional = false)
+    @Column(name = "weight")
+    private short weight;
+    @Basic(optional = false)
     @Column(name = "description")
     private String description;
-    @Basic(optional = false)
-    @Column(name = "dispatch_time")
-    private int dispatchTime;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkCategory")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkRoleType")
     private Collection<Process> processCollection;
-    @JoinColumn(name = "fk_doc_template", referencedColumnName = "id")
-    @ManyToOne
-    private DocTemplate fkDocTemplate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkRoleType")
+    private Collection<Role> rolesCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkRoleType")
+    private Collection<Module> modulesCollection;
 
-    public Category()
+    public RoleType()
     {
     }
 
-    public Category(Long id)
+    public RoleType(Long id)
     {
         this.id = id;
     }
 
-    public Category(Long id, String name, String description, int dispatchTime)
+    public RoleType(Long id, String name, String key, short weight, String description)
     {
         this.id = id;
         this.name = name;
+        this.roleKey = key;
+        this.weight = weight;
         this.description = description;
-        this.dispatchTime = dispatchTime;
     }
 
     public Long getId()
@@ -86,6 +92,26 @@ public class Category implements Serializable
         this.name = name;
     }
 
+    public String getRoleKey()
+    {
+        return roleKey;
+    }
+
+    public void setRoleKey(String roleKey)
+    {
+        this.roleKey = roleKey;
+    }
+
+    public short getWeight()
+    {
+        return weight;
+    }
+
+    public void setWeight(short weight)
+    {
+        this.weight = weight;
+    }
+
     public String getDescription()
     {
         return description;
@@ -96,17 +122,6 @@ public class Category implements Serializable
         this.description = description;
     }
 
-    public int getDispatchTime()
-    {
-        return dispatchTime;
-    }
-
-    public void setDispatchTime(int dispatchTime)
-    {
-        this.dispatchTime = dispatchTime;
-    }
-
-//    @JsonIgnoreProperties({"fkCategory", ""})
     @JsonIgnore
     public Collection<Process> getProcessCollection()
     {
@@ -118,14 +133,26 @@ public class Category implements Serializable
         this.processCollection = processCollection;
     }
 
-    public DocTemplate getFkDocTemplate()
+    @JsonIgnore
+    public Collection<Role> getRolesCollection()
     {
-        return fkDocTemplate;
+        return rolesCollection;
     }
 
-    public void setFkDocTemplate(DocTemplate fkDocTemplate)
+    public void setRolesCollection(Collection<Role> rolesCollection)
     {
-        this.fkDocTemplate = fkDocTemplate;
+        this.rolesCollection = rolesCollection;
+    }
+
+    @JsonIgnore
+    public Collection<Module> getModulesCollection()
+    {
+        return modulesCollection;
+    }
+
+    public void setModulesCollection(Collection<Module> modulesCollection)
+    {
+        this.modulesCollection = modulesCollection;
     }
 
     @Override
@@ -140,10 +167,10 @@ public class Category implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Category)) {
+        if (!(object instanceof RoleType)) {
             return false;
         }
-        Category other = (Category) object;
+        RoleType other = (RoleType) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -153,7 +180,7 @@ public class Category implements Serializable
     @Override
     public String toString()
     {
-        return "entities.Category[ id=" + id + " ]";
+        return "entities.RoleTypes[ id=" + id + " ]";
     }
 
 }

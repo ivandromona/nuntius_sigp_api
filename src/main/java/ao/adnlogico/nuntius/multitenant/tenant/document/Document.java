@@ -3,22 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.entity;
+package ao.adnlogico.nuntius.multitenant.tenant.document;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import ao.adnlogico.nuntius.multitenant.tenant.doc_template.DocTemplate;
+import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
+import ao.adnlogico.nuntius.multitenant.tenant.user.User;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,8 +28,8 @@ import javax.persistence.TemporalType;
  * @author Sebastião Paulo
  */
 @Entity
-@Table(name = "explorers")
-public class Explorer implements Serializable
+@Table(name = "documents")
+public class Document implements Serializable
 {
 
     @Id
@@ -38,11 +38,9 @@ public class Explorer implements Serializable
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @Column(name = "subject")
-    private String subject;
-    @Basic(optional = false)
-    @Column(name = "type")
-    private String type;
+    @Lob
+    @Column(name = "content")
+    private String content;
     @Basic(optional = false)
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -51,31 +49,29 @@ public class Explorer implements Serializable
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkExplorer")
-    private Collection<Process> processCollection;
-    @JoinColumn(name = "fk_department", referencedColumnName = "id")
+    @JoinColumn(name = "fk_doc_template", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Department fkDepartment;
-    @OneToMany(mappedBy = "fkExplorerFather")
-    private Collection<Explorer> explorersCollection;
-    @JoinColumn(name = "fk_explorer_father", referencedColumnName = "id")
-    @ManyToOne
-    private Explorer fkExplorerFather;
+    private DocTemplate fkDocTemplate;
+    @JoinColumn(name = "fk_process", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Process fkProcess;
+    @JoinColumn(name = "fk_user", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private User fkUser;
 
-    public Explorer()
+    public Document()
     {
     }
 
-    public Explorer(Long id)
+    public Document(Long id)
     {
         this.id = id;
     }
 
-    public Explorer(Long id, String subject, String type, Date createdAt, Date updatedAt)
+    public Document(Long id, String content, Date createdAt, Date updatedAt)
     {
         this.id = id;
-        this.subject = subject;
-        this.type = type;
+        this.content = content;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -90,24 +86,14 @@ public class Explorer implements Serializable
         this.id = id;
     }
 
-    public String getSubject()
+    public String getContent()
     {
-        return subject;
+        return content;
     }
 
-    public void setSubject(String subject)
+    public void setContent(String content)
     {
-        this.subject = subject;
-    }
-
-    public String getType()
-    {
-        return type;
-    }
-
-    public void setType(String type)
-    {
-        this.type = type;
+        this.content = content;
     }
 
     public Date getCreatedAt()
@@ -130,46 +116,34 @@ public class Explorer implements Serializable
         this.updatedAt = updatedAt;
     }
 
-    @JsonIgnore
-    public Collection<Process> getProcessCollection()
+    public DocTemplate getFkDocTemplate()
     {
-        return processCollection;
+        return fkDocTemplate;
     }
 
-    public void setProcessCollection(Collection<Process> processCollection)
+    public void setFkDocTemplate(DocTemplate fkDocTemplate)
     {
-        this.processCollection = processCollection;
+        this.fkDocTemplate = fkDocTemplate;
     }
 
-    public Department getFkDepartment()
+    public Process getFkProcess()
     {
-        return fkDepartment;
+        return fkProcess;
     }
 
-    public void setFkDepartment(Department fkDepartment)
+    public void setFkProcess(Process fkProcess)
     {
-        this.fkDepartment = fkDepartment;
+        this.fkProcess = fkProcess;
     }
 
-    @JsonIgnore
-    public Collection<Explorer> getExplorersCollection()
+    public User getFkUser()
     {
-        return explorersCollection;
+        return fkUser;
     }
 
-    public void setExplorersCollection(Collection<Explorer> explorersCollection)
+    public void setFkUser(User fkUser)
     {
-        this.explorersCollection = explorersCollection;
-    }
-
-    public Explorer getFkExplorerFather()
-    {
-        return fkExplorerFather;
-    }
-
-    public void setFkExplorerFather(Explorer fkExplorerFather)
-    {
-        this.fkExplorerFather = fkExplorerFather;
+        this.fkUser = fkUser;
     }
 
     @Override
@@ -184,10 +158,10 @@ public class Explorer implements Serializable
     public boolean equals(Object object)
     {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Explorer)) {
+        if (!(object instanceof Document)) {
             return false;
         }
-        Explorer other = (Explorer) object;
+        Document other = (Document) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -197,7 +171,7 @@ public class Explorer implements Serializable
     @Override
     public String toString()
     {
-        return "entities.Explorers[ id=" + id + " ]";
+        return "entities.Documents[ id=" + id + " ]";
     }
 
 }

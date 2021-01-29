@@ -3,8 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.entity;
+package ao.adnlogico.nuntius.multitenant.tenant.user;
 
+import ao.adnlogico.nuntius.multitenant.tenant.role.Role;
+import ao.adnlogico.nuntius.multitenant.tenant.progress.Progress;
+import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
+import ao.adnlogico.nuntius.multitenant.tenant.person.Person;
+import ao.adnlogico.nuntius.multitenant.tenant.notification.Notification;
+import ao.adnlogico.nuntius.multitenant.tenant.message.Message;
+import ao.adnlogico.nuntius.multitenant.tenant.function.Function;
+import ao.adnlogico.nuntius.multitenant.tenant.forwarding.Forwarding;
+import ao.adnlogico.nuntius.multitenant.tenant.document.Document;
+import ao.adnlogico.nuntius.multitenant.tenant.doc_template.DocTemplate;
+import ao.adnlogico.nuntius.multitenant.tenant.comment.Comment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
