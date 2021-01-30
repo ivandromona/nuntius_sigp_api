@@ -24,8 +24,8 @@ import java.util.Map;
  * @author Md. Amran Hossain
  */
 @Configuration
-@ComponentScan(basePackages = {"ao.adnlogico.nuntius.multitenant.tenant.repository", "ao.adnlogico.nuntius.multitenant.tenant.entity"})
-@EnableJpaRepositories(basePackages = {"ao.adnlogico.nuntius.multitenant.tenant.repository", "ao.adnlogico.nuntius.multitenant.tenant.service"},
+@ComponentScan(basePackages = {"ao.adnlogico.nuntius.multitenant.tenant"})
+@EnableJpaRepositories(basePackages = {"ao.adnlogico.nuntius.multitenant.tenant", "ao.adnlogico.nuntius.multitenant.tenant.service"},
                        entityManagerFactoryRef = "tenantEntityManagerFactory",
                        transactionManagerRef = "tenantTransactionManager")
 @EnableTransactionManagement

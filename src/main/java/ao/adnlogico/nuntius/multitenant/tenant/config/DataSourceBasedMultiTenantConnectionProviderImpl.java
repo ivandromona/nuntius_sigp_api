@@ -1,8 +1,8 @@
 package ao.adnlogico.nuntius.multitenant.tenant.config;
 
 import ao.adnlogico.nuntius.multitenant.master.config.DBContextHolder;
-import ao.adnlogico.nuntius.multitenant.master.entity.MasterTenant;
-import ao.adnlogico.nuntius.multitenant.master.repository.MasterTenantRepository;
+import ao.adnlogico.nuntius.multitenant.master.MasterTenant;
+import ao.adnlogico.nuntius.multitenant.master.MasterTenantRepository;
 import ao.adnlogico.nuntius.multitenant.util.DataSourceUtil;
 import org.hibernate.engine.jdbc.connections.spi.AbstractDataSourceBasedMultiTenantConnectionProviderImpl;
 import org.slf4j.Logger;

@@ -1,7 +1,7 @@
 package ao.adnlogico.nuntius.multitenant.security;
 
 import ao.adnlogico.nuntius.multitenant.master.config.DBContextHolder;
-import ao.adnlogico.nuntius.multitenant.master.service.MasterTenantService;
+import ao.adnlogico.nuntius.multitenant.master.MasterTenantService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

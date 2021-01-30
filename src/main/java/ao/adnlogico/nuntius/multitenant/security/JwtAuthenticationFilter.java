@@ -2,8 +2,8 @@ package ao.adnlogico.nuntius.multitenant.security;
 
 import ao.adnlogico.nuntius.multitenant.constant.JWTConstants;
 import ao.adnlogico.nuntius.multitenant.master.config.DBContextHolder;
-import ao.adnlogico.nuntius.multitenant.master.entity.MasterTenant;
-import ao.adnlogico.nuntius.multitenant.master.service.MasterTenantService;
+import ao.adnlogico.nuntius.multitenant.master.MasterTenant;
+import ao.adnlogico.nuntius.multitenant.master.MasterTenantService;
 import ao.adnlogico.nuntius.multitenant.util.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;

@@ -5,7 +5,7 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.service;
 
-import ao.adnlogico.nuntius.multitenant.tenant.repository.ProcessRepository;
+import ao.adnlogico.nuntius.multitenant.tenant.process.ProcessRepository;
 import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
