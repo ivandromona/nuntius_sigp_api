@@ -134,14 +134,14 @@ public class UserController implements Serializable
     @PutMapping("/user/password/{id}")
     public ResponseEntity<?> updatePassword(@RequestBody UserPasswordUpdater newUserPasswd, @PathVariable Long id)
     {
-        newUserPasswd.setNewPassword(pwdEncoder.getPasswordEncoder().encode(newUserPasswd.getNewPassword()));
-        newUserPasswd.setOldPassword(pwdEncoder.getPasswordEncoder().encode(newUserPasswd.getOldPassword()));
-//        ApiError(HttpStatus.UNAUTHORIZED, "Erro ao tentar atualizar a password, confirme sua password anterior.", "Passwords diferentes.");
         User user = repository.findById(id) //
             .orElseThrow(() -> new EntityNotFoundException(new User(), id));
 
         ApiError apiError;
-        if (user.getPassword().equals(newUserPasswd.getOldPassword())) {
+        LOGGER.info("Old Encripted password: " + newUserPasswd.getOldPassword());
+        LOGGER.info("Stored Encripted password: " + user.getPassword());
+        if (pwdEncoder.getPasswordEncoder().matches(newUserPasswd.getOldPassword(), user.getPassword())) {
+            user.setPassword(pwdEncoder.getPasswordEncoder().encode(newUserPasswd.getNewPassword()));
             repository.save(user);
             apiError = new ApiError(HttpStatus.OK, "A sua palavra passe foi atualizada com sucesso de hoje em diante passará a usar a nova palavra passe", "Operação efetuada com sucesso");
         }
