@@ -1,7 +1,7 @@
 package ao.adnlogico.nuntius.multitenant.tenant.process_atachment;
 
-import ao.adnlogico.nuntius.multitenant.tenant.process_atachment.ProcessAttachment;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,5 +10,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProcessAttachmentRepository extends JpaRepository<ProcessAttachment, Long>
 {
+
+    @Query("SELECT pa FROM ProcessAttachment pa WHERE pa.fkProcess = ?1 AND pa.file = ?2")
+    ProcessAttachment checkFileByProcess(ao.adnlogico.nuntius.multitenant.tenant.process.Process process, String fileType);
+
+    @Query("SELECT pa.name FROM ProcessAttachment pa WHERE pa.fkProcess = ?1 AND pa.file = ?2")
+    String getUploadFilePath(ao.adnlogico.nuntius.multitenant.tenant.process.Process process, String fileType);
 
 }

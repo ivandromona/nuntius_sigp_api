@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  *
@@ -39,6 +40,9 @@ public class MasterDatabaseConfig
     @Autowired
     private MasterDatabaseConfigProperties masterDbProperties;
 
+    @Value("${enviroment.staging}")
+    private String enviromentValue;
+
     //Create Master Data Source using master properties and also configure HikariCP
     @Bean(name = "masterDataSource")
     public DataSource masterDataSource()
@@ -55,6 +59,8 @@ public class MasterDatabaseConfig
         hikariDataSource.setConnectionTimeout(masterDbProperties.getConnectionTimeout());
         hikariDataSource.setIdleTimeout(masterDbProperties.getIdleTimeout());
         LOG.info("Setup of masterDataSource succeeded.");
+        LOG.info("Enviroment: " + enviromentValue);
+
         return hikariDataSource;
     }
 

@@ -5,8 +5,6 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.process_atachment;
 
-import ao.adnlogico.nuntius.multitenant.tenant.process_atachment.ProcessAttachmentController;
-import ao.adnlogico.nuntius.multitenant.tenant.process_atachment.ProcessAttachment;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
@@ -26,7 +24,7 @@ public class ProcessAttachmentModelAssembler implements RepresentationModelAssem
     {
 
         return EntityModel.of(process, //
-                linkTo(methodOn(ProcessAttachmentController.class).findById(process.getId())).withSelfRel(),
-                linkTo(methodOn(ProcessAttachmentController.class).all()).withRel("provinces"));
+            linkTo(methodOn(ProcessAttachmentController.class).findById(process.getId())).withSelfRel(),
+            linkTo(methodOn(ProcessAttachmentController.class).all()).withRel("provinces"));
     }
 }

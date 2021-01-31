@@ -19,11 +19,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  *
  * @author Sebastião Paulo
  */
+@ConfigurationProperties(prefix = "file")
 @Entity
 @Table(name = "process_attachments")
 public class ProcessAttachment implements Serializable
@@ -38,20 +40,20 @@ public class ProcessAttachment implements Serializable
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "description")
-    private String description;
-    @Basic(optional = false)
-    @Column(name = "file_url")
-    private String fileUrl;
-    @Basic(optional = false)
     @Column(name = "file")
     private String file;
+    @Column(name = "extension")
+    private String extension;
+    @Basic(optional = false)
+    @Column(name = "file_url")
+    private String uploadDir;
+    @Basic(optional = false)
+    @Column(name = "description")
+    private String description;
     @Basic(optional = false)
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    @Column(name = "extension")
-    private String extension;
     @JoinColumn(name = "fk_process", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Process fkProcess;
@@ -70,7 +72,7 @@ public class ProcessAttachment implements Serializable
         this.id = id;
         this.name = name;
         this.description = description;
-        this.fileUrl = fileUrl;
+        this.uploadDir = fileUrl;
         this.file = file;
         this.createdAt = createdAt;
     }
@@ -105,14 +107,14 @@ public class ProcessAttachment implements Serializable
         this.description = description;
     }
 
-    public String getFileUrl()
+    public String getUploadDir()
     {
-        return fileUrl;
+        return uploadDir;
     }
 
-    public void setFileUrl(String fileUrl)
+    public void setUploadDir(String uploadDir)
     {
-        this.fileUrl = fileUrl;
+        this.uploadDir = uploadDir;
     }
 
     public String getFile()
