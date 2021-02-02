@@ -25,8 +25,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @author Sebastião Paulo
  */
-@ConfigurationProperties(prefix = "file")
 @Entity
+@ConfigurationProperties(prefix = "file")
 @Table(name = "process_attachments")
 public class ProcessAttachment implements Serializable
 {
@@ -44,10 +44,8 @@ public class ProcessAttachment implements Serializable
     private String file;
     @Column(name = "extension")
     private String extension;
-    @Basic(optional = false)
-    @Column(name = "file_url")
+    @Column(name = "upload_dir")
     private String uploadDir;
-//    @Basic(optional = false)
     @Column(name = "description")
     private String description;
     @Basic(optional = false)

@@ -6,6 +6,7 @@
 package ao.adnlogico.nuntius.multitenant.tenant.process_atachment;
 
 import ao.adnlogico.nuntius.multitenant.dto.StorageService;
+import ao.adnlogico.nuntius.multitenant.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -22,6 +23,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 import org.springframework.util.FileSystemUtils;
 import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
+import ao.adnlogico.nuntius.multitenant.tenant.process.ProcessRepository;
 import java.util.Calendar;
 
 /**
@@ -36,12 +38,15 @@ public class FileStorageService implements StorageService
 
     @Autowired
     ProcessAttachmentRepository repository;
+    @Autowired
+    ProcessRepository processRepository;
 
     @Autowired
     public FileStorageService(ProcessAttachment fileStorageProperties)
     {
         this.rootFileLocation = Paths.get(fileStorageProperties.getUploadDir())
-                .toAbsolutePath().normalize();
+            .toAbsolutePath().normalize();
+        System.err.println("\nUpload DIrr: " + this.rootFileLocation + "\n");
         init();
     }
 
@@ -58,6 +63,56 @@ public class FileStorageService implements StorageService
         }
         catch (IOException ex) {
             throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
+        }
+    }
+
+    @Override
+    public String store(MultipartFile file, Process process, String fileType, String description)
+    {
+        // Normalize file name
+        String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = "";
+
+        try {
+            // Check if the file's name contains invalid characters
+            if (originalFileName.contains("..")) {
+                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + originalFileName);
+            }
+            String fileExtension = "";
+            try {
+                fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+            }
+            catch (Exception e) {
+                fileExtension = "";
+            }
+
+            final Process localProcess = processRepository.findById(process.getId()).orElseThrow(() -> new EntityNotFoundException(new Process(), process.getId()));
+            fileName = localProcess.getProcessNumber() + "_" + fileType + fileExtension;
+            // Copy file to the target location (Replacing existing file with the same name)
+            Path targetLocation = this.rootFileLocation.resolve(fileName);
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            ProcessAttachment fileEntity = repository.checkFileByProcess(process, fileType);
+            if (fileEntity != null) {
+                fileEntity.setExtension(file.getContentType());
+                fileEntity.setName(fileName);
+                fileEntity.setDescription(description);
+                repository.save(fileEntity);
+            }
+            else {
+                ProcessAttachment newFile = new ProcessAttachment();
+                newFile.setFkProcess(process);
+                newFile.setExtension(file.getContentType());
+                newFile.setName(fileName);
+                newFile.setFile(fileType);
+                newFile.setDescription(description);
+                newFile.setCreatedAt(Calendar.getInstance().getTime());
+                repository.save(newFile);
+            }
+
+            return fileName;
+        }
+        catch (IOException ex) {
+            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
         }
     }
 
@@ -113,8 +168,8 @@ public class FileStorageService implements StorageService
     {
         try {
             return Files.walk(this.rootFileLocation, 1)
-                    .filter(path -> !path.equals(this.rootFileLocation))
-                    .map(this.rootFileLocation::relativize);
+                .filter(path -> !path.equals(this.rootFileLocation))
+                .map(this.rootFileLocation::relativize);
         }
         catch (IOException e) {
             throw new FileStorageException("Failed to read stored files", e);

@@ -122,7 +122,7 @@ public class ProcessAttachmentController implements Serializable
     }
 
 //    Implementação do file sistem control
-    @GetMapping("/file")
+    @GetMapping("/processAttachment/files")
     public List listUploadedFiles(Model model) throws IOException
     {
 
@@ -132,15 +132,16 @@ public class ProcessAttachmentController implements Serializable
             .collect(Collectors.toList());
     }
 
-    @PostMapping("/file/upload")
+    @PostMapping("/processAttachment/upload")
     public ao.adnlogico.nuntius.multitenant.dto.UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file,
-                                                                                                   @RequestParam("process") Integer process,
-                                                                                                   @RequestParam("fileType") String fileType)
+                                                                              @RequestParam("process") Integer process,
+                                                                              @RequestParam("fileType") String fileType,
+                                                                              @RequestParam("description") String description)
     {
-        String fileName = fileStorageService.store(file, new ao.adnlogico.nuntius.multitenant.tenant.process.Process(Long.valueOf(process)), fileType);
+        String fileName = fileStorageService.store(file, new ao.adnlogico.nuntius.multitenant.tenant.process.Process(Long.valueOf(process)), fileType, description);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-            .path("/nuntius/v1/api/file/download/")
+            .path("/nuntius/v1/api/processAttachment/download/")
             .path(fileName)
             .toUriString();
 
@@ -148,7 +149,7 @@ public class ProcessAttachmentController implements Serializable
             file.getContentType(), file.getSize());
     }
 
-    @GetMapping("/file/download")
+    @GetMapping("/processAttachment/download")
     public ResponseEntity<Resource> downloadFile(@RequestParam("process") Integer process,
                                                  @RequestParam("fileType") String fileType,
                                                  HttpServletRequest request)
@@ -189,7 +190,7 @@ public class ProcessAttachmentController implements Serializable
 
     }
 
-    @GetMapping("/files/{filename:.+}")
+    @GetMapping("/processAttachments/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws Exception
     {

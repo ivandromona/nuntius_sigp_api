@@ -22,6 +22,8 @@ public interface StorageService
 
     String store(MultipartFile file, ao.adnlogico.nuntius.multitenant.tenant.process.Process process, String fileType);
 
+    String store(MultipartFile file, ao.adnlogico.nuntius.multitenant.tenant.process.Process process, String fileType, String description);
+
     Stream<Path> loadAll();
 
     Path load(String fileName);
