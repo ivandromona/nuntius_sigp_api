@@ -41,7 +41,7 @@ public class FileStorageService implements StorageService
     public FileStorageService(ProcessAttachment fileStorageProperties)
     {
         this.rootFileLocation = Paths.get(fileStorageProperties.getUploadDir())
-            .toAbsolutePath().normalize();
+                .toAbsolutePath().normalize();
         init();
     }
 
@@ -113,8 +113,8 @@ public class FileStorageService implements StorageService
     {
         try {
             return Files.walk(this.rootFileLocation, 1)
-                .filter(path -> !path.equals(this.rootFileLocation))
-                .map(this.rootFileLocation::relativize);
+                    .filter(path -> !path.equals(this.rootFileLocation))
+                    .map(this.rootFileLocation::relativize);
         }
         catch (IOException e) {
             throw new FileStorageException("Failed to read stored files", e);

@@ -47,7 +47,7 @@ public class ProcessAttachment implements Serializable
     @Basic(optional = false)
     @Column(name = "file_url")
     private String uploadDir;
-    @Basic(optional = false)
+//    @Basic(optional = false)
     @Column(name = "description")
     private String description;
     @Basic(optional = false)
