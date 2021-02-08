@@ -64,8 +64,8 @@ public class ProcessAttachmentController implements Serializable
     public CollectionModel<EntityModel<ProcessAttachment>> all()
     {
         List<EntityModel<ProcessAttachment>> processAttachments = repository.findAll().stream() //
-            .map(assembler::toModel) //
-            .collect(Collectors.toList());
+                .map(assembler::toModel) //
+                .collect(Collectors.toList());
 
         return CollectionModel.of(processAttachments, linkTo(methodOn(ProcessAttachmentController.class).all()).withSelfRel());
     }
@@ -77,8 +77,8 @@ public class ProcessAttachmentController implements Serializable
         EntityModel<ProcessAttachment> entityModel = assembler.toModel(repository.save(processAttachment));
 
         return ResponseEntity //
-            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-            .body(entityModel);
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+                .body(entityModel);
     }
 
     @RequestAuthorization
@@ -86,7 +86,7 @@ public class ProcessAttachmentController implements Serializable
     public EntityModel<ProcessAttachment> findById(@PathVariable Long id)
     {
         ProcessAttachment processAttachment = repository.findById(id) //
-            .orElseThrow(() -> new EntityNotFoundException(new ProcessAttachment(), id));
+                .orElseThrow(() -> new EntityNotFoundException(new ProcessAttachment(), id));
 
         return assembler.toModel(processAttachment);
     }
@@ -96,20 +96,20 @@ public class ProcessAttachmentController implements Serializable
     public ResponseEntity<?> update(@RequestBody ProcessAttachment newprocessAttachment, @PathVariable Long id)
     {
         ProcessAttachment updatedprocessAttachment = repository.findById(id) //
-            .map(processAttachment -> {
-                processAttachment.setDescription(newprocessAttachment.getDescription());
-                return repository.save(processAttachment);
-            }) //
-            .orElseGet(() -> {
-                newprocessAttachment.setId(id);
-                return repository.save(newprocessAttachment);
-            });
+                .map(processAttachment -> {
+                    processAttachment.setDescription(newprocessAttachment.getDescription());
+                    return repository.save(processAttachment);
+                }) //
+                .orElseGet(() -> {
+                    newprocessAttachment.setId(id);
+                    return repository.save(newprocessAttachment);
+                });
 
         EntityModel<ProcessAttachment> entityModel = assembler.toModel(updatedprocessAttachment);
 
         return ResponseEntity //
-            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-            .body(entityModel);
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+                .body(entityModel);
     }
 
     @RequestAuthorization
@@ -127,9 +127,9 @@ public class ProcessAttachmentController implements Serializable
     {
 
         return fileStorageService.loadAll().map(
-            path -> MvcUriComponentsBuilder.fromMethodName(ProcessAttachment.class,
-                "serveFile", path.getFileName().toString()).build().toUri().toString())
-            .collect(Collectors.toList());
+                path -> MvcUriComponentsBuilder.fromMethodName(ProcessAttachment.class,
+                        "serveFile", path.getFileName().toString()).build().toUri().toString())
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/processAttachment/upload")
@@ -141,12 +141,12 @@ public class ProcessAttachmentController implements Serializable
         String fileName = fileStorageService.store(file, new ao.adnlogico.nuntius.multitenant.tenant.process.Process(Long.valueOf(process)), fileType, description);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-            .path("/nuntius/v1/api/processAttachment/download/")
-            .path(fileName)
-            .toUriString();
+                .path("/nuntius/v1/api/processAttachment/download/")
+                .path(fileName)
+                .toUriString();
 
         return new ao.adnlogico.nuntius.multitenant.dto.UploadFileResponse(fileName, fileDownloadUri,
-            file.getContentType(), file.getSize());
+                file.getContentType(), file.getSize());
     }
 
     @GetMapping("/processAttachment/download")
@@ -179,9 +179,50 @@ public class ProcessAttachmentController implements Serializable
             }
 
             return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        }
+        else {
+            return ResponseEntity.notFound().build();
+
+        }
+
+    }
+
+    @GetMapping("/processAttachment/showdirect")
+    public ResponseEntity<Resource> showFile(@RequestParam("process") Integer process,
+                                             @RequestParam("fileType") String fileType,
+                                             HttpServletRequest request)
+    {
+
+        String fileName = fileStorageService.getFileName(new ao.adnlogico.nuntius.multitenant.tenant.process.Process(Long.valueOf(process)), fileType);
+        Resource resource = null;
+        if (fileName != null && !fileName.isEmpty()) {
+            try {
+                resource = fileStorageService.loadAsResource(fileName);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            // Try to determine file's content type
+            String contentType = null;
+
+            try {
+                contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+            }
+            catch (IOException ex) {
+                //logger.info("Could not determine file type.");
+            }
+            // Fallback to the default content type if type could not be determined
+            if (contentType == null) {
+                contentType = "application/octet-stream";
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
         }
         else {
             return ResponseEntity.notFound().build();
@@ -197,7 +238,7 @@ public class ProcessAttachmentController implements Serializable
 
         Resource file = fileStorageService.loadAsResource(filename);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-            "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
 }

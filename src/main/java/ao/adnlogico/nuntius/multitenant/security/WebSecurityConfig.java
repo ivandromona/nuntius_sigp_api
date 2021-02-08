@@ -41,7 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         "/configuration/ui",
         "/configuration/security",
         "/swagger-ui/**",
-        "/webjars/**"
+        "/webjars/**",
+        "/nuntius/v1/api/processAttachment/showdirect"
     };
 
     @Override
@@ -67,13 +68,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         http.cors().and().csrf().disable().
-            authorizeRequests()
-            .antMatchers(AUTH_WHITELIST).permitAll()
-            .antMatchers(HttpMethod.POST, "/nuntius/v1/api/auth/**").permitAll()
-            .antMatchers("/nuntius/v1/api/**").authenticated()
-            .and()
-            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                authorizeRequests()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers(HttpMethod.POST, "/nuntius/v1/api/auth/**").permitAll()
+                .antMatchers("/nuntius/v1/api/**").authenticated()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class
         );
     }
