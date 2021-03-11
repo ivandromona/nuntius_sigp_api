@@ -68,13 +68,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         http.cors().and().csrf().disable().
-                authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers(HttpMethod.POST, "/nuntius/v1/api/auth/**").permitAll()
-                .antMatchers("/nuntius/v1/api/**").authenticated()
-                .and()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            authorizeRequests()
+            .antMatchers(AUTH_WHITELIST).permitAll()
+            .antMatchers(HttpMethod.POST, "/nuntius/v1/api/auth/**").permitAll()
+            .antMatchers("/nuntius/v1/api/**").authenticated()
+            .and()
+            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class
         );
     }
@@ -97,7 +97,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 
         CorsConfiguration configAutenticacao = new CorsConfiguration();
         configAutenticacao.setAllowCredentials(true);
-        configAutenticacao.addAllowedOriginPattern("*");
+        configAutenticacao.addAllowedOrigin("*");
         configAutenticacao.addAllowedHeader("Authorization");
         configAutenticacao.addAllowedHeader("Content-Type");
         configAutenticacao.addAllowedHeader("Accept");
