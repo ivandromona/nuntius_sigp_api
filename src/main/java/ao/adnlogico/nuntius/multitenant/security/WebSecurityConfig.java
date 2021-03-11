@@ -70,8 +70,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     {
         http.cors().and().csrf().disable().
             authorizeRequests()
-            .antMatchers(AUTH_WHITELIST).permitAll()
-            .antMatchers(HttpMethod.POST, "/nuntius/v1/api/auth/**").permitAll()
+            .antMatchers(HttpMethod.GET, AUTH_WHITELIST).permitAll()
+            .antMatchers(HttpMethod.POST, "/nuntius/v1/api/auth/login").permitAll()
             .antMatchers("/nuntius/v1/api/**").authenticated()
             .and()
             .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
@@ -99,14 +99,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         CorsConfiguration configAutenticacao = new CorsConfiguration();
         configAutenticacao.setAllowCredentials(true);
         configAutenticacao.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://localhost:4200", "http://app.nuntius.ao", "https://app.nuntius.ao"));
-        configAutenticacao.addAllowedHeader("Authorization");
-        configAutenticacao.addAllowedHeader("Content-Type");
-        configAutenticacao.addAllowedHeader("Accept");
-        configAutenticacao.addAllowedMethod("POST");
-        configAutenticacao.addAllowedMethod("GET");
-        configAutenticacao.addAllowedMethod("DELETE");
-        configAutenticacao.addAllowedMethod("PUT");
-        configAutenticacao.addAllowedMethod("OPTIONS");
+        configAutenticacao.setAllowedMethods(Arrays.asList("POST", "GET", "DELETE", "PUT", "OPTIONS"));
+        configAutenticacao.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
         configAutenticacao.setMaxAge(3600L);
         source.registerCorsConfiguration("/**", configAutenticacao);
 
