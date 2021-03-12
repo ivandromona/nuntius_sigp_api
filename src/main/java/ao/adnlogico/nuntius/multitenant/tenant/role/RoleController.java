@@ -52,8 +52,8 @@ public class RoleController implements Serializable
     public CollectionModel<EntityModel<Role>> all()
     {
         List<EntityModel<Role>> roles = repository.findAll().stream() //
-                .map(assembler::toModel) //
-                .collect(Collectors.toList());
+            .map(assembler::toModel) //
+            .collect(Collectors.toList());
 
         return CollectionModel.of(roles, linkTo(methodOn(RoleController.class).all()).withSelfRel());
     }
@@ -65,8 +65,8 @@ public class RoleController implements Serializable
         EntityModel<Role> entityModel = assembler.toModel(repository.save(role));
 
         return ResponseEntity //
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-                .body(entityModel);
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+            .body(entityModel);
     }
 
     @RequestAuthorization
@@ -74,7 +74,7 @@ public class RoleController implements Serializable
     public EntityModel<Role> findById(@PathVariable Long id)
     {
         Role role = repository.findById(id) //
-                .orElseThrow(() -> new EntityNotFoundException(new Role(), id));
+            .orElseThrow(() -> new EntityNotFoundException(new Role(), id));
 
         return assembler.toModel(role);
     }
@@ -84,20 +84,36 @@ public class RoleController implements Serializable
     public ResponseEntity<?> update(@RequestBody Role newrole, @PathVariable Long id)
     {
         Role updatedrole = repository.findById(id) //
-                .map(role -> {
-                    role.setName(newrole.getName());
-                    return repository.save(role);
-                }) //
-                .orElseGet(() -> {
-                    newrole.setId(id);
-                    return repository.save(newrole);
-                });
+            .map(role -> {
+                role.setName(newrole.getName());
+                role.setDescription(newrole.getDescription());
+                role.setCreateProcess(newrole.getCreateProcess());
+                role.setEditDoc(newrole.getEditDoc());
+                role.setDeleteProcess(newrole.getDeleteProcess());
+                role.setViewProcess(newrole.getViewProcess());
+                role.setApprove(newrole.getApprove());
+                role.setReject(newrole.getReject());
+                role.setForward(newrole.getForward());
+                role.setComment(newrole.getComment());
+                role.setAddAttach(newrole.getAddAttach());
+                role.setRemoveAttach(newrole.getRemoveAttach());
+                role.setViewAttach(newrole.getViewAttach());
+                role.setViewDoc(newrole.getViewDoc());
+                role.setEditDoc(newrole.getEditDoc());
+                role.setAddDoc(newrole.getAddDoc());
+                role.setFkRoleType(newrole.getFkRoleType());
+                return repository.save(role);
+            }) //
+            .orElseGet(() -> {
+                newrole.setId(id);
+                return repository.save(newrole);
+            });
 
         EntityModel<Role> entityModel = assembler.toModel(updatedrole);
 
         return ResponseEntity //
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-                .body(entityModel);
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+            .body(entityModel);
     }
 
     @RequestAuthorization
