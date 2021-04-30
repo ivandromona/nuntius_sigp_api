@@ -47,7 +47,7 @@ import org.springframework.web.bind.annotation.PutMapping;
  * @author domingos.fernando
  */
 @RestController
-@RequestMapping("/nuntius/v1/api/auth")
+@RequestMapping("/nuntius/v1/api")
 public class AuthenticationController implements Serializable
 {
 
@@ -68,7 +68,7 @@ public class AuthenticationController implements Serializable
     @Autowired
     MasterTenantService masterTenantService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/login", method = RequestMethod.POST)
     public ResponseEntity<?> userLogin(@RequestBody @NotNull UserLoginDTO userLoginDTO) throws AuthenticationException
     {
         LOGGER.info("userLogin() method call...");
