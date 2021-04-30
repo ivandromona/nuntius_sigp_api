@@ -1,6 +1,6 @@
 package ao.adnlogico.nuntius.multitenant.tenant.role;
 
-import ao.adnlogico.nuntius.multitenant.tenant.user.AuthenticationController;
+import ao.adnlogico.nuntius.multitenant.tenant.auth.AuthenticationController;
 import ao.adnlogico.nuntius.multitenant.tenant.role.Role;
 import ao.adnlogico.nuntius.multitenant.exception.EntityNotFoundException;
 import ao.adnlogico.nuntius.multitenant.security.RequestAuthorization;

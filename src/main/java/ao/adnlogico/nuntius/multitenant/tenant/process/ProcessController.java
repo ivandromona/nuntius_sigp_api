@@ -1,6 +1,6 @@
 package ao.adnlogico.nuntius.multitenant.tenant.process;
 
-import ao.adnlogico.nuntius.multitenant.tenant.user.AuthenticationController;
+import ao.adnlogico.nuntius.multitenant.tenant.auth.AuthenticationController;
 import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
 import ao.adnlogico.nuntius.multitenant.exception.EntityNotFoundException;
 import ao.adnlogico.nuntius.multitenant.security.RequestAuthorization;
