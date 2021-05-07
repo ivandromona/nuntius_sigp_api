@@ -86,6 +86,8 @@ public class FunctionController implements Serializable
         Function updatedFunction = repository.findById(id) //
             .map(function -> {
                 function.setName(newFunction.getName());
+                function.setDescription(newFunction.getDescription());
+                function.setFkDepartment(newFunction.getFkDepartment());
                 return repository.save(function);
             }) //
             .orElseGet(() -> {

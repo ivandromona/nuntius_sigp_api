@@ -86,6 +86,8 @@ public class DepartmentController implements Serializable
         Department updateddepartment = repository.findById(id) //
                 .map(department -> {
                     department.setName(newdepartment.getName());
+                    department.setDescription(newdepartment.getDescription());
+                    department.setFkDeptFather(newdepartment.getFkDeptFather());
                     return repository.save(department);
                 }) //
                 .orElseGet(() -> {

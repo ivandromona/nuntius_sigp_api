@@ -86,6 +86,7 @@ public class CategoryController implements Serializable
         Category updatedCategory = repository.findById(id) //
                 .map(category -> {
                     category.setName(newCategory.getName());
+                    category.setDescription(newCategory.getDescription());
                     return repository.save(category);
                 }) //
                 .orElseGet(() -> {

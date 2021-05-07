@@ -86,6 +86,10 @@ public class PersonController implements Serializable
         Person updatedperson = repository.findById(id) //
                 .map(person -> {
                     person.setFirstName(newPerson.getFirstName());
+                    person.setLastName(newPerson.getLastName());
+                    person.setBirthdate(newPerson.getBirthdate());
+                    person.setIdentityNumber(newPerson.getIdentityNumber());
+                    person.setGender(newPerson.getGender());
                     return repository.save(person);
                 }) //
                 .orElseGet(() -> {
