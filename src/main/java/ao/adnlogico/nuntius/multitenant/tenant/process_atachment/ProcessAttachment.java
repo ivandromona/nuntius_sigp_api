@@ -19,14 +19,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import javax.persistence.Transient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author Sebastião Paulo
  */
 @Entity
-@ConfigurationProperties(prefix = "file")
 @Table(name = "process_attachments")
 public class ProcessAttachment implements Serializable
 {
@@ -40,12 +40,10 @@ public class ProcessAttachment implements Serializable
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "file")
-    private String file;
-    @Column(name = "extension")
-    private String extension;
-    @Column(name = "upload_dir")
-    private String uploadDir;
+    @Column(name = "file_url")
+    private String fileUrl;
+    @Column(name = "file_id")
+    private Long fileId;
     @Column(name = "description")
     private String description;
     @Basic(optional = false)
@@ -56,6 +54,9 @@ public class ProcessAttachment implements Serializable
     @ManyToOne(optional = false)
     private Process fkProcess;
 
+    @Transient
+    private MultipartFile fileContent;
+
     public ProcessAttachment()
     {
     }
@@ -65,14 +66,22 @@ public class ProcessAttachment implements Serializable
         this.id = id;
     }
 
-    public ProcessAttachment(Long id, String name, String description, String fileUrl, String file, Date createdAt)
+    public ProcessAttachment(Long id, String name, String description, String fileUrl, Date createdAt)
     {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.uploadDir = fileUrl;
-        this.file = file;
         this.createdAt = createdAt;
+    }
+
+    public String getFileUrl()
+    {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl)
+    {
+        this.fileUrl = fileUrl;
     }
 
     public Long getId()
@@ -105,26 +114,6 @@ public class ProcessAttachment implements Serializable
         this.description = description;
     }
 
-    public String getUploadDir()
-    {
-        return uploadDir;
-    }
-
-    public void setUploadDir(String uploadDir)
-    {
-        this.uploadDir = uploadDir;
-    }
-
-    public String getFile()
-    {
-        return file;
-    }
-
-    public void setFile(String file)
-    {
-        this.file = file;
-    }
-
     public Date getCreatedAt()
     {
         return createdAt;
@@ -135,16 +124,6 @@ public class ProcessAttachment implements Serializable
         this.createdAt = createdAt;
     }
 
-    public String getExtension()
-    {
-        return extension;
-    }
-
-    public void setExtension(String extension)
-    {
-        this.extension = extension;
-    }
-
     public Process getFkProcess()
     {
         return fkProcess;
@@ -153,6 +132,26 @@ public class ProcessAttachment implements Serializable
     public void setFkProcess(Process fkProcess)
     {
         this.fkProcess = fkProcess;
+    }
+
+    public MultipartFile getFileContent()
+    {
+        return fileContent;
+    }
+
+    public void setFileContent(MultipartFile fileContent)
+    {
+        this.fileContent = fileContent;
+    }
+
+    public Long getFileId()
+    {
+        return fileId;
+    }
+
+    public void setFileId(Long fileId)
+    {
+        this.fileId = fileId;
     }
 
     @Override

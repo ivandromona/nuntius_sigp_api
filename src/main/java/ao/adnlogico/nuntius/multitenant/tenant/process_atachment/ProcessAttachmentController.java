@@ -3,6 +3,7 @@ package ao.adnlogico.nuntius.multitenant.tenant.process_atachment;
 import ao.adnlogico.nuntius.multitenant.tenant.auth.AuthenticationController;
 import ao.adnlogico.nuntius.multitenant.exception.EntityNotFoundException;
 import ao.adnlogico.nuntius.multitenant.security.RequestAuthorization;
+import ao.adnlogico.nuntius.multitenant.tenant.file.FileStorageService;
 import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +49,7 @@ public class ProcessAttachmentController implements Serializable
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 
     @Autowired
-    private ao.adnlogico.nuntius.multitenant.tenant.file.FileStorageService fileStorageService;
+    private FileStorageService fileStorageService;
 
     private final ProcessAttachmentRepository repository;
     private final ProcessAttachmentModelAssembler assembler;
@@ -74,6 +76,11 @@ public class ProcessAttachmentController implements Serializable
     @PostMapping("/processAttachment")
     public ResponseEntity<?> save(@RequestBody ProcessAttachment processAttachment)
     {
+        String fileName = fileStorageService.store(processAttachment.getFileContent(), processAttachment.getFkProcess().getId(), processAttachment.getName(), ProcessAttachment.class.getName());
+        String filePath = fileStorageService.getFileAbsolutePath(fileName);
+        LOGGER.info("FilePath finded ... : " + filePath);
+        processAttachment.setFileUrl(filePath);
+        processAttachment.setCreatedAt(Calendar.getInstance().getTime());
         EntityModel<ProcessAttachment> entityModel = assembler.toModel(repository.save(processAttachment));
 
         return ResponseEntity //
@@ -134,46 +141,46 @@ public class ProcessAttachmentController implements Serializable
 
     @RequestAuthorization
     @PostMapping("/attachment/upload")
-    public ao.adnlogico.nuntius.multitenant.dto.UploadFileResponse uploadFileSecure(@RequestParam("file") MultipartFile file,
-                                                                                    @RequestParam("process") Integer process,
-                                                                                    @RequestParam("fileType") String fileType,
-                                                                                    @RequestParam("description") String description)
+    public ao.adnlogico.nuntius.multitenant.tenant.file.UploadFileResponse uploadFileSecure(@RequestParam("file") MultipartFile file,
+                                                                                            @RequestParam("process") Long process,
+                                                                                            @RequestParam("fileType") String fileType,
+                                                                                            @RequestParam("description") String description)
     {
-        String fileName = fileStorageService.store(file, new ao.adnlogico.nuntius.multitenant.tenant.process.Process(Long.valueOf(process)), fileType, description);
+        String fileName = fileStorageService.store(file, process, fileType, description);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
             .path("/nuntius/v1/api/processAttachment/download/")
             .path(fileName)
             .toUriString();
 
-        return new ao.adnlogico.nuntius.multitenant.dto.UploadFileResponse(fileName, fileDownloadUri,
+        return new ao.adnlogico.nuntius.multitenant.tenant.file.UploadFileResponse(fileName, fileDownloadUri,
             file.getContentType(), file.getSize());
     }
 
     @PostMapping("/processAttachment/upload")
-    public ao.adnlogico.nuntius.multitenant.dto.UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file,
-                                                                              @RequestParam("process") Integer process,
-                                                                              @RequestParam("fileType") String fileType,
-                                                                              @RequestParam("description") String description)
+    public ao.adnlogico.nuntius.multitenant.tenant.file.UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file,
+                                                                                      @RequestParam("process") Long process,
+                                                                                      @RequestParam("fileType") String fileType,
+                                                                                      @RequestParam("description") String description)
     {
-        String fileName = fileStorageService.store(file, new ao.adnlogico.nuntius.multitenant.tenant.process.Process(Long.valueOf(process)), fileType, description);
+        String fileName = fileStorageService.store(file, process, fileType, description);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
             .path("/nuntius/v1/api/processAttachment/download/")
             .path(fileName)
             .toUriString();
 
-        return new ao.adnlogico.nuntius.multitenant.dto.UploadFileResponse(fileName, fileDownloadUri,
+        return new ao.adnlogico.nuntius.multitenant.tenant.file.UploadFileResponse(fileName, fileDownloadUri,
             file.getContentType(), file.getSize());
     }
 
     @GetMapping("/processAttachment/download")
-    public ResponseEntity<Resource> downloadFile(@RequestParam("process") Integer process,
+    public ResponseEntity<Resource> downloadFile(@RequestParam("atache") Long atacheId,
                                                  @RequestParam("fileType") String fileType,
                                                  HttpServletRequest request)
     {
 
-        String fileName = fileStorageService.getFileName(new ao.adnlogico.nuntius.multitenant.tenant.process.Process(Long.valueOf(process)), fileType);
+        String fileName = fileStorageService.getFileName(atacheId, fileType, ProcessAttachment.class.getName());
         Resource resource = null;
         if (fileName != null && !fileName.isEmpty()) {
             try {
@@ -209,12 +216,12 @@ public class ProcessAttachmentController implements Serializable
     }
 
     @GetMapping("/processAttachment/showdirect")
-    public ResponseEntity<Resource> showFile(@RequestParam("process") Integer process,
+    public ResponseEntity<Resource> showFile(@RequestParam("process") Long process,
                                              @RequestParam("fileType") String fileType,
                                              HttpServletRequest request)
     {
 
-        String fileName = fileStorageService.getFileName(new ao.adnlogico.nuntius.multitenant.tenant.process.Process(Long.valueOf(process)), fileType);
+        String fileName = fileStorageService.getFileName(process, fileType);
         Resource resource = null;
         if (fileName != null && !fileName.isEmpty()) {
             try {

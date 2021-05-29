@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.dto;
+package ao.adnlogico.nuntius.multitenant.tenant.file;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,13 +20,8 @@ public interface StorageService
 
     void init();
 
-    String store(MultipartFile file, ao.adnlogico.nuntius.multitenant.tenant.process.Process process, String fileType);
-
-    String store(MultipartFile file, Long entityId, String fileType);
-
-    String store(MultipartFile file, ao.adnlogico.nuntius.multitenant.tenant.process.Process process, String fileType, String description);
-
-    String store(MultipartFile file, Long entityId, String fileType, String description);
+//    String store(MultipartFile file, Integer userId, String fileType);
+    String store(MultipartFile file, Long fkEntityId, String fileType, String fileEntity);
 
     Stream<Path> loadAll();
 

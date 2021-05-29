@@ -5,8 +5,6 @@
  */
 package ao.adnlogico.nuntius.multitenant.tenant.file;
 
-import ao.adnlogico.nuntius.multitenant.dto.StorageService;
-import ao.adnlogico.nuntius.multitenant.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -22,11 +20,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 import org.springframework.util.FileSystemUtils;
-import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
-import ao.adnlogico.nuntius.multitenant.tenant.process.ProcessRepository;
-import ao.adnlogico.nuntius.multitenant.tenant.process_atachment.ProcessAttachment;
-import ao.adnlogico.nuntius.multitenant.tenant.process_atachment.ProcessAttachmentRepository;
-import java.util.Calendar;
 
 /**
  *
@@ -39,22 +32,24 @@ public class FileStorageService implements StorageService
     private final Path rootFileLocation;
 
     @Autowired
-    ProcessAttachmentRepository repository;
-    @Autowired
-    ProcessRepository processRepository;
+    FileRepository repository;
 
     @Autowired
-    public FileStorageService(ProcessAttachment fileStorageProperties)
+    public FileStorageService(FileEntity fileStorageProperties)
     {
         this.rootFileLocation = Paths.get(fileStorageProperties.getUploadDir())
             .toAbsolutePath().normalize();
-        System.err.println("\nUpload DIrr: " + this.rootFileLocation + "\n");
         init();
     }
 
-    public String getFileName(Process process, String fileType)
+    public String getFileName(Long entityId, String fileType)
     {
-        return repository.getUploadFilePath(process, fileType);
+        return repository.getUploadFilePath(entityId, fileType);
+    }
+
+    public String getFileName(Long entityId, String fileType, String entityName)
+    {
+        return repository.getUploadFilePath(entityId, fileType, entityName);
     }
 
     @Override
@@ -69,7 +64,7 @@ public class FileStorageService implements StorageService
     }
 
     @Override
-    public String store(MultipartFile file, Process process, String fileType, String description)
+    public String store(MultipartFile file, Long fkEntityId, String fileType, String fileExternalEntity)
     {
         // Normalize file name
         String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -88,73 +83,24 @@ public class FileStorageService implements StorageService
                 fileExtension = "";
             }
 
-            final Process localProcess = processRepository.findById(process.getId()).orElseThrow(() -> new EntityNotFoundException(new Process(), process.getId()));
-            fileName = localProcess.getProcessNumber() + "_" + fileType + fileExtension;
+            fileName = fkEntityId + "_" + fileType + fileExtension;
             // Copy file to the target location (Replacing existing file with the same name)
             Path targetLocation = this.rootFileLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            ProcessAttachment fileEntity = repository.checkFileByProcess(process, fileType);
+            FileEntity fileEntity = repository.checkFileByEntity(fkEntityId, fileType, fileExternalEntity);
             if (fileEntity != null) {
-                fileEntity.setExtension(file.getContentType());
-                fileEntity.setName(fileName);
-                fileEntity.setDescription(description);
+                fileEntity.setFileFormat(file.getContentType());
+                fileEntity.setFileName(fileName);
                 repository.save(fileEntity);
             }
             else {
-                ProcessAttachment newFile = new ProcessAttachment();
-                newFile.setFkProcess(process);
-                newFile.setExtension(file.getContentType());
-                newFile.setName(fileName);
-                newFile.setFile(fileType);
-                newFile.setDescription(description);
-                newFile.setCreatedAt(Calendar.getInstance().getTime());
-                repository.save(newFile);
-            }
+                FileEntity newFile = new FileEntity();
+                newFile.setFkEntityId(fkEntityId);
+                newFile.setFileFormat(file.getContentType());
+                newFile.setFileName(fileName);
+                newFile.setFileType(fileType);
+                newFile.setFileEntity(fileExternalEntity);
 
-            return fileName;
-        }
-        catch (IOException ex) {
-            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
-        }
-    }
-
-    @Override
-    public String store(MultipartFile file, Process process, String fileType)
-    {
-        // Normalize file name
-        String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
-        String fileName = "";
-
-        try {
-            // Check if the file's name contains invalid characters
-            if (originalFileName.contains("..")) {
-                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + originalFileName);
-            }
-            String fileExtension = "";
-            try {
-                fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-            }
-            catch (Exception e) {
-                fileExtension = "";
-            }
-
-            fileName = process.getProcessNumber() + "_" + fileType + fileExtension;
-            // Copy file to the target location (Replacing existing file with the same name)
-            Path targetLocation = this.rootFileLocation.resolve(fileName);
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            ProcessAttachment fileEntity = repository.checkFileByProcess(process, fileType);
-            if (fileEntity != null) {
-                fileEntity.setExtension(file.getContentType());
-                fileEntity.setName(fileName);
-                repository.save(fileEntity);
-            }
-            else {
-                ProcessAttachment newFile = new ProcessAttachment();
-                newFile.setFkProcess(process);
-                newFile.setExtension(file.getContentType());
-                newFile.setName(fileName);
-                newFile.setFile(fileType);
-                newFile.setCreatedAt(Calendar.getInstance().getTime());
                 repository.save(newFile);
             }
 
@@ -213,5 +159,28 @@ public class FileStorageService implements StorageService
     public void deleteAll()
     {
         FileSystemUtils.deleteRecursively(rootFileLocation.toFile());
+    }
+
+    public String getFileAbsolutePath(String fileName)
+    {
+
+        String filePath = "";
+        Resource resource = null;
+        try {
+            resource = loadAsResource(fileName);
+        }
+        catch (Exception e) {
+        }
+        // Try to determine file's content type
+        String contentType = null;
+
+        try {
+            filePath = resource.getFile().getAbsolutePath();
+        }
+        catch (IOException ex) {
+            //logger.info("Could not determine file type.");
+        }
+        return filePath;
+
     }
 }
