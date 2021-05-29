@@ -4,6 +4,9 @@ import ao.adnlogico.nuntius.multitenant.tenant.auth.AuthenticationController;
 import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
 import ao.adnlogico.nuntius.multitenant.exception.EntityNotFoundException;
 import ao.adnlogico.nuntius.multitenant.security.RequestAuthorization;
+import ao.adnlogico.nuntius.multitenant.util.search.CustomRsqlVisitor;
+import cz.jirutka.rsql.parser.RSQLParser;
+import cz.jirutka.rsql.parser.ast.Node;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -24,6 +32,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Md. Amran Hossain | amrancse930@gmail.com
@@ -35,8 +44,6 @@ public class ProcessController implements Serializable
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 
-//    @Autowired
-//    ProcessService service;
     private final ProcessRepository repository;
     private final ProcessModelAssembler assembler;
 
@@ -47,13 +54,56 @@ public class ProcessController implements Serializable
         this.assembler = assembler;
     }
 
-//    @RequestAuthorization
-//    @RequestMapping(value = "/all", method = RequestMethod.GET)
-//    public ResponseEntity<Object> getAllProcess()
-//    {
-//        LOGGER.info("getAllProduct() method call...");
-//        return new ResponseEntity<>(service.getAllProcess(), HttpStatus.OK);
-//    }
+    @GetMapping(value = "/process/search", params = {"query", "page", "size", "sort"})
+    public Page<Process> search(@RequestParam(value = "page") int page,
+                                @RequestParam(value = "size") int size,
+                                @RequestParam(value = "sort") int sort,
+                                @RequestParam(value = "query", defaultValue = "origin==*") String query)
+    {
+//      Implementar perquisa generica com subníveis
+        Node rootNode = new RSQLParser().parse(query);
+        Specification<Process> spec = rootNode.accept(new CustomRsqlVisitor<>());
+
+//      Implementação de paginação para o resultado da pesquisa
+        Pageable sortedById;
+        if (sort > 0) {
+            sortedById = PageRequest.of(page, size, Sort.by("id").ascending());
+        }
+        else {
+            sortedById = PageRequest.of(page, size, Sort.by("id").descending());
+        }
+        Page<Process> result = repository.findAll(spec, sortedById); //
+
+        return result;
+    }
+
+    @GetMapping(value = "/process/byDepartment/{id}/pages", params = {"query", "page", "size", "sort"})
+    public Page<Process> listByDepartmentPaginateSearch(@RequestParam(value = "page") int page,
+                                                        @RequestParam(value = "size") int size,
+                                                        @RequestParam(value = "sort") int sort,
+                                                        @RequestParam(value = "query", defaultValue = "") String query,
+                                                        @PathVariable Long id)
+    {
+
+//      Implementar perquisa generica com subníveis
+        String search = "fkApproval.fkDepartment.id==" + id;
+        search += query.isEmpty() ? "" : ";" + query;
+        Node rootNode = new RSQLParser().parse(search);
+        Specification<Process> spec = rootNode.accept(new CustomRsqlVisitor<>());
+
+//      Implementação de paginação para o resultado da pesquisa
+        Pageable sortedById;
+        if (sort > 0) {
+            sortedById = PageRequest.of(page, size, Sort.by("id").ascending());
+        }
+        else {
+            sortedById = PageRequest.of(page, size, Sort.by("id").descending());
+        }
+        Page<Process> result = repository.findAll(spec, sortedById); //
+
+        return result;
+    }
+
     @RequestAuthorization
     @GetMapping("/process")
     public CollectionModel<EntityModel<Process>> all()

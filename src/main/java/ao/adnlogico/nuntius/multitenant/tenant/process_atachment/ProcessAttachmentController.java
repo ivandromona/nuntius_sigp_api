@@ -47,7 +47,7 @@ public class ProcessAttachmentController implements Serializable
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 
     @Autowired
-    private ao.adnlogico.nuntius.multitenant.tenant.process_atachment.FileStorageService fileStorageService;
+    private ao.adnlogico.nuntius.multitenant.tenant.file.FileStorageService fileStorageService;
 
     private final ProcessAttachmentRepository repository;
     private final ProcessAttachmentModelAssembler assembler;

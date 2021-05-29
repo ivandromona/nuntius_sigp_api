@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.process_atachment;
+package ao.adnlogico.nuntius.multitenant.tenant.file;
 
 /**
  *

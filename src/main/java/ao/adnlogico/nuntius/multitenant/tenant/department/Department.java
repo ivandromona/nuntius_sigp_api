@@ -8,6 +8,7 @@ package ao.adnlogico.nuntius.multitenant.tenant.department;
 import ao.adnlogico.nuntius.multitenant.tenant.explorer.Explorer;
 import ao.adnlogico.nuntius.multitenant.tenant.function.Function;
 import ao.adnlogico.nuntius.multitenant.tenant.progress.Progress;
+import ao.adnlogico.nuntius.multitenant.tenant.cataloguing.doc_type.CataloguingDocType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
@@ -54,6 +55,8 @@ public class Department implements Serializable
     private Collection<Explorer> explorersCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkDepartment")
     private Collection<Progress> progressCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
+    private Collection<CataloguingDocType> cataloguingDocTypes;
     @OneToMany(mappedBy = "fkDeptFather")
     private Collection<Department> departmentsCollection;
     @JoinColumn(name = "fk_dept_father", referencedColumnName = "id")
@@ -169,6 +172,17 @@ public class Department implements Serializable
     public void setFkDeptFather(Department fkDeptFather)
     {
         this.fkDeptFather = fkDeptFather;
+    }
+
+    @JsonIgnore
+    public Collection<CataloguingDocType> getCataloguingDocTypes()
+    {
+        return cataloguingDocTypes;
+    }
+
+    public void setCataloguingDocTypes(Collection<CataloguingDocType> cataloguingDocTypes)
+    {
+        this.cataloguingDocTypes = cataloguingDocTypes;
     }
 
     @Override

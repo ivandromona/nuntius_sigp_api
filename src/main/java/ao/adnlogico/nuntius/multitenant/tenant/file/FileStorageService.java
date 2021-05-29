@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ao.adnlogico.nuntius.multitenant.tenant.process_atachment;
+package ao.adnlogico.nuntius.multitenant.tenant.file;
 
 import ao.adnlogico.nuntius.multitenant.dto.StorageService;
 import ao.adnlogico.nuntius.multitenant.exception.EntityNotFoundException;
@@ -24,6 +24,8 @@ import java.util.stream.Stream;
 import org.springframework.util.FileSystemUtils;
 import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
 import ao.adnlogico.nuntius.multitenant.tenant.process.ProcessRepository;
+import ao.adnlogico.nuntius.multitenant.tenant.process_atachment.ProcessAttachment;
+import ao.adnlogico.nuntius.multitenant.tenant.process_atachment.ProcessAttachmentRepository;
 import java.util.Calendar;
 
 /**
