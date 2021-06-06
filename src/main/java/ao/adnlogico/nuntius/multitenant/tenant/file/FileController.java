@@ -38,34 +38,34 @@ public class FileController
     {
 
         return fileStorageService.loadAll().map(
-            path -> MvcUriComponentsBuilder.fromMethodName(FileController.class,
-                "serveFile", path.getFileName().toString()).build().toUri().toString())
-            .collect(Collectors.toList());
+                path -> MvcUriComponentsBuilder.fromMethodName(FileController.class,
+                        "serveFile", path.getFileName().toString()).build().toUri().toString())
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/file/upload")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file,
-                                         @RequestParam("userId") Long UserId,
+                                         @RequestParam("entityId") Long entityId,
                                          @RequestParam("fileType") String fileType)
     {
-        String fileName = fileStorageService.store(file, UserId, fileType, "");
+        String fileName = fileStorageService.store(file, entityId, fileType, "");
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-            .path("/sigcpape/v1/api/file/download/")
-            .path(fileName)
-            .toUriString();
+                .path("/sigcpape/v1/api/file/download/")
+                .path(fileName)
+                .toUriString();
 
         return new UploadFileResponse(fileName, fileDownloadUri,
-            file.getContentType(), file.getSize());
+                file.getContentType(), file.getSize());
     }
 
     @GetMapping("/file/showdirect")
-    public ResponseEntity<Resource> showFile(@RequestParam("userId") Long userId,
+    public ResponseEntity<Resource> showFile(@RequestParam("entityId") Long entityId,
                                              @RequestParam("fileType") String fileType,
                                              HttpServletRequest request)
     {
 
-        String fileName = fileStorageService.getFileName(userId, fileType);
+        String fileName = fileStorageService.getFileName(entityId, fileType);
         Resource resource = null;
         if (fileName != null && !fileName.isEmpty()) {
             try {
@@ -89,9 +89,9 @@ public class FileController
             }
 
             return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
         }
         else {
             return ResponseEntity.notFound().build();
@@ -101,12 +101,12 @@ public class FileController
     }
 
     @GetMapping("/file/download")
-    public ResponseEntity<Resource> downloadFile(@RequestParam("userId") Long userId,
+    public ResponseEntity<Resource> downloadFile(@RequestParam("entityId") Long entityId,
                                                  @RequestParam("fileType") String fileType,
                                                  HttpServletRequest request)
     {
 
-        String fileName = fileStorageService.getFileName(userId, fileType);
+        String fileName = fileStorageService.getFileName(entityId, fileType);
         Resource resource = null;
         if (fileName != null && !fileName.isEmpty()) {
             try {
@@ -130,9 +130,9 @@ public class FileController
             }
 
             return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
         }
         else {
             return ResponseEntity.notFound().build();
@@ -141,13 +141,46 @@ public class FileController
 
     }
 
+    @GetMapping("/files/show/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename, HttpServletRequest request) throws Exception
+    {
+
+        Resource resource = null;
+        try {
+            resource = fileStorageService.loadAsResource(filename);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        // Try to determine file's content type
+        String contentType = null;
+
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        }
+        catch (IOException ex) {
+            //logger.info("Could not determine file type.");
+        }
+        // Fallback to the default content type if type could not be determined
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+
+    }
+
     @GetMapping("/files/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws Exception
+    public ResponseEntity<Resource> serveFileContent(@PathVariable String filename) throws Exception
     {
 
         Resource file = fileStorageService.loadAsResource(filename);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-            "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 }
