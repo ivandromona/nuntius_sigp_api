@@ -9,14 +9,15 @@ import ao.adnlogico.nuntius.multitenant.tenant.role.Role;
 import ao.adnlogico.nuntius.multitenant.tenant.progress.Progress;
 import ao.adnlogico.nuntius.multitenant.tenant.process.Process;
 import ao.adnlogico.nuntius.multitenant.tenant.person.Person;
-import ao.adnlogico.nuntius.multitenant.tenant.notification.Notification;
 import ao.adnlogico.nuntius.multitenant.tenant.message.Message;
 import ao.adnlogico.nuntius.multitenant.tenant.function.Function;
 import ao.adnlogico.nuntius.multitenant.tenant.forwarding.Forwarding;
 import ao.adnlogico.nuntius.multitenant.tenant.document.Document;
 import ao.adnlogico.nuntius.multitenant.tenant.doc_template.DocTemplate;
 import ao.adnlogico.nuntius.multitenant.tenant.comment.Comment;
+import ao.adnlogico.nuntius.multitenant.tenant.notification.Notification;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -24,11 +25,11 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -115,12 +116,15 @@ public class User implements Serializable
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkUser")
     private Collection<Progress> progressCollection;
 
-    @JoinTable(
-            name = "user_notifications",
-            joinColumns = @JoinColumn(name = "fk_user"),
-            inverseJoinColumns = @JoinColumn(name = "fk_notification"))
-    @ManyToMany
+//    @JoinTable(
+//        name = "user_notifications",
+//        joinColumns = @JoinColumn(name = "fk_user"),
+//        inverseJoinColumns = @JoinColumn(name = "fk_notification"))
+//    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "users", fetch = FetchType.EAGER)
     private Collection<Notification> notifications;
+//    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+//    private Collection<UserNotification> notifications;
 
     public User()
     {
@@ -406,16 +410,26 @@ public class User implements Serializable
         this.progressCollection = progressCollection;
     }
 
-    @JsonIgnore
+    @JsonIgnoreProperties({"users"})
     public Collection<Notification> getNotifications()
     {
         return notifications;
     }
 
-    public void setNotifications(Collection<Notification> notificationUsersCollection)
+    public void setNotifications(Collection<Notification> notifications)
     {
-        this.notifications = notificationUsersCollection;
+        this.notifications = notifications;
     }
+//    @JsonIgnoreProperties({"user"})
+//    public Collection<UserNotification> getNotifications()
+//    {
+//        return notifications;
+//    }
+//
+//    public void setNotifications(Collection<UserNotification> notifications)
+//    {
+//        this.notifications = notifications;
+//    }
 
     @Override
     public int hashCode()

@@ -11,10 +11,10 @@ import org.springframework.stereotype.Repository;
 public interface ProcessAttachmentRepository extends JpaRepository<ProcessAttachment, Long>
 {
 
-    @Query("SELECT pa FROM ProcessAttachment pa WHERE pa.fkProcess = ?1 AND pa.fileId = ?2")
-    ProcessAttachment checkFileByProcess(ao.adnlogico.nuntius.multitenant.tenant.process.Process process, Long fileId);
+    @Query("SELECT pa FROM ProcessAttachment pa WHERE pa.fkProcess = ?1 AND pa.fileName = ?2")
+    ProcessAttachment checkFileByProcess(ao.adnlogico.nuntius.multitenant.tenant.process.Process process, String fileName);
 
-    @Query("SELECT pa.name FROM ProcessAttachment pa WHERE pa.fkProcess = ?1 AND pa.fileId = ?2")
-    String getUploadFilePath(ao.adnlogico.nuntius.multitenant.tenant.process.Process process, Long fileId);
+    @Query("SELECT pa.name FROM ProcessAttachment pa WHERE pa.fkProcess = ?1 AND pa.fileName = ?2")
+    String getUploadFilePath(ao.adnlogico.nuntius.multitenant.tenant.process.Process process, String fileName);
 
 }

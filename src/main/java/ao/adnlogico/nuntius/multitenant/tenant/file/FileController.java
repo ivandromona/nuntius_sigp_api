@@ -38,9 +38,9 @@ public class FileController
     {
 
         return fileStorageService.loadAll().map(
-                path -> MvcUriComponentsBuilder.fromMethodName(FileController.class,
-                        "serveFile", path.getFileName().toString()).build().toUri().toString())
-                .collect(Collectors.toList());
+            path -> MvcUriComponentsBuilder.fromMethodName(FileController.class,
+                "serveFile", path.getFileName().toString()).build().toUri().toString())
+            .collect(Collectors.toList());
     }
 
     @PostMapping("/file/upload")
@@ -51,12 +51,13 @@ public class FileController
         String fileName = fileStorageService.store(file, entityId, fileType, "");
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/sigcpape/v1/api/file/download/")
-                .path(fileName)
-                .toUriString();
+            //            .path("/sigcpape/v1/api/file/download/")
+            .path(Constants.DEFAULT_APP_URL_BASE + "/v1/api/files/show/")
+            .path(fileName)
+            .toUriString();
 
         return new UploadFileResponse(fileName, fileDownloadUri,
-                file.getContentType(), file.getSize());
+            file.getContentType(), file.getSize());
     }
 
     @GetMapping("/file/showdirect")
@@ -89,9 +90,9 @@ public class FileController
             }
 
             return ResponseEntity.ok()
-                    .contentType(MediaType.parseMediaType(contentType))
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                    .body(resource);
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
         }
         else {
             return ResponseEntity.notFound().build();
@@ -130,9 +131,9 @@ public class FileController
             }
 
             return ResponseEntity.ok()
-                    .contentType(MediaType.parseMediaType(contentType))
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                    .body(resource);
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
         }
         else {
             return ResponseEntity.notFound().build();
@@ -142,7 +143,7 @@ public class FileController
     }
 
     @GetMapping("/files/show/{filename:.+}")
-    @ResponseBody
+//    @ResponseBody
     public ResponseEntity<Resource> serveFile(@PathVariable String filename, HttpServletRequest request) throws Exception
     {
 
@@ -168,9 +169,9 @@ public class FileController
         }
 
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
+            .contentType(MediaType.parseMediaType(contentType))
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+            .body(resource);
 
     }
 
@@ -181,6 +182,144 @@ public class FileController
 
         Resource file = fileStorageService.loadAsResource(filename);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+            "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
+
+    //    Implementação do file sistem control
+//    @GetMapping("/processAttachment/files")
+//    public List listUploadedFiles(Model model) throws IOException
+//    {
+//
+//        return fileStorageService.loadAll().map(
+//            path -> MvcUriComponentsBuilder.fromMethodName(ProcessAttachment.class,
+//                "serveFile", path.getFileName().toString()).build().toUri().toString())
+//            .collect(Collectors.toList());
+//}
+//
+//    @RequestAuthorization
+//    @PostMapping("/attachment/upload")
+//    public ao.adnlogico.nuntius.multitenant.tenant.file.UploadFileResponse uploadFileSecure(@RequestParam("file") MultipartFile file,
+//                                                                                            @RequestParam("process") Long process,
+//                                                                                            @RequestParam("fileType") String fileType,
+//                                                                                            @RequestParam("description") String description)
+//    {
+//        String fileName = fileStorageService.store(file, process, fileType, description);
+//
+//        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+//            .path("/nuntius/v1/api/processAttachment/download/")
+//            .path(fileName)
+//            .toUriString();
+//
+//        return new ao.adnlogico.nuntius.multitenant.tenant.file.UploadFileResponse(fileName, fileDownloadUri,
+//            file.getContentType(), file.getSize());
+//    }
+//
+//    @PostMapping("/processAttachment/upload")
+//    public ao.adnlogico.nuntius.multitenant.tenant.file.UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file,
+//                                                                                      @RequestParam("process") Long process,
+//                                                                                      @RequestParam("fileType") String fileType,
+//                                                                                      @RequestParam("description") String description)
+//    {
+//        String fileName = fileStorageService.store(file, process, fileType, description);
+//
+//        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+//            .path("/nuntius/v1/api/processAttachment/download/")
+//            .path(fileName)
+//            .toUriString();
+//
+//        return new ao.adnlogico.nuntius.multitenant.tenant.file.UploadFileResponse(fileName, fileDownloadUri,
+//            file.getContentType(), file.getSize());
+//    }
+//
+//    @GetMapping("/processAttachment/download")
+//    public ResponseEntity<Resource> downloadFile(@RequestParam("atache") Long atacheId,
+//                                                 @RequestParam("fileType") String fileType,
+//                                                 HttpServletRequest request)
+//    {
+//
+//        String fileName = fileStorageService.getFileName(atacheId, fileType, ProcessAttachment.class.getName());
+//        Resource resource = null;
+//        if (fileName != null && !fileName.isEmpty()) {
+//            try {
+//                resource = fileStorageService.loadAsResource(fileName);
+//            }
+//            catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            // Try to determine file's content type
+//            String contentType = null;
+//
+//            try {
+//                contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+//            }
+//            catch (IOException ex) {
+//                //logger.info("Could not determine file type.");
+//            }
+//            // Fallback to the default content type if type could not be determined
+//            if (contentType == null) {
+//                contentType = "application/octet-stream";
+//            }
+//
+//            return ResponseEntity.ok()
+//                .contentType(MediaType.parseMediaType(contentType))
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+//                .body(resource);
+//        }
+//        else {
+//            return ResponseEntity.notFound().build();
+//
+//        }
+//
+//    }
+//
+//    @GetMapping("/processAttachment/showdirect")
+//    public ResponseEntity<Resource> showFile(@RequestParam("process") Long process,
+//                                             @RequestParam("fileType") String fileType,
+//                                             HttpServletRequest request)
+//    {
+//
+//        String fileName = fileStorageService.getFileName(process, fileType);
+//        Resource resource = null;
+//        if (fileName != null && !fileName.isEmpty()) {
+//            try {
+//                resource = fileStorageService.loadAsResource(fileName);
+//            }
+//            catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            // Try to determine file's content type
+//            String contentType = null;
+//
+//            try {
+//                contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+//            }
+//            catch (IOException ex) {
+//                //logger.info("Could not determine file type.");
+//            }
+//            // Fallback to the default content type if type could not be determined
+//            if (contentType == null) {
+//                contentType = "application/octet-stream";
+//            }
+//
+//            return ResponseEntity.ok()
+//                .contentType(MediaType.parseMediaType(contentType))
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+//                .body(resource);
+//        }
+//        else {
+//            return ResponseEntity.notFound().build();
+//
+//        }
+//
+//    }
+//
+//    @GetMapping("/processAttachments/{filename:.+}")
+//    @ResponseBody
+//    public ResponseEntity<Resource> serveFile(@PathVariable String filename) throws Exception
+//    {
+//
+//        Resource file = fileStorageService.loadAsResource(filename);
+//        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+//            "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+//    }
 }

@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 import java.util.stream.Stream;
 import org.springframework.util.FileSystemUtils;
 
@@ -68,6 +69,7 @@ public class FileStorageService implements StorageService
     {
         // Normalize file name
         String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String randomName = UUID.randomUUID().toString();
         String fileName = "";
 
         try {
@@ -83,7 +85,7 @@ public class FileStorageService implements StorageService
                 fileExtension = "";
             }
 
-            fileName = fkEntityId + "_" + fileType + fileExtension;
+            fileName = fkEntityId + "_" + randomName + "_" + fileType + fileExtension;
             // Copy file to the target location (Replacing existing file with the same name)
             Path targetLocation = this.rootFileLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
@@ -100,7 +102,7 @@ public class FileStorageService implements StorageService
                 newFile.setFileName(fileName);
                 newFile.setFileType(fileType);
                 newFile.setFileEntity(fileExternalEntity);
-
+                newFile.setFileExtention(fileExtension);
                 repository.save(newFile);
             }
 

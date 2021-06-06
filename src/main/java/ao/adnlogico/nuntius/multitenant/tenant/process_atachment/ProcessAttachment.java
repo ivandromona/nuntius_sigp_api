@@ -42,8 +42,12 @@ public class ProcessAttachment implements Serializable
     @Basic(optional = false)
     @Column(name = "file_url")
     private String fileUrl;
-    @Column(name = "file_id")
-    private Long fileId;
+    @Basic(optional = false)
+    @Column(name = "file_name")
+    private String fileName;
+    @Basic(optional = false)
+    @Column(name = "extension")
+    private String fileType;
     @Column(name = "description")
     private String description;
     @Basic(optional = false)
@@ -114,6 +118,16 @@ public class ProcessAttachment implements Serializable
         this.description = description;
     }
 
+    public String getFileName()
+    {
+        return fileName;
+    }
+
+    public void setFileName(String fileName)
+    {
+        this.fileName = fileName;
+    }
+
     public Date getCreatedAt()
     {
         return createdAt;
@@ -144,14 +158,14 @@ public class ProcessAttachment implements Serializable
         this.fileContent = fileContent;
     }
 
-    public Long getFileId()
+    public String getFileType()
     {
-        return fileId;
+        return fileType;
     }
 
-    public void setFileId(Long fileId)
+    public void setFileType(String fileType)
     {
-        this.fileId = fileId;
+        this.fileType = fileType;
     }
 
     @Override

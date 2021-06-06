@@ -52,8 +52,8 @@ public class SettingController implements Serializable
     public CollectionModel<EntityModel<Setting>> all()
     {
         List<EntityModel<Setting>> settings = repository.findAll().stream() //
-                .map(assembler::toModel) //
-                .collect(Collectors.toList());
+            .map(assembler::toModel) //
+            .collect(Collectors.toList());
 
         return CollectionModel.of(settings, linkTo(methodOn(SettingController.class).all()).withSelfRel());
     }
@@ -65,8 +65,8 @@ public class SettingController implements Serializable
         EntityModel<Setting> entityModel = assembler.toModel(repository.save(setting));
 
         return ResponseEntity //
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-                .body(entityModel);
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+            .body(entityModel);
     }
 
     @RequestAuthorization
@@ -74,9 +74,32 @@ public class SettingController implements Serializable
     public EntityModel<Setting> findById(@PathVariable Long id)
     {
         Setting setting = repository.findById(id) //
-                .orElseThrow(() -> new EntityNotFoundException(new Setting(), id));
+            .orElseThrow(() -> new EntityNotFoundException(new Setting(), id));
 
         return assembler.toModel(setting);
+    }
+
+    @RequestAuthorization
+    @PostMapping("/setting/{id}")
+    public ResponseEntity<?> updateOrSave(@RequestBody Setting newsetting, @PathVariable String id)
+    {
+        Setting updatedsetting = repository.findBySettingKey(id) //
+            .map(setting -> {
+                setting.setSettingKey(newsetting.getSettingKey());
+                setting.setValue(newsetting.getValue());
+                setting.setDescription(newsetting.getDescription());
+                return repository.save(setting);
+            }) //
+            .orElseGet(() -> {
+                newsetting.setSettingKey(id);
+                return repository.save(newsetting);
+            });
+
+        EntityModel<Setting> entityModel = assembler.toModel(updatedsetting);
+
+        return ResponseEntity //
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+            .body(entityModel);
     }
 
     @RequestAuthorization
@@ -84,20 +107,20 @@ public class SettingController implements Serializable
     public ResponseEntity<?> update(@RequestBody Setting newsetting, @PathVariable Long id)
     {
         Setting updatedsetting = repository.findById(id) //
-                .map(setting -> {
-                    setting.setSettingKey(newsetting.getSettingKey());
-                    return repository.save(setting);
-                }) //
-                .orElseGet(() -> {
-                    newsetting.setId(id);
-                    return repository.save(newsetting);
-                });
+            .map(setting -> {
+                setting.setSettingKey(newsetting.getSettingKey());
+                return repository.save(setting);
+            }) //
+            .orElseGet(() -> {
+                newsetting.setId(id);
+                return repository.save(newsetting);
+            });
 
         EntityModel<Setting> entityModel = assembler.toModel(updatedsetting);
 
         return ResponseEntity //
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-                .body(entityModel);
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+            .body(entityModel);
     }
 
     @RequestAuthorization

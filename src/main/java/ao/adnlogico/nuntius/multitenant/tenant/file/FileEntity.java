@@ -48,6 +48,9 @@ public class FileEntity implements Serializable
     @Column(name = "upload_dir")
     private String uploadDir;
 
+    @Column(name = "file_extention")
+    private String fileExtention;
+
     public FileEntity()
     {
     }
@@ -128,6 +131,16 @@ public class FileEntity implements Serializable
     public void setFileEntity(String fileEntity)
     {
         this.fileEntity = fileEntity;
+    }
+
+    public String getFileExtention()
+    {
+        return fileExtention;
+    }
+
+    public void setFileExtention(String fileExtention)
+    {
+        this.fileExtention = fileExtention;
     }
 
     @Override

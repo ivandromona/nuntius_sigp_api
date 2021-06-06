@@ -74,8 +74,8 @@ public class UserController implements Serializable
     public CollectionModel<EntityModel<User>> all()
     {
         List<EntityModel<User>> users = repository.findAll().stream() //
-                .map(assembler::toModel) //
-                .collect(Collectors.toList());
+            .map(assembler::toModel) //
+            .collect(Collectors.toList());
 
         return CollectionModel.of(users, linkTo(methodOn(UserController.class).all()).withSelfRel());
     }
@@ -89,8 +89,8 @@ public class UserController implements Serializable
         EntityModel<User> entityModel = assembler.toModel(repository.save(user));
 
         return ResponseEntity //
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-                .body(entityModel);
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+            .body(entityModel);
     }
 
     @RequestAuthorization
@@ -98,7 +98,7 @@ public class UserController implements Serializable
     public EntityModel<User> findById(@PathVariable Long id)
     {
         User user = repository.findById(id) //
-                .orElseThrow(() -> new EntityNotFoundException(new User(), id));
+            .orElseThrow(() -> new EntityNotFoundException(new User(), id));
 
         return assembler.toModel(user);
     }
@@ -108,26 +108,26 @@ public class UserController implements Serializable
     public ResponseEntity<?> update(@RequestBody User newUser, @PathVariable Long id)
     {
         User updatedUser = repository.findById(id) //
-                .map(user -> {
-                    user.setPhone(newUser.getPhone());
-                    user.setPhoneAlt(newUser.getPhoneAlt());
-                    user.setMechanographicNumber(newUser.getMechanographicNumber());
-                    user.setDescription(newUser.getDescription());
-                    user.setUpdatedAt(newUser.getCreatedAt());
-                    user.setFkFunction(newUser.getFkFunction());
-                    user.setFkRole(newUser.getFkRole());
-                    return repository.save(user);
-                }) //
-                .orElseGet(() -> {
-                    newUser.setId(id);
-                    return repository.save(newUser);
-                });
+            .map(user -> {
+                user.setPhone(newUser.getPhone());
+                user.setPhoneAlt(newUser.getPhoneAlt());
+                user.setMechanographicNumber(newUser.getMechanographicNumber());
+                user.setDescription(newUser.getDescription());
+                user.setUpdatedAt(newUser.getCreatedAt());
+                user.setFkFunction(newUser.getFkFunction());
+                user.setFkRole(newUser.getFkRole());
+                return repository.save(user);
+            }) //
+            .orElseGet(() -> {
+                newUser.setId(id);
+                return repository.save(newUser);
+            });
 
         EntityModel<User> entityModel = assembler.toModel(updatedUser);
 
         return ResponseEntity //
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-                .body(entityModel);
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+            .body(entityModel);
     }
 
     @RequestAuthorization
@@ -135,7 +135,7 @@ public class UserController implements Serializable
     public ResponseEntity<?> updatePassword(@RequestBody UserPasswordUpdater newUserPasswd, @PathVariable Long id)
     {
         User user = repository.findById(id) //
-                .orElseThrow(() -> new EntityNotFoundException(new User(), id));
+            .orElseThrow(() -> new EntityNotFoundException(new User(), id));
 
         ApiError apiError;
         LOGGER.info("Old Encripted password: " + newUserPasswd.getOldPassword());
@@ -155,17 +155,17 @@ public class UserController implements Serializable
     public ResponseEntity<?> updatePassword(@RequestBody User newUser, @PathVariable Long id)
     {
         User updatedUser = repository.findById(id) //
-                .map(user -> {
-                    user.setPassword(new CustomPasswordEncoder().getPasswordEncoder().encode(newUser.getPassword()));
-                    return repository.save(user);
-                }) //
-                .orElseThrow(() -> new EntityNotFoundException(new User(), id));
+            .map(user -> {
+                user.setPassword(new CustomPasswordEncoder().getPasswordEncoder().encode(newUser.getPassword()));
+                return repository.save(user);
+            }) //
+            .orElseThrow(() -> new EntityNotFoundException(new User(), id));
 
         EntityModel<User> entityModel = assembler.toModel(updatedUser);
 
         return ResponseEntity //
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-                .body(entityModel);
+            .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+            .body(entityModel);
     }
 
 }

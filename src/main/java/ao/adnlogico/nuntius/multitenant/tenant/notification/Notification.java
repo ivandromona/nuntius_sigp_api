@@ -6,18 +6,23 @@
 package ao.adnlogico.nuntius.multitenant.tenant.notification;
 
 import ao.adnlogico.nuntius.multitenant.tenant.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -25,6 +30,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "notifications")
+@JsonIgnoreProperties(value = {"users"}, allowSetters = true)
 public class Notification implements Serializable
 {
 
@@ -33,9 +39,10 @@ public class Notification implements Serializable
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    @Lob
     @Basic(optional = false)
-    @Column(name = "content")
-    private int content;
+    @Column(name = "content", columnDefinition = "TEXT")
+    private String content;
     @Basic(optional = false)
     @Column(name = "type")
     private String type;
@@ -44,11 +51,18 @@ public class Notification implements Serializable
     private String entity;
     @Basic(optional = false)
     @Column(name = "entity_id")
-    private int entityId;
+    private Long entityId;
     @Basic(optional = false)
     @Column(name = "created_at")
-    private int createdAt;
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "notifications")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+//    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "notifications")
+    @JoinTable(
+        name = "user_notifications",
+        joinColumns = @JoinColumn(name = "fk_notification"),
+        inverseJoinColumns = @JoinColumn(name = "fk_user"))
+    @ManyToMany
     private Collection<User> users;
 
     public Notification()
@@ -60,7 +74,7 @@ public class Notification implements Serializable
         this.id = id;
     }
 
-    public Notification(Long id, int content, String type, String entity, int entityId, int createdAt)
+    public Notification(Long id, String content, String type, String entity, Long entityId, Date createdAt)
     {
         this.id = id;
         this.content = content;
@@ -80,12 +94,12 @@ public class Notification implements Serializable
         this.id = id;
     }
 
-    public int getContent()
+    public String getContent()
     {
         return content;
     }
 
-    public void setContent(int content)
+    public void setContent(String content)
     {
         this.content = content;
     }
@@ -110,35 +124,34 @@ public class Notification implements Serializable
         this.entity = entity;
     }
 
-    public int getEntityId()
+    public Long getEntityId()
     {
         return entityId;
     }
 
-    public void setEntityId(int entityId)
+    public void setEntityId(Long entityId)
     {
         this.entityId = entityId;
     }
 
-    public int getCreatedAt()
+    public Date getCreatedAt()
     {
         return createdAt;
     }
 
-    public void setCreatedAt(int createdAt)
+    public void setCreatedAt(Date createdAt)
     {
         this.createdAt = createdAt;
     }
 
-    @JsonIgnore
-    public Collection<User> getNotificationUsersCollection()
+    public Collection<User> getUsers()
     {
         return users;
     }
 
-    public void setNotificationUsersCollection(Collection<User> notificationUsersCollection)
+    public void setUsers(Collection<User> users)
     {
-        this.users = notificationUsersCollection;
+        this.users = users;
     }
 
     @Override

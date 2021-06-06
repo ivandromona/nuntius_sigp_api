@@ -37,6 +37,10 @@ public class Setting implements Serializable
     @Column(name = "value")
     private String value;
     @Basic(optional = false)
+    @Lob
+    @Column(name = "meta_data")
+    private String metaData;
+    @Basic(optional = false)
     @Column(name = "description")
     private String description;
 
@@ -95,6 +99,16 @@ public class Setting implements Serializable
     public void setDescription(String description)
     {
         this.description = description;
+    }
+
+    public String getMetaData()
+    {
+        return metaData;
+    }
+
+    public void setMetaData(String metaData)
+    {
+        this.metaData = metaData;
     }
 
     @Override

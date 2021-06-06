@@ -43,7 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
         "/configuration/security",
         "/swagger-ui/**",
         "/webjars/**",
-        "/nuntius/v1/api/processAttachment/showdirect"
+        "/nuntius/v1/api/processAttachment/showdirect",
+        "/nuntius/v1/api/files/show/{filename:.+}"
     };
 
     @Override
@@ -98,6 +99,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 
         CorsConfiguration configAutenticacao = new CorsConfiguration();
         configAutenticacao.setAllowCredentials(true);
+        configAutenticacao.addAllowedOrigin("*");
         configAutenticacao.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://localhost:4200", "http://app.nuntius.ao", "https://app.nuntius.ao"));
         configAutenticacao.setAllowedMethods(Arrays.asList("POST", "GET", "DELETE", "PUT", "OPTIONS"));
         configAutenticacao.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
