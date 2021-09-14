@@ -164,6 +164,7 @@ public class Department implements Serializable
         this.departmentsCollection = departmentsCollection;
     }
 
+    @JsonIgnore
     public Department getFkDeptFather()
     {
         return fkDeptFather;

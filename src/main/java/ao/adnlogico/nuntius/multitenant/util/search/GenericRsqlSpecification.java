@@ -62,7 +62,7 @@ public class GenericRsqlSpecification<T> implements Specification<T>
                 }
                 else if (argument instanceof String) {
                     return builder.like(builder.lower(propertyExpression),
-                        argument.toString().replace('*', '%').toLowerCase());
+                            argument.toString().replace('*', '%').toLowerCase());
                 }
                 else {
                     return builder.equal(propertyExpression, argument);
@@ -77,7 +77,7 @@ public class GenericRsqlSpecification<T> implements Specification<T>
                 }
                 else if (argument instanceof String) {
                     return builder.notLike(builder.lower(propertyExpression),
-                        argument.toString().replace('*', '%').toLowerCase());
+                            argument.toString().replace('*', '%').toLowerCase());
                 }
                 else {
                     return builder.notEqual(propertyExpression, argument);
@@ -88,28 +88,28 @@ public class GenericRsqlSpecification<T> implements Specification<T>
                     return builder.greaterThan(root.get(property), (Date) argument);
                 }
                 return builder.greaterThan(propertyExpression,
-                    argument.toString());
+                        argument.toString());
 
             case GREATER_THAN_OR_EQUAL:
                 if (argument instanceof Date) {
                     return builder.greaterThanOrEqualTo(root.get(property), (Date) argument);
                 }
                 return builder.greaterThanOrEqualTo(propertyExpression,
-                    argument.toString());
+                        argument.toString());
 
             case LESS_THAN:
                 if (argument instanceof Date) {
                     return builder.lessThan(root.get(property), (Date) argument);
                 }
                 return builder.lessThan(propertyExpression,
-                    argument.toString());
+                        argument.toString());
 
             case LESS_THAN_OR_EQUAL:
                 if (argument instanceof Date) {
                     return builder.lessThanOrEqualTo(root.get(property), (Date) argument);
                 }
                 return builder.lessThanOrEqualTo(propertyExpression,
-                    argument.toString());
+                        argument.toString());
             case IN:
                 return propertyExpression.in(args);
             case NOT_IN:
@@ -195,6 +195,9 @@ public class GenericRsqlSpecification<T> implements Specification<T>
             }
             else if (type.equals(Boolean.class)) {
                 return Boolean.parseBoolean(arg);
+            }
+            else if (type.equals(Short.class)) {
+                return Short.parseShort(arg);
             }
             else {
                 return arg;
