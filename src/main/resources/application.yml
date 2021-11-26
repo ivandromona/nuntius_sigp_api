@@ -28,7 +28,7 @@ multitenancy:
   nuntius:
     master:
       datasource:
-        url: jdbc:mysql://10.144.252.86:3306/nuntius_master_db_v1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
+        url: jdbc:mysql://10.144.252.86:3306/nuntius_master_db_v1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&AllowPublicKeyRetrieval=true&useSSL=false
         username: root
         password: Mult1t3l.2021
         driverClassName: com.mysql.cj.jdbc.Driver
