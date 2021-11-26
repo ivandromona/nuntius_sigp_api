@@ -26,8 +26,7 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter
-{
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtUserDetailsService jwtUserDetailsService;
@@ -49,34 +48,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 
     @Override
     @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception
-    {
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
     @Autowired
-    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception
-    {
+    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
-    public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception
-    {
+    public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
         return new JwtAuthenticationFilter();
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception
-    {
+    protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().
-            authorizeRequests()
-            .antMatchers(HttpMethod.GET, AUTH_WHITELIST).permitAll()
-            .antMatchers(HttpMethod.POST, "/nuntius/v1/api/auth/login").permitAll()
-            .antMatchers("/nuntius/v1/api/**").authenticated()
-            .and()
-            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                authorizeRequests()
+                .antMatchers(HttpMethod.GET, AUTH_WHITELIST).permitAll()
+                .antMatchers(HttpMethod.POST, "/nuntius/v1/api/auth/login").permitAll()
+                .antMatchers("/nuntius/v1/api/**").authenticated()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class
         );
     }
@@ -87,20 +82,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 //        return encoder;
 //    }
     @Bean
-    public PasswordEncoder passwordEncoder()
-    {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public FilterRegistrationBean platformCorsFilter()
-    {
+    public FilterRegistrationBean platformCorsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
         CorsConfiguration configAutenticacao = new CorsConfiguration();
         configAutenticacao.setAllowCredentials(true);
         configAutenticacao.addAllowedOrigin("*");
-        configAutenticacao.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://localhost:4200", "http://app.nuntius.ao", "https://app.nuntius.ao"));
+        configAutenticacao.setAllowedOrigins(Arrays.asList("http://127.0.0.1", "http://localhost", "http://localhost:4200", "https://localhost:4200", "http://app.nuntius.ao", "https://app.nuntius.ao"));
         configAutenticacao.setAllowedMethods(Arrays.asList("POST", "GET", "DELETE", "PUT", "OPTIONS"));
         configAutenticacao.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
         configAutenticacao.setMaxAge(3600L);
