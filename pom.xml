@@ -160,6 +160,12 @@
             </properties>
         </profile>
         <profile>
+            <id>multitel</id>
+            <properties>
+                <spring.profiles.active>multitel</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
             <id>staging</id>
             <properties>
                 <spring.profiles.active>staging</spring.profiles.active>
