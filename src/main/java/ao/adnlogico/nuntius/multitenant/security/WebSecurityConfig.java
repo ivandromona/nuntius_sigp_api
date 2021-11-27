@@ -93,7 +93,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configAutenticacao = new CorsConfiguration();
         configAutenticacao.setAllowCredentials(true);
         configAutenticacao.addAllowedOrigin("*");
-        configAutenticacao.setAllowedOrigins(Arrays.asList("http://127.0.0.1", "http://localhost", "http://localhost:4200", "https://localhost:4200", "http://app.nuntius.ao", "https://app.nuntius.ao"));
+        configAutenticacao.setAllowedOrigins(Arrays.asList("http://10.144.252.84", "http://127.0.0.1", "http://localhost", "http://localhost:4200", "https://localhost:4200", "http://app.nuntius.ao", "https://app.nuntius.ao"));
         configAutenticacao.setAllowedMethods(Arrays.asList("POST", "GET", "DELETE", "PUT", "OPTIONS"));
         configAutenticacao.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
         configAutenticacao.setMaxAge(3600L);
