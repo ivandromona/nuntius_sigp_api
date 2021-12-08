@@ -29,8 +29,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "forwardings")
-public class Forwarding implements Serializable
-{
+public class Forwarding implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +50,7 @@ public class Forwarding implements Serializable
     @Column(name = "action")
     private String action;
     @JoinColumn(name = "fk_previous_step", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Step fkPreviousStep;
     @JoinColumn(name = "fk_process", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -60,114 +59,93 @@ public class Forwarding implements Serializable
     @ManyToOne(optional = false)
     private User fkUser;
 
-    public Forwarding()
-    {
+    public Forwarding() {
     }
 
-    public Forwarding(Long id)
-    {
+    public Forwarding(Long id) {
         this.id = id;
     }
 
-    public Forwarding(Long id, String dispatch, Date createdAt, String action)
-    {
+    public Forwarding(Long id, String dispatch, Date createdAt, String action) {
         this.id = id;
         this.dispatch = dispatch;
         this.createdAt = createdAt;
         this.action = action;
     }
 
-    public Long getId()
-    {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id)
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getDispatch()
-    {
+    public String getDispatch() {
         return dispatch;
     }
 
-    public void setDispatch(String dispatch)
-    {
+    public void setDispatch(String dispatch) {
         this.dispatch = dispatch;
     }
 
-    public String getComment()
-    {
+    public String getComment() {
         return comment;
     }
 
-    public void setComment(String comment)
-    {
+    public void setComment(String comment) {
         this.comment = comment;
     }
 
-    public Date getCreatedAt()
-    {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt)
-    {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getAction()
-    {
+    public String getAction() {
         return action;
     }
 
-    public void setAction(String action)
-    {
+    public void setAction(String action) {
         this.action = action;
     }
 
-    public Step getFkPreviousStep()
-    {
+    public Step getFkPreviousStep() {
         return fkPreviousStep;
     }
 
-    public void setFkPreviousStep(Step fkPreviousStep)
-    {
+    public void setFkPreviousStep(Step fkPreviousStep) {
         this.fkPreviousStep = fkPreviousStep;
     }
 
-    public Process getFkProcess()
-    {
+    public Process getFkProcess() {
         return fkProcess;
     }
 
-    public void setFkProcess(Process fkProcess)
-    {
+    public void setFkProcess(Process fkProcess) {
         this.fkProcess = fkProcess;
     }
 
-    public User getFkUser()
-    {
+    public User getFkUser() {
         return fkUser;
     }
 
-    public void setFkUser(User fkUser)
-    {
+    public void setFkUser(User fkUser) {
         this.fkUser = fkUser;
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object)
-    {
+    public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Forwarding)) {
             return false;
@@ -180,8 +158,7 @@ public class Forwarding implements Serializable
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "entities.Forwarding[ id=" + id + " ]";
     }
 
