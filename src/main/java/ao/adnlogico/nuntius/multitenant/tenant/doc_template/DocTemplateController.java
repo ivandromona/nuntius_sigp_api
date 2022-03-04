@@ -1,9 +1,10 @@
 package ao.adnlogico.nuntius.multitenant.tenant.doc_template;
 
+import ao.adnlogico.nuntius.multitenant.util.Converter;
 import ao.adnlogico.nuntius.multitenant.tenant.auth.AuthenticationController;
-import ao.adnlogico.nuntius.multitenant.tenant.doc_template.DocTemplate;
 import ao.adnlogico.nuntius.multitenant.exception.EntityNotFoundException;
 import ao.adnlogico.nuntius.multitenant.security.RequestAuthorization;
+import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -30,18 +32,18 @@ import org.springframework.web.bind.annotation.RequestBody;
  */
 @RestController
 @RequestMapping("/nuntius/v1/api")
-public class DocTemplateController implements Serializable
-{
+public class DocTemplateController implements Serializable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 
 //    @Autowired
 //    doctemplateService service;
+    @Autowired
+    DocTemplateService service;
     private final DocTemplateRepository repository;
     private final DocTemplateModelAssembler assembler;
 
-    public DocTemplateController(DocTemplateRepository repository, DocTemplateModelAssembler assembler)
-    {
+    public DocTemplateController(DocTemplateRepository repository, DocTemplateModelAssembler assembler) {
 
         this.repository = repository;
         this.assembler = assembler;
@@ -49,8 +51,7 @@ public class DocTemplateController implements Serializable
 
     @RequestAuthorization
     @GetMapping("/doctemplate")
-    public CollectionModel<EntityModel<DocTemplate>> all()
-    {
+    public CollectionModel<EntityModel<DocTemplate>> all() {
         List<EntityModel<DocTemplate>> doctemplates = repository.findAll().stream() //
                 .map(assembler::toModel) //
                 .collect(Collectors.toList());
@@ -60,9 +61,9 @@ public class DocTemplateController implements Serializable
 
     @RequestAuthorization
     @PostMapping("/doctemplate")
-    public ResponseEntity<?> save(@RequestBody DocTemplate doctemplate)
-    {
-        EntityModel<DocTemplate> entityModel = assembler.toModel(repository.save(doctemplate));
+    public ResponseEntity<?> save(@RequestBody DocTemplate doctemplate) throws Exception {
+
+        EntityModel<DocTemplate> entityModel = assembler.toModel(service.create(doctemplate));
 
         return ResponseEntity //
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
@@ -71,8 +72,7 @@ public class DocTemplateController implements Serializable
 
     @RequestAuthorization
     @GetMapping("/doctemplate/{id}")
-    public EntityModel<DocTemplate> findById(@PathVariable Long id)
-    {
+    public EntityModel<DocTemplate> findById(@PathVariable Long id) {
         DocTemplate doctemplate = repository.findById(id) //
                 .orElseThrow(() -> new EntityNotFoundException(new DocTemplate(), id));
 
@@ -81,8 +81,7 @@ public class DocTemplateController implements Serializable
 
     @RequestAuthorization
     @PutMapping("/doctemplate/{id}")
-    public ResponseEntity<?> update(@RequestBody DocTemplate newDocTemplate, @PathVariable Long id)
-    {
+    public ResponseEntity<?> update(@RequestBody DocTemplate newDocTemplate, @PathVariable Long id) {
         DocTemplate updatedDocTemplate = repository.findById(id) //
                 .map(docTemplate -> {
                     docTemplate.setName(newDocTemplate.getName());
@@ -102,8 +101,7 @@ public class DocTemplateController implements Serializable
 
     @RequestAuthorization
     @DeleteMapping("/doctemplate/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id)
-    {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         repository.deleteById(id);
 
         return ResponseEntity.noContent().build();

@@ -33,8 +33,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "doc_templates")
-public class DocTemplate implements Serializable
-{
+public class DocTemplate implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,21 +43,17 @@ public class DocTemplate implements Serializable
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
     @Lob
     @Column(name = "standard_content")
     private String standardContent;
     @Basic(optional = false)
     @Column(name = "file_url")
     private String fileUrl;
-    @Basic(optional = false)
     @Column(name = "description")
     private String description;
-    @Basic(optional = false)
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-    @Basic(optional = false)
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
@@ -70,17 +65,14 @@ public class DocTemplate implements Serializable
     @OneToMany(mappedBy = "fkDocTemplate")
     private Collection<Category> categoriesCollection;
 
-    public DocTemplate()
-    {
+    public DocTemplate() {
     }
 
-    public DocTemplate(Long id)
-    {
+    public DocTemplate(Long id) {
         this.id = id;
     }
 
-    public DocTemplate(Long id, String name, String standardContent, String fileUrl, String description, Date createdAt, Date updatedAt)
-    {
+    public DocTemplate(Long id, String name, String standardContent, String fileUrl, String description, Date createdAt, Date updatedAt) {
         this.id = id;
         this.name = name;
         this.standardContent = standardContent;
@@ -90,119 +82,97 @@ public class DocTemplate implements Serializable
         this.updatedAt = updatedAt;
     }
 
-    public Long getId()
-    {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id)
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getStandardContent()
-    {
+    public String getStandardContent() {
         return standardContent;
     }
 
-    public void setStandardContent(String standardContent)
-    {
+    public void setStandardContent(String standardContent) {
         this.standardContent = standardContent;
     }
 
-    public String getFileUrl()
-    {
+    public String getFileUrl() {
         return fileUrl;
     }
 
-    public void setFileUrl(String fileUrl)
-    {
+    public void setFileUrl(String fileUrl) {
         this.fileUrl = fileUrl;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description)
-    {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public Date getCreatedAt()
-    {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt)
-    {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt()
-    {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt)
-    {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
     @JsonIgnore
-    public Collection<Document> getDocumentsCollection()
-    {
+    public Collection<Document> getDocumentsCollection() {
         return documentsCollection;
     }
 
-    public void setDocumentsCollection(Collection<Document> documentsCollection)
-    {
+    public void setDocumentsCollection(Collection<Document> documentsCollection) {
         this.documentsCollection = documentsCollection;
     }
 
-    public User getCreatedBy()
-    {
+    public User getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(User createdBy)
-    {
+    public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
     }
 
     @JsonIgnore
-    public Collection<Category> getCategoriesCollection()
-    {
+    public Collection<Category> getCategoriesCollection() {
         return categoriesCollection;
     }
 
-    public void setCategoriesCollection(Collection<Category> categoriesCollection)
-    {
+    public void setCategoriesCollection(Collection<Category> categoriesCollection) {
         this.categoriesCollection = categoriesCollection;
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object)
-    {
+    public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof DocTemplate)) {
             return false;
@@ -215,8 +185,7 @@ public class DocTemplate implements Serializable
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "entities.DocTemplates[ id=" + id + " ]";
     }
 

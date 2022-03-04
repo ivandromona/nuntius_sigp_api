@@ -1,32 +1,32 @@
 ##############################################################
 #ADN Lógico connection local db
-#multitenancy:
-#  nuntius:
-#    master:
-#      datasource:
-#        url: jdbc:mysql://127.0.0.1:3306/nuntius_master_db_v1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
-#        username: root
-#        password: root
-#        driverClassName: com.mysql.cj.jdbc.Driver
-#        connectionTimeout: 20000
-#        maxPoolSize: 250
-#        idleTimeout: 300000
-#        minIdle: 5
-#        poolName: nuntius_master_db_v1-connection-pool
-
-##############################################################
-#Multitel connection local db
-
 multitenancy:
   nuntius:
     master:
       datasource:
-        url: jdbc:mysql://10.144.252.86:3306/nuntius_master_db_v1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+        url: jdbc:mysql://127.0.0.1:3306/nuntius_master_db_v1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
         username: root
-        password: Mult1t3l.2021
+        password: root
         driverClassName: com.mysql.cj.jdbc.Driver
         connectionTimeout: 20000
         maxPoolSize: 250
         idleTimeout: 300000
         minIdle: 5
         poolName: nuntius_master_db_v1-connection-pool
+
+##############################################################
+#Multitel connection local db
+
+#multitenancy:
+#  nuntius:
+#    master:
+#      datasource:
+#        url: jdbc:mysql://10.144.252.86:3306/nuntius_master_db_v1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+#        username: root
+#        password: Mult1t3l.2021
+#        driverClassName: com.mysql.cj.jdbc.Driver
+#        connectionTimeout: 20000
+#        maxPoolSize: 250
+#        idleTimeout: 300000
+#        minIdle: 5
+#        poolName: nuntius_master_db_v1-connection-pool
